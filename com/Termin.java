@@ -40,6 +40,6 @@ public abstract class Termin {
     @Override
     public String toString() {
         SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy hh:mm");
-        return ort + " " + sdf.format(von) + " - " + sdf.format(bis);
+        return ort + " " + sdf.format(von.getTime()) + " - " + sdf.format(bis.getTime());
     }
 }
