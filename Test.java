@@ -42,12 +42,12 @@ public class Test {
         }
         System.out.println("");
 
-        b.probe_hinzufuegen(new Probe("Musterstr. 23", new GregorianCalendar(1995, 6, 5, 18, 0), new GregorianCalendar(1995, 6, 5), 5));
-        b.probe_hinzufuegen(new Probe("Musterstr. 23", new GregorianCalendar(1995, 6, 5, 18, 0), new GregorianCalendar(1995, 6, 5), 20));
-        b.auftritt_hinzufuegen(new Auftritt("Stadthalle", new GregorianCalendar(1995, 6, 5, 18, 0), new GregorianCalendar(1995, 6, 5), 500));
-        b.auftritt_hinzufuegen(new Auftritt("Gasometer", new GregorianCalendar(1995, 6, 5, 18, 0), new GregorianCalendar(1995, 6, 5), 800));
+        b.termin_hinzufuegen(new Probe("Musterstr. 23", new GregorianCalendar(1995, 6, 5, 18, 0), new GregorianCalendar(1995, 6, 5), 5));
+        b.termin_hinzufuegen(new Probe("Musterstr. 23", new GregorianCalendar(1995, 6, 5, 18, 0), new GregorianCalendar(1995, 6, 5), 20));
+        b.termin_hinzufuegen(new Auftritt("Stadthalle", new GregorianCalendar(1995, 6, 5, 18, 0), new GregorianCalendar(1995, 6, 5), 500));
+        b.termin_hinzufuegen(new Auftritt("Gasometer", new GregorianCalendar(1995, 6, 5, 18, 0), new GregorianCalendar(1995, 6, 5), 800));
 
-        ArrayList<Termin> termine = b.termine_auflisten(von, bis);
+        ArrayList<? extends Termin> termine = b.termine_auflisten(von, bis);
 
         System.out.println("Auflistung aller Termine:");
         for (Termin t : termine) {

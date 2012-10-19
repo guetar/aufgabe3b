@@ -15,18 +15,14 @@ public class Band {
 
     private ArrayList<Mitglied> mitglieder;
     private ArrayList<Song> repertoire;
-    private ArrayList<Probe> proben;
-    private ArrayList<Auftritt> auftritte;
+    private ArrayList<Termin> termine;
     private ArrayList<Ort> orte;
-    private ArrayList<Probe> proben_trash;
-    private ArrayList<Auftritt> auftritt_trash;
-
+    private ArrayList<Termin> trash;
 
     public Band() {
         mitglieder = new ArrayList<Mitglied>();
         repertoire = new ArrayList<Song>();
-        proben = new ArrayList<Probe>();
-        auftritte = new ArrayList<Auftritt>();
+        termine = new ArrayList<Termin>();
     }
 
     // Mitglieder
@@ -84,52 +80,37 @@ public class Band {
     }
 
     // Termine
-    public ArrayList<Termin> termine_auflisten(GregorianCalendar _von, GregorianCalendar _bis) {
-        ArrayList<Termin> termin_liste = new ArrayList<Termin>();
-
-        for (Termin t : proben) {
-            if (_von.before(t.getVon()) && _bis.after(t.getBis())) {
-                termin_liste.add(t);
-            } else if (_bis.before(t.getBis())) {
-                break;
-            }
-        }
-
-        for (Termin t : auftritte) {
-            if (_von.before(t.getVon()) && _bis.after(t.getBis())) {
-                termin_liste.add(t);
-            } else if (_bis.before(t.getBis())) {
-                break;
-            }
-        }
-
-        return termin_liste;
-    }
-
-    // Proben
-    public void probe_hinzufuegen(Probe _p) {
-        for (int i = 0; i < proben.size(); i++) {
-            if (_p.getVon().before(proben.get(i).getVon())) {
-                proben.add(i, _p);
+    public void termin_hinzufuegen(Termin _t) {
+        for (int i = 0; i < termine.size(); i++) {
+            if (_t.getVon().before(termine.get(i).getVon())) {
+                termine.add(i, _t);
                 return;
             }
         }
-        proben.add(_p);
+        termine.add(_t);
     }
 
-    public void probe_entfernen(Probe _p) {
-        if (proben.contains(_p)) {
-            proben.remove(_p);
+    public ArrayList<? extends Termin> termine_auflisten(GregorianCalendar _von, GregorianCalendar _bis) {
+        ArrayList<Termin> termine_liste = new ArrayList<Termin>();
+
+        for (Termin t : termine) {
+            if (_von.before(t.getVon()) && _bis.after(t.getBis())) {
+                termine_liste.add( t);
+            } else if (_bis.before(t.getVon())) {
+                break;
+            }
         }
+
+        return termine_liste;
     }
 
     public ArrayList<Probe> proben_auflisten(GregorianCalendar _von, GregorianCalendar _bis) {
         ArrayList<Probe> proben_liste = new ArrayList<Probe>();
 
-        for (Probe p : proben) {
-            if (_von.before(p.getVon()) && _bis.after(p.getBis())) {
-                proben_liste.add(p);
-            } else if (_bis.before(p.getBis())) {
+        for (Termin t : termine) {
+            if (t instanceof Probe && _von.before(t.getVon()) && _bis.after(t.getBis())) {
+                proben_liste.add((Probe) t);
+            } else if (_bis.before(t.getVon())) {
                 break;
             }
         }
@@ -137,30 +118,13 @@ public class Band {
         return proben_liste;
     }
 
-    // Auftritte
-    public void auftritt_hinzufuegen(Auftritt _a) {
-        for (int i = 0; i < proben.size(); i++) {
-            if (_a.getVon().before(proben.get(i).getVon())) {
-                auftritte.add(i, _a);
-                return;
-            }
-        }
-        auftritte.add(_a);
-    }
-
-    public void auftritt_entfernen(Auftritt _a) {
-        if (auftritte.contains(_a)) {
-            auftritte.remove(_a);
-        }
-    }
-
     public ArrayList<Auftritt> auftritte_auflisten(GregorianCalendar _von, GregorianCalendar _bis) {
         ArrayList<Auftritt> auftritte_liste = new ArrayList<Auftritt>();
 
-        for (Auftritt a : auftritte) {
-            if (_von.before(a.getVon()) && _bis.after(a.getBis())) {
-                auftritte_liste.add(a);
-            } else if (_bis.before(a.getBis())) {
+        for (Termin t : termine) {
+            if (t instanceof Auftritt && _von.before(t.getVon()) && _bis.after(t.getBis())) {
+                auftritte_liste.add((Auftritt) t);
+            } else if (_bis.before(t.getVon())) {
                 break;
             }
         }
