@@ -49,7 +49,8 @@ public class Ort {
     public int getAnzSteckdosen() {
         return asteckdosen;
     }
-
+//push test
+    
     /**
      * Liefert Anzahl der vorhandenen Zuschauerplätze
      *
