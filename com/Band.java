@@ -16,7 +16,6 @@ public class Band {
     private ArrayList<Mitglied> mitglieder;
     private ArrayList<Song> repertoire;
     private ArrayList<Termin> termine;
-    private ArrayList<Ort> orte;
     private ArrayList<Termin> trash;
 
     /**
@@ -309,11 +308,12 @@ public class Band {
     public ArrayList<Ort> finde_ort(int _plaetze) {
         ArrayList<Ort> gef_orte = new ArrayList<Ort>();
         
-        for (Ort o : orte) {
-        if (o.getPlaetze() >= _plaetze) {
-                gef_orte.add(o);
-            }
-        }
+		for (Termin t : termine) {
+			Ort o = t.getOrt();
+			if (o.getPlaetze() >= _plaetze) {
+				gef_orte.add(o);
+			}
+		}
 
         return gef_orte;
     }

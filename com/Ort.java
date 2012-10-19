@@ -41,9 +41,6 @@ public class Ort {
         
     }
     
-    public Ort(String _name) {
-        name = _name;
-    }
     
     /**
      * Liefert Anzahl der vorhandenen Zuschauerplaetze
