@@ -136,7 +136,7 @@ public class Band {
      */
     public void termin_hinzufuegen(Termin _t) {
         for (int i = 0; i < termine.size(); i++) {
-            if (_t.getVon().before(termine.get(i).getVon())) {
+            if (_t.getDate().before(termine.get(i).getDate())) {
                 termine.add(i, _t);
                 return;
             }
@@ -190,9 +190,9 @@ public class Band {
         ArrayList<Termin> termine_liste = new ArrayList<Termin>();
 
         for (Termin t : termine) {
-            if (_von.before(t.getVon()) && _bis.after(t.getBis())) {
+            if (_von.before(t.getDate()) && _bis.after(t.getDate())) {
                 termine_liste.add( t);
-            } else if (_bis.before(t.getVon())) {
+            } else if (_bis.before(t.getDate())) {
                 break;
             }
         }
@@ -211,9 +211,9 @@ public class Band {
         ArrayList<Probe> proben_liste = new ArrayList<Probe>();
 
         for (Termin t : termine) {
-            if (t instanceof Probe && _von.before(t.getVon()) && _bis.after(t.getBis())) {
+            if (t instanceof Probe && _von.before(t.getDate()) && _bis.after(t.getDate())) {
                 proben_liste.add((Probe) t);
-            } else if (_bis.before(t.getVon())) {
+            } else if (_bis.before(t.getDate())) {
                 break;
             }
         }
@@ -232,9 +232,9 @@ public class Band {
         ArrayList<Auftritt> auftritte_liste = new ArrayList<Auftritt>();
 
         for (Termin t : termine) {
-            if (t instanceof Auftritt && _von.before(t.getVon()) && _bis.after(t.getBis())) {
+            if (t instanceof Auftritt && _von.before(t.getDate()) && _bis.after(t.getDate())) {
                 auftritte_liste.add((Auftritt) t);
-            } else if (_bis.before(t.getVon())) {
+            } else if (_bis.before(t.getDate())) {
                 break;
             }
         }
@@ -315,7 +315,7 @@ public class Band {
                         gef_orte.add(o);
                 }
         }
-
+			
         return gef_orte;
     }
 }
