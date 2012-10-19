@@ -15,7 +15,7 @@ public class Ort {
     private int plaetze;
 
     /**
-     * erzeugt ein neues Ort Objekt
+     * Konstruktor
      *
      * @param name Name des Ortes
      * @param adresse Adresse des Ortes
@@ -29,6 +29,11 @@ public class Ort {
         plaetze = _plaetze;
     }
     
+    /**
+     * Kopierkonstruktor
+     * 
+     * @param _o zu kopierender Ort
+     */
     public Ort (Ort _o) {
         name = _o.name;
         adresse = _o.adresse;
@@ -52,8 +57,7 @@ public class Ort {
     @Override
     /**
      * Liefert die Elemente des Ortes als String getrennt durch Leerzeichen in
-     * der Reihenfolge: Name, Adresse, Anzahl der Zuschauerplaetze, Anzahl der
-     * Steckdosen, besitzt Catering
+     * der Reihenfolge: Name, Adresse und die Anzahl der Zuschauerplaetze
      */
     public String toString() {
         return name + " " + adresse + " " + plaetze;

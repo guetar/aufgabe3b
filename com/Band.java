@@ -31,7 +31,8 @@ public class Band {
     // Mitglieder
     
     /**
-     * Fügt der Band ein Mitglied hinzu.
+     * Fuegt der Band ein Mitglied hinzu.
+     * 
      * @param _m hinzuzufuegendes Mitglied
      */
     public void mitglied_hinzufuegen(Mitglied _m) {
@@ -39,6 +40,7 @@ public class Band {
     }
 
     /**
+     * Entfernt ein Mitglied aus der Band.
      * 
      * @param _m zu entferndenes Mitglied
      */
@@ -49,6 +51,7 @@ public class Band {
     }
 
     /**
+     * Listet alle Mitglieder der Band.
      * 
      * @return Mitglieder
      */
@@ -57,10 +60,11 @@ public class Band {
     }
 
     /**
+     * Listet alle Personen, die innerhalb eines gesuchten Zeitraums Mitglieder der Band waren.
      * 
-     * @param _von Beginn der gesuchten Zeitspanne
-     * @param _bis Ende der gesuchten Zeitspanne
-     * @return 
+     * @param _von Beginn des gesuchten Zeitraumes
+     * @param _bis Ende des gesuchten Zeitraumes
+     * @return Mitglieder innerhalb des gesuchten Zeitraumes
      */
     public ArrayList<Mitglied> mitglieder_auflisten(GregorianCalendar _von, GregorianCalendar _bis) {
         ArrayList<Mitglied> mitglieder_liste = new ArrayList<Mitglied>();
@@ -77,6 +81,7 @@ public class Band {
     // Repertoire
     
     /**
+     * Fuegt dem Repertoire der Band einen Song hinzu.
      * 
      * @param _s hinzuzufuegender Song
      */
@@ -85,6 +90,7 @@ public class Band {
     }
 
     /**
+     * Entfernt einen Song aus dem Repertoire der Band.
      * 
      * @param _s zu entfernender Song
      */
@@ -95,6 +101,7 @@ public class Band {
     }
 
     /**
+     * Listet das gesamte Repertoire der Band.
      * 
      * @return Repertoire
      */
@@ -103,6 +110,7 @@ public class Band {
     }
 
     /**
+     * Listet das Repertoire der Band ab einem gewissen Zeitpunkt.
      * 
      * @param _von gesuchter Zeitpunkt
      * @return Repertoire ab gesuchtem Zeitpunkt
@@ -122,6 +130,7 @@ public class Band {
     // Termine
     
     /**
+     * Fügt einen Termin hinzu.
      * 
      * @param _t hinzuzufuegender Termin
      */
@@ -136,8 +145,9 @@ public class Band {
     }
     
     /**
+     * Aendert einen bereits vorhandenen Termin und speichert dessen alte Version.
      * 
-     * @param _alt
+     * @param _alt zu aendernder Termin
      * @param _neu 
      */
     public void termin_aendern(Termin _alt, Termin _neu) {
@@ -147,9 +157,9 @@ public class Band {
     }
     
     /**
-     * Löscht einen Termin
+     * Loescht einen Termin
      *
-     * @param t die gelöschten Termine
+     * @param t die geloeschten Termine
      */
     public void termin_loeschen(Termin t) {
         if(termine.contains(t)) {
@@ -161,13 +171,21 @@ public class Band {
     }
     
     /**
+     * Listet alle geloeschten und geaenderten Termine
      * 
-     * @return trash die Elemente des Mistkübels 
+     * @return trash geloeschte und geaenderte Termine
      */
     public ArrayList<Termin> trash_auflisten() {
         return trash;
     }
 
+    /**
+     * Listet alle Termine innerhalb eines gesuchten Zeitraumes
+     * 
+     * @param _von Beginn des gesuchten Zeitraumes
+     * @param _bis Ende des gesuchten Zeitraumes
+     * @return Termine innerhalb des gesuchten Zeitraumes
+     */
     public ArrayList<? extends Termin> termine_auflisten(GregorianCalendar _von, GregorianCalendar _bis) {
         ArrayList<Termin> termine_liste = new ArrayList<Termin>();
 
@@ -182,6 +200,13 @@ public class Band {
         return termine_liste;
     }
 
+    /**
+     * Listet alle Proben innerhalb eines gesuchten Zeitraumes
+     * 
+     * @param _von Beginn des gesuchten Zeitraumes
+     * @param _bis Ende des gesuchten Zeitraumes
+     * @return Proben innerhalb des gesuchten Zeitraumes
+     */
     public ArrayList<Probe> proben_auflisten(GregorianCalendar _von, GregorianCalendar _bis) {
         ArrayList<Probe> proben_liste = new ArrayList<Probe>();
 
@@ -196,6 +221,13 @@ public class Band {
         return proben_liste;
     }
 
+    /**
+     * Listet alle Auftritte innerhalb eines gesuchten Zeitraumes
+     * 
+     * @param _von Beginn des gesuchten Zeitraumes
+     * @param _bis Ende des gesuchten Zeitraumes
+     * @return Auftritte innerhalb des gesuchten Zeitraumes
+     */
     public ArrayList<Auftritt> auftritte_auflisten(GregorianCalendar _von, GregorianCalendar _bis) {
         ArrayList<Auftritt> auftritte_liste = new ArrayList<Auftritt>();
 
@@ -210,6 +242,13 @@ public class Band {
         return auftritte_liste;
     }
 
+    /**
+     * Summiert die Kosten, die innerhalb eines gesuchten Zeitraumes durch das Mieten der Proberaume entstehen
+     * 
+     * @param _von Beginn des gesuchten Zeitraumes
+     * @param _bis Ende des gesuchten Zeitraumes
+     * @return Kosten, die innerhalb des gesuchten Zeitraumes entstanden sind
+     */
     public int kosten_summieren(GregorianCalendar _von, GregorianCalendar _bis) {
         int kosten = 0;
         ArrayList<Probe> proben_kosten = proben_auflisten(_von, _bis);
@@ -221,6 +260,13 @@ public class Band {
         return kosten;
     }
 
+    /**
+     * Summiert den Umsatz, der innerhalb eines gesuchten Zeitraumes durch Gagen bei den Auftritten verdient wurde
+     * 
+     * @param _von Beginn des gesuchten Zeitraumes
+     * @param _bis Ende des gesuchten Zeitraumes
+     * @return Umsatz, der innerhalb des gesuchten Zeitraumes erwirtschaftet werden konnte
+     */
     public int umsatz_summieren(GregorianCalendar _von, GregorianCalendar _bis) {
         int umsatz = 0;
         ArrayList<Auftritt> auftritte_kosten = auftritte_auflisten(_von, _bis);
@@ -232,10 +278,22 @@ public class Band {
         return umsatz;
     }
 
+    /**
+     * Summiert den Gewinn, der innerhalb eines gesuchten Zeitraumes erwirtschaftet werden konnte
+     * 
+     * @param _von Beginn des gesuchten Zeitraumes
+     * @param _bis Ende des gesuchten Zeitraumes
+     * @return Gewinn, der innerhalb des gesuchten Zeitraumes erwirtschaftet werden konnte
+     */
     public int gewinn_summieren(GregorianCalendar _von, GregorianCalendar _bis) {
         return umsatz_summieren(_von, _bis) - kosten_summieren(_von, _bis);
     }
     
+    /**
+     * Fuegt einen Ort hinzu.
+     * 
+     * @param _o hinzuzufuegender Ort
+     */
     public void ort_hinzufuegen(Ort _o) {
         orte.add(_o);
     }
