@@ -4,8 +4,6 @@
  */
 package com;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.GregorianCalendar;
 import java.util.ArrayList;
 
@@ -19,8 +17,10 @@ public class Band {
     private ArrayList<Song> repertoire;
     private ArrayList<Probe> proben;
     private ArrayList<Auftritt> auftritte;
+    private ArrayList<Ort> orte;
     private ArrayList<Probe> proben_trash;
     private ArrayList<Auftritt> auftritt_trash;
+
 
     public Band() {
         mitglieder = new ArrayList<Mitglied>();
@@ -192,5 +192,31 @@ public class Band {
 
     public int gewinn_summieren(GregorianCalendar _von, GregorianCalendar _bis) {
         return umsatz_summieren(_von, _bis) - kosten_summieren(_von, _bis);
+    }
+
+    /**
+     * liefert Liste mit Orten, die eine bestimmte Infrastruktur haben.
+     *
+     * @param zplaetze Gesuchte Anzahl an ZuschauerplÃ¤tzen(oder 0, wenn egal)
+     * @param asteckdosen Gesuchte Anzahl an Steckdosen(oder 0, wenn egal)
+     * @param catering true setzen,wenn Catering vorhanden sein soll, false,
+     * wenn egal
+     * @return die Orte, die die bestimmte Infrastruktur haben. null, wenn kein
+     * Ort die Voraussetzungen erfuellt.
+     */
+    public ArrayList<Ort> finde_Ort(int zplaetze, int asteckdosen, boolean catering) {
+        ArrayList<Ort> geforte = new ArrayList<Ort>();
+        for (Ort o : orte) {
+            if (!catering || (catering && o.hatCatering())) {
+                if (o.getAnzSteckdosen() >= asteckdosen && o.getAnzZuschauerPl() >= zplaetze) {
+                    geforte.add(o);
+                }
+            }
+        }
+        if (geforte.isEmpty()) {
+            return null;
+        }
+
+        return geforte;
     }
 }
