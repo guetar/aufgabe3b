@@ -6,8 +6,8 @@ package com;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.GregorianCalendar;
 import java.util.ArrayList;
-import java.util.Date;
 
 /**
  *
@@ -48,25 +48,17 @@ public class Band
         return mitglieder;
     }
     
-    public ArrayList<Mitglied> mitglieder_auflisten(String _von, String _bis)
+    public ArrayList<Mitglied> mitglieder_auflisten(GregorianCalendar _von, GregorianCalendar _bis)
     {
         ArrayList<Mitglied> mitglieder_liste = new ArrayList<Mitglied>();
         
-        try
+        for(Mitglied m : mitglieder)
         {
-            SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy");
-            Date von = sdf.parse(_von);
-            Date bis = sdf.parse(_bis);
-
-            for(Mitglied m : mitglieder)
+            if(m.getVon().before(_bis) && m.getBis().after(_von))
             {
-                if(m.getVon().before(bis) && m.getBis().after(von))
-                {
-                    mitglieder_liste.add(m);
-                }
+                mitglieder_liste.add(m);
             }
         }
-        catch (ParseException ex) {}
         
         return mitglieder_liste;
     }
@@ -91,26 +83,16 @@ public class Band
         return repertoire;
     }
     
-    public ArrayList<Song> songs_auflisten(String _von)
+    public ArrayList<Song> songs_auflisten(GregorianCalendar _von)
     {
         ArrayList<Song> repertoire_liste = new ArrayList<Song>();
         
-        try
+        for(Song m : repertoire)
         {
-            SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy");
-            Date von = sdf.parse(_von);
-        
-            for(Song m : repertoire)
+            if(_von.before(m.getVon()))
             {
-                if(von.before(m.getVon()))
-                {
-                    repertoire_liste.add(m);
-                }
+                repertoire_liste.add(m);
             }
-        }
-        catch(ParseException ex)
-        {
-            ex.printStackTrace();
         }
         
         return repertoire_liste;
@@ -118,42 +100,32 @@ public class Band
     
     // Termine
     
-    public ArrayList<Termin> termine_auflisten(String _von, String _bis)
+    public ArrayList<Termin> termine_auflisten(GregorianCalendar _von, GregorianCalendar _bis)
     {
         ArrayList<Termin> termin_liste = new ArrayList<Termin>();
         
-        try
+        for(Termin t : proben)
         {
-            SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy");
-            Date von = sdf.parse(_von);
-            Date bis = sdf.parse(_bis);
-            
-            for(Termin t : proben)
-            {
-                if(von.before(t.getVon()) && bis.after(t.getVon()))
-                {     
-                    termin_liste.add(t);
-                }
-                else if(bis.before(t.getVon()))
-                {
-                    break;
-                }
+            if(_von.before(t.getVon()) && _bis.after(t.getBis()))
+            {     
+                termin_liste.add(t);
             }
-            for(Termin t : auftritte)
+            else if(_bis.before(t.getBis()))
             {
-                if(von.before(t.getVon()) && bis.after(t.getVon()))
-                {     
-                    termin_liste.add(t);
-                }
-                else if(bis.before(t.getVon()))
-                {
-                    break;
-                }
+                break;
             }
         }
-        catch(ParseException ex)
+        
+        for(Termin t : auftritte)
         {
-            ex.printStackTrace();
+            if(_von.before(t.getVon()) && _bis.after(t.getBis()))
+            {     
+                termin_liste.add(t);
+            }
+            else if(_bis.before(t.getBis()))
+            {
+                break;
+            }
         }
         
         return termin_liste;
@@ -182,31 +154,20 @@ public class Band
         }
     }
     
-    public  ArrayList<Probe> proben_auflisten(String _von,  String _bis)
+    public  ArrayList<Probe> proben_auflisten(GregorianCalendar _von,  GregorianCalendar _bis)
     {
         ArrayList<Probe> proben_liste = new ArrayList<Probe>();
         
-        try
+        for(Probe p : proben)
         {
-            SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy");
-            Date von = sdf.parse(_von);
-            Date bis = sdf.parse(_bis);
-            
-            for(Probe p : proben)
-            {
-                if(von.before(p.getVon()) && bis.after(p.getVon()))
-                {     
-                    proben_liste.add(p);
-                }
-                else if(bis.before(p.getVon()))
-                {
-                    break;
-                }
+            if(_von.before(p.getVon()) && _bis.after(p.getBis()))
+            {     
+                proben_liste.add(p);
             }
-        }
-        catch(ParseException ex)
-        {
-            ex.printStackTrace();
+            else if(_bis.before(p.getBis()))
+            {
+                break;
+            }
         }
         
         return proben_liste;
@@ -227,7 +188,7 @@ public class Band
         auftritte.add(_a);
     }
     
-    public void probe_entfernen(Auftritt _a)
+    public void auftritt_entfernen(Auftritt _a)
     {
         if(auftritte.contains(_a))
         {
@@ -235,37 +196,26 @@ public class Band
         }
     }
     
-    public  ArrayList<Auftritt> auftritte_auflisten(String _von,  String _bis)
+    public  ArrayList<Auftritt> auftritte_auflisten(GregorianCalendar _von,  GregorianCalendar _bis)
     {
         ArrayList<Auftritt> auftritte_liste = new ArrayList<Auftritt>();
         
-        try
+        for(Auftritt a : auftritte)
         {
-            SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy");
-            Date von = sdf.parse(_von);
-            Date bis = sdf.parse(_bis);
-            
-            for(Auftritt a : auftritte)
-            {
-                if(von.before(a.getVon()) && bis.after(a.getVon()))
-                {     
-                    auftritte_liste.add(a);
-                }
-                else if(bis.before(a.getVon()))
-                {
-                    break;
-                }
+            if(_von.before(a.getVon()) && _bis.after(a.getBis()))
+            {     
+                auftritte_liste.add(a);
             }
-        }
-        catch(ParseException ex)
-        {
-            ex.printStackTrace();
+            else if(_bis.before(a.getBis()))
+            {
+                break;
+            }
         }
         
         return auftritte_liste;
     }
     
-    public int kosten_summieren(String _von,  String _bis)
+    public int kosten_summieren(GregorianCalendar _von,  GregorianCalendar _bis)
     {
         int kosten=0;
         ArrayList<Probe> proben_kosten = proben_auflisten(_von, _bis);
@@ -278,7 +228,7 @@ public class Band
         return kosten;
     }
     
-    public int umsatz_summieren(String _von,  String _bis)
+    public int umsatz_summieren(GregorianCalendar _von,  GregorianCalendar _bis)
     {
         int umsatz=0;
         ArrayList<Auftritt> auftritte_kosten = auftritte_auflisten(_von, _bis);
@@ -291,7 +241,7 @@ public class Band
         return umsatz;
     }
     
-    public int gewinn_summieren(String _von,  String _bis)
+    public int gewinn_summieren(GregorianCalendar _von,  GregorianCalendar _bis)
     {
         return umsatz_summieren(_von, _bis) - kosten_summieren(_von, _bis);
     }

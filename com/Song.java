@@ -4,9 +4,7 @@
  */
 package com;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.util.GregorianCalendar;
 
 /**
  *
@@ -15,29 +13,17 @@ import java.util.Date;
 public class Song
 {
     private String name;
-    private Date laenge;
-    private Date von;
-    private SimpleDateFormat sdf_laenge;
-    private SimpleDateFormat sdf_von;
+    private String laenge;
+    private GregorianCalendar von;
     
-    public Song(String _name, String _laenge, String _von)
+    public Song(String _name, String _laenge, GregorianCalendar _von)
     {
-        this.name = _name;
-        
-        try
-        {
-            sdf_laenge = new SimpleDateFormat("mm:ss");
-            laenge = sdf_laenge.parse(_laenge);
-            sdf_von = new SimpleDateFormat("dd.MM.yyyy");
-            von = sdf_von.parse(_von);
-        }
-        catch(ParseException ex)
-        {
-            ex.printStackTrace();
-        }
+        name = _name;
+        laenge = _laenge;
+        von = _von;
     }
     
-    public Date getVon()
+    public GregorianCalendar getVon()
     {
         return von;
     }
@@ -45,6 +31,6 @@ public class Song
     @Override
     public String toString()
     {
-        return name + " " + sdf_laenge.format(laenge);
+        return name + " " + laenge;
     }
 }

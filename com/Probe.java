@@ -4,6 +4,8 @@
  */
 package com;
 
+import java.util.GregorianCalendar;
+
 /**
  *
  * @author Matthias
@@ -12,20 +14,20 @@ public class Probe extends Termin
 {
     private int miete;
     
-    public Probe(String _ort, String _von, String _bis, int _miete)
+    public Probe(String _ort, GregorianCalendar _von, GregorianCalendar _bis, int _miete)
     {
         super(_ort, _von, _bis);
         miete = _miete;
-    }
-
-    @Override
-    public String toString()
-    {
-        return terminToString() + " " + miete + " Euro Miete";
     }
     
     public int getMiete()
     {
         return miete;
+    }
+
+    @Override
+    public String toString()
+    {
+        return super.toString() + " " + miete + " Euro Miete";
     }
 }

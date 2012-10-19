@@ -6,7 +6,7 @@ package com;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.util.GregorianCalendar;
 
 /**
  *
@@ -15,38 +15,30 @@ import java.util.Date;
 public abstract class Termin
 {    
     private String ort;
-    private Date von;
-    private Date bis;
-    private SimpleDateFormat sdf;
+    private GregorianCalendar von;
+    private GregorianCalendar bis;
     
-    public Termin(String _ort, String _von, String _bis)
+    public Termin(String _ort, GregorianCalendar _von, GregorianCalendar _bis)
     {
-        ort = _ort;
-        
-        try
-        {
-            sdf = new SimpleDateFormat("dd.MM.yyyy hh:mm");
-            von = sdf.parse(_von);
-            bis = sdf.parse(_bis);
-        }
-        catch(ParseException ex)
-        {
-            ex.printStackTrace();
-        }
+        ort = _ort;      
+        von = _von;
+        bis = _bis;
     }
     
-    public Date getVon()
+    public GregorianCalendar getVon()
     {
         return von;
     }
     
-    public Date getBis()
+    public GregorianCalendar getBis()
     {
         return bis;
     }
     
-    public String terminToString()
+    @Override
+    public String toString()
     {
+        SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy hh:mm");
         return ort + " " + sdf.format(von) + " - " + sdf.format(bis);
     }
 }

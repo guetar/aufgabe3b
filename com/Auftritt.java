@@ -4,6 +4,8 @@
  */
 package com;
 
+import java.util.GregorianCalendar;
+
 /**
  *
  * @author Matthias
@@ -12,20 +14,20 @@ public class Auftritt extends Termin
 {
     private int gage;
     
-    public Auftritt(String _ort, String _von, String _bis, int _gage)
+    public Auftritt(String _ort, GregorianCalendar _von, GregorianCalendar _bis, int _gage)
     {   
         super(_ort, _von, _bis);
         gage = _gage;
-    }
-
-    @Override
-    public String toString()
-    {
-        return terminToString() + " " + gage + " Euro Gage";
     }
     
     public int getGage()
     {
         return gage;
+    }
+
+    @Override
+    public String toString()
+    {
+        return super.toString() + " " + gage + " Euro Gage";
     }
 }

@@ -4,9 +4,7 @@
  */
 package com;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.util.GregorianCalendar;
 
 /**
  *
@@ -17,33 +15,24 @@ public class Mitglied
     private String name;
     private String tel;
     private String instrument;
-    private Date von;
-    private Date bis;
+    private GregorianCalendar von;
+    private GregorianCalendar bis;
     
-    public Mitglied(String _name, String _tel, String _instrument, String _von, String _bis)
+    public Mitglied(String _name, String _tel, String _instrument, GregorianCalendar _von, GregorianCalendar _bis)
     {
         name = _name;
         tel = _tel;
         instrument = _instrument;
-            
-        try
-        {
-            SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy");
-            von = sdf.parse(_von);
-            bis = sdf.parse(_bis);
-        }
-        catch (ParseException ex)
-        {
-            ex.printStackTrace();
-        }
+        von = _bis;
+        bis = _bis;
     }
     
-    public Date getVon()
+    public GregorianCalendar getVon()
     {
         return von;
     }
     
-    public Date getBis()
+    public GregorianCalendar getBis()
     {
         return bis;
     }
