@@ -14,16 +14,46 @@ public class Auftritt extends Termin {
 
     private int gage;
 
-    public Auftritt(Ort _ort, GregorianCalendar _von, String _dauer, int _gage) {
-        super(_ort, _von, _dauer);
+    /**
+     * Konstruktor
+     * 
+     * @param _ort Ort
+     * @param _datum Datum
+     * @param _dauer Dauer
+     * @param _gage Gage
+     */
+    public Auftritt(Ort _ort, GregorianCalendar _datum, String _dauer, int _gage) {
+        super(_ort, _datum, _dauer);
         gage = _gage;
     }
 
+    /**
+     * Aendert den derzeitigen Auftritt
+     * 
+     * @param _ort Ort
+     * @param _datum Datum
+     * @param _dauer Dauer
+     * @param _gage Gage
+     */
+    public void setDatum(Ort _ort, GregorianCalendar _datum, String _dauer, int _gage) {
+        super.setDatum(_ort, _datum, _dauer);
+        gage = _gage;
+    }
+
+    /**
+     * Getter für Gage
+     * 
+     * @return Gage
+     */
     public int getGage() {
         return gage;
     }
 
     @Override
+    /**
+     * Liefert die Daten des Auftritts als String getrennt durch Leerzeichen in
+     * der Reihenfolge: Ort, Datum, Dauer und Gage
+     */
     public String toString() {
         return super.toString() + " " + gage + " Euro Gage";
     }

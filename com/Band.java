@@ -4,8 +4,8 @@
  */
 package com;
 
-import java.util.GregorianCalendar;
 import java.util.ArrayList;
+import java.util.GregorianCalendar;
 
 /**
  *
@@ -17,7 +17,6 @@ public class Band {
     private ArrayList<Song> repertoire;
     private ArrayList<Termin> termine;
     private ArrayList<Termin> trash;
-    private ArrayList<Ort> orte;
 
     /**
      * Konstruktor
@@ -135,7 +134,7 @@ public class Band {
      */
     public void termin_hinzufuegen(Termin _t) {
         for (int i = 0; i < termine.size(); i++) {
-            if (_t.getDate().before(termine.get(i).getDate())) {
+            if (_t.getDatum().before(termine.get(i).getDatum())) {
                 termine.add(i, _t);
                 return;
             }
@@ -189,9 +188,9 @@ public class Band {
         ArrayList<Termin> termine_liste = new ArrayList<Termin>();
 
         for (Termin t : termine) {
-            if (_von.before(t.getDate()) && _bis.after(t.getDate())) {
+            if (_von.before(t.getDatum()) && _bis.after(t.getDatum())) {
                 termine_liste.add( t);
-            } else if (_bis.before(t.getDate())) {
+            } else if (_bis.before(t.getDatum())) {
                 break;
             }
         }
@@ -210,9 +209,9 @@ public class Band {
         ArrayList<Probe> proben_liste = new ArrayList<Probe>();
 
         for (Termin t : termine) {
-            if (t instanceof Probe && _von.before(t.getDate()) && _bis.after(t.getDate())) {
+            if (t instanceof Probe && _von.before(t.getDatum()) && _bis.after(t.getDatum())) {
                 proben_liste.add((Probe) t);
-            } else if (_bis.before(t.getDate())) {
+            } else if (_bis.before(t.getDatum())) {
                 break;
             }
         }
@@ -231,9 +230,9 @@ public class Band {
         ArrayList<Auftritt> auftritte_liste = new ArrayList<Auftritt>();
 
         for (Termin t : termine) {
-            if (t instanceof Auftritt && _von.before(t.getDate()) && _bis.after(t.getDate())) {
+            if (t instanceof Auftritt && _von.before(t.getDatum()) && _bis.after(t.getDatum())) {
                 auftritte_liste.add((Auftritt) t);
-            } else if (_bis.before(t.getDate())) {
+            } else if (_bis.before(t.getDatum())) {
                 break;
             }
         }
@@ -287,15 +286,6 @@ public class Band {
     public int gewinn_summieren(GregorianCalendar _von, GregorianCalendar _bis) {
         return umsatz_summieren(_von, _bis) - kosten_summieren(_von, _bis);
     }
-    
-    /**
-     * Fuegt einen Ort hinzu.
-     * 
-     * @param _o hinzuzufuegender Ort
-     */
-    public void ort_hinzufuegen(Ort _o) {
-        orte.add(_o);
-    }
 
     /**
      * liefert Liste mit Orten, die eine bestimmte Infrastruktur haben.
@@ -308,13 +298,13 @@ public class Band {
     public ArrayList<Ort> finde_ort(int _plaetze) {
         ArrayList<Ort> gef_orte = new ArrayList<Ort>();
         
-		for (Termin t : termine) {
-			Ort o = t.getOrt();
-			
-			if (o.getPlaetze() >= _plaetze) {
-				gef_orte.add(o);
-			}
-		}
+        for (Termin t : termine) {
+            Ort o = t.getOrt();
+
+            if (o.getPlaetze() >= _plaetze) {
+                    gef_orte.add(o);
+            }
+        }
 
         return gef_orte;
     }

@@ -16,6 +16,13 @@ public class Song
     private String laenge;
     private GregorianCalendar von;
     
+    /**
+     * Konstruktor
+     * 
+     * @param _name Name
+     * @param _laenge Laenge
+     * @param _von Entstehungsdatum
+     */
     public Song(String _name, String _laenge, GregorianCalendar _von)
     {
         name = _name;
@@ -23,12 +30,21 @@ public class Song
         von = _von;
     }
     
+    /**
+     * Getter fuers Entstehungsdatum
+     * 
+     * @return Entstehungsdatum
+     */
     public GregorianCalendar getVon()
     {
         return von;
     }
     
     @Override
+    /**
+     * Liefert die Daten des Songs als String getrennt durch Leerzeichen in
+     * der Reihenfolge: Name, Laenge
+     */
     public String toString()
     {
         return name + " " + laenge;

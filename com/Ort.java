@@ -38,9 +38,7 @@ public class Ort {
         name = _o.name;
         adresse = _o.adresse;
         plaetze = _o.plaetze;
-        
     }
-    
     
     /**
      * Liefert Anzahl der vorhandenen Zuschauerplaetze
@@ -53,7 +51,7 @@ public class Ort {
 
     @Override
     /**
-     * Liefert die Elemente des Ortes als String getrennt durch Leerzeichen in
+     * Liefert die Variablen des Ortes als String getrennt durch Leerzeichen in
      * der Reihenfolge: Name, Adresse und die Anzahl der Zuschauerplaetze
      */
     public String toString() {
