@@ -75,7 +75,5 @@ public class Test {
         System.out.println("Gesamtumsatz in diesem Zeitraum:" + b.umsatz_summieren(von, bis) + " Euro");
         System.out.println("Macht einen Gesamtgewinn von:" + b.gewinn_summieren(von, bis) + " Euro");
         System.out.println("");
-            
-        }
     }
 }
