@@ -42,10 +42,10 @@ public class Test {
         }
         System.out.println("");
 
-        b.termin_hinzufuegen(new Probe(new Ort("Musterstr. 23"), new GregorianCalendar(1995, 6, 5, 18, 0), new GregorianCalendar(1995, 6, 5), 5));
-        b.termin_hinzufuegen(new Probe(new Ort("Musterstr. 23"), new GregorianCalendar(1995, 6, 5, 18, 0), new GregorianCalendar(1995, 6, 5), 20));
-        b.termin_hinzufuegen(new Auftritt(new Ort("Stadthalle"), new GregorianCalendar(1995, 6, 5, 18, 0), new GregorianCalendar(1995, 6, 5), 500));
-        b.termin_hinzufuegen(new Auftritt(new Ort("Gasometer"), new GregorianCalendar(1995, 6, 5, 18, 0), new GregorianCalendar(1995, 6, 5), 800));
+        b.termin_hinzufuegen(new Probe(new Ort("Studio","Musterstr. 23", 8), new GregorianCalendar(1995, 6, 5, 18, 0), new GregorianCalendar(1995, 6, 5), 5));
+        b.termin_hinzufuegen(new Probe(new Ort("Garage","Maxerstr. 32", 4), new GregorianCalendar(1995, 7, 2, 18, 0), new GregorianCalendar(1995, 6, 5), 20));
+        b.termin_hinzufuegen(new Auftritt(new Ort("Stadthalle","Stadthallenstr.1",150), new GregorianCalendar(1995, 6, 5, 18, 0), new GregorianCalendar(1995, 6, 5), 500));
+        b.termin_hinzufuegen(new Auftritt(new Ort("Gasometer","Gasstr.666",3000), new GregorianCalendar(1995, 9, 3, 18, 0), new GregorianCalendar(1995, 6, 5), 800));
 
         ArrayList<? extends Termin> termine = b.termine_auflisten(von, bis);
 
@@ -76,8 +76,14 @@ public class Test {
         System.out.println("Macht einen Gesamtgewinn von:" + b.gewinn_summieren(von, bis) + " Euro");
         System.out.println("");
         
-        b.termin_loeschen(1) {
-            
+        System.out.println("Suche Orte mit mehr als 200 Plätze:");
+        System.out.println(b.finde_ort(200)+"\n");
+        
+        System.out.println("Suche Orte mit mehr als 3 Plätze:");
+        ArrayList<Ort> orte = b.finde_ort(3);
+        for (Ort o : orte) {
+        	System.out.println(o);
         }
+        System.out.println("\n");
     }
 }
