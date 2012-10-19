@@ -10,36 +10,32 @@ import java.util.GregorianCalendar;
  *
  * @author guetar
  */
-public class Mitglied
-{    
+public class Mitglied {
+
     private String name;
     private String tel;
     private String instrument;
     private GregorianCalendar von;
     private GregorianCalendar bis;
-    
-    public Mitglied(String _name, String _tel, String _instrument, GregorianCalendar _von, GregorianCalendar _bis)
-    {
+
+    public Mitglied(String _name, String _tel, String _instrument, GregorianCalendar _von, GregorianCalendar _bis) {
         name = _name;
         tel = _tel;
         instrument = _instrument;
         von = _bis;
         bis = _bis;
     }
-    
-    public GregorianCalendar getVon()
-    {
+
+    public GregorianCalendar getVon() {
         return von;
     }
-    
-    public GregorianCalendar getBis()
-    {
+
+    public GregorianCalendar getBis() {
         return bis;
     }
-    
+
     @Override
-    public String toString()
-    {
+    public String toString() {
         return name + " " + tel + " " + instrument;
     }
 }

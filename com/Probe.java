@@ -10,24 +10,26 @@ import java.util.GregorianCalendar;
  *
  * @author Matthias
  */
-public class Probe extends Termin
-{
+public class Probe extends Termin {
+
     private int miete;
-    
-    public Probe(String _ort, GregorianCalendar _von, GregorianCalendar _bis, int _miete)
-    {
+
+    public Probe(String _ort, GregorianCalendar _von, GregorianCalendar _bis, int _miete) {
         super(_ort, _von, _bis);
         miete = _miete;
     }
-    
-    public int getMiete()
-    {
+
+    public void setDate(String _ort, GregorianCalendar _von, GregorianCalendar _bis, int _miete) {
+        super.setDate(_ort, _von, _bis);
+        miete = _miete;
+    }
+
+    public int getMiete() {
         return miete;
     }
 
     @Override
-    public String toString()
-    {
+    public String toString() {
         return super.toString() + " " + miete + " Euro Miete";
     }
 }
