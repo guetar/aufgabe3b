@@ -19,6 +19,9 @@ public class Band {
     private ArrayList<Ort> orte;
     private ArrayList<Termin> trash;
 
+    /**
+     * Konstruktor
+     */
     public Band() {
         mitglieder = new ArrayList<Mitglied>();
         repertoire = new ArrayList<Song>();
@@ -26,20 +29,39 @@ public class Band {
     }
 
     // Mitglieder
+    
+    /**
+     * Fügt der Band ein Mitglied hinzu.
+     * @param _m hinzuzufuegendes Mitglied
+     */
     public void mitglied_hinzufuegen(Mitglied _m) {
         mitglieder.add(_m);
     }
 
+    /**
+     * 
+     * @param _m zu entferndenes Mitglied
+     */
     public void mitglied_entfernen(Mitglied _m) {
         if (mitglieder.contains(_m)) {
             mitglieder.remove(_m);
         }
     }
 
+    /**
+     * 
+     * @return Mitglieder
+     */
     public ArrayList<Mitglied> mitglieder_auflisten() {
         return mitglieder;
     }
 
+    /**
+     * 
+     * @param _von Beginn der gesuchten Zeitspanne
+     * @param _bis Ende der gesuchten Zeitspanne
+     * @return 
+     */
     public ArrayList<Mitglied> mitglieder_auflisten(GregorianCalendar _von, GregorianCalendar _bis) {
         ArrayList<Mitglied> mitglieder_liste = new ArrayList<Mitglied>();
 
@@ -53,20 +75,38 @@ public class Band {
     }
 
     // Repertoire
+    
+    /**
+     * 
+     * @param _s hinzuzufuegender Song
+     */
     public void song_hinzufuegen(Song _s) {
         repertoire.add(_s);
     }
 
+    /**
+     * 
+     * @param _s zu entfernender Song
+     */
     public void song_entfernen(Song _s) {
         if (repertoire.contains(_s)) {
             repertoire.remove(_s);
         }
     }
 
+    /**
+     * 
+     * @return Repertoire
+     */
     public ArrayList<Song> songs_auflisten() {
         return repertoire;
     }
 
+    /**
+     * 
+     * @param _von gesuchter Zeitpunkt
+     * @return Repertoire ab gesuchtem Zeitpunkt
+     */
     public ArrayList<Song> songs_auflisten(GregorianCalendar _von) {
         ArrayList<Song> repertoire_liste = new ArrayList<Song>();
 
@@ -80,6 +120,11 @@ public class Band {
     }
 
     // Termine
+    
+    /**
+     * 
+     * @param _t hinzuzufuegender Termin
+     */
     public void termin_hinzufuegen(Termin _t) {
         for (int i = 0; i < termine.size(); i++) {
             if (_t.getVon().before(termine.get(i).getVon())) {
@@ -88,6 +133,39 @@ public class Band {
             }
         }
         termine.add(_t);
+    }
+    
+    /**
+     * 
+     * @param _alt
+     * @param _neu 
+     */
+    public void termin_aendern(Termin _alt, Termin _neu) {
+        if(termine.contains(_alt)) {
+            
+        }
+    }
+    
+    /**
+     * Löscht einen Termin
+     *
+     * @param t die gelöschten Termine
+     */
+    public void termin_loeschen(Termin t) {
+        if(termine.contains(t)) {
+            termine.remove(t);
+        }
+        if(!trash.contains(t)) {
+            trash.add(t);
+        }
+    }
+    
+    /**
+     * 
+     * @return trash die Elemente des Mistkübels 
+     */
+    public ArrayList<Termin> trash_auflisten() {
+        return trash;
     }
 
     public ArrayList<? extends Termin> termine_auflisten(GregorianCalendar _von, GregorianCalendar _bis) {
@@ -157,30 +235,28 @@ public class Band {
     public int gewinn_summieren(GregorianCalendar _von, GregorianCalendar _bis) {
         return umsatz_summieren(_von, _bis) - kosten_summieren(_von, _bis);
     }
+    
+    public void ort_hinzufuegen(Ort _o) {
+        orte.add(_o);
+    }
 
     /**
      * liefert Liste mit Orten, die eine bestimmte Infrastruktur haben.
      *
-     * @param zplaetze Gesuchte Anzahl an ZuschauerplÃ¤tzen(oder 0, wenn egal)
-     * @param asteckdosen Gesuchte Anzahl an Steckdosen(oder 0, wenn egal)
-     * @param catering true setzen,wenn Catering vorhanden sein soll, false,
-     * wenn egal
+     * @param plaetze Gesuchte Anzahl an Zuschauerplaetzen(oder 0, wenn egal)
+     * 
      * @return die Orte, die die bestimmte Infrastruktur haben. null, wenn kein
      * Ort die Voraussetzungen erfuellt.
      */
-    public ArrayList<Ort> finde_Ort(int zplaetze, int asteckdosen, boolean catering) {
-        ArrayList<Ort> geforte = new ArrayList<Ort>();
+    public ArrayList<Ort> finde_ort(int _plaetze) {
+        ArrayList<Ort> gef_orte = new ArrayList<Ort>();
+        
         for (Ort o : orte) {
-            if (!catering || (catering && o.hatCatering())) {
-                if (o.getAnzSteckdosen() >= asteckdosen && o.getAnzZuschauerPl() >= zplaetze) {
-                    geforte.add(o);
-                }
+        if (o.getPlaetze() >= _plaetze) {
+                gef_orte.add(o);
             }
         }
-        if (geforte.isEmpty()) {
-            return null;
-        }
 
-        return geforte;
+        return gef_orte;
     }
 }

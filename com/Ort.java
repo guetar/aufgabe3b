@@ -12,9 +12,7 @@ public class Ort {
 
     private String name;
     private String adresse;
-    private int zplaetze;
-    private int asteckdosen;
-    private boolean catering;
+    private int plaetze;
 
     /**
      * erzeugt ein neues Ort Objekt
@@ -25,48 +23,39 @@ public class Ort {
      * @param asteckdosen Anzahl der vorhandenen Steckdosen
      * @param catering true, wenn Catering vorhanden ist
      */
-    public Ort(String name, String adresse, int zplaetze, int asteckdosen, boolean catering) {
-        this.name = name;
-        this.adresse = adresse;
-        this.asteckdosen = asteckdosen;
-        this.zplaetze = zplaetze;
-        this.catering = catering;
+    public Ort(String _name, String _adresse, int _plaetze) {
+        name = _name;
+        adresse = _adresse;
+        plaetze = _plaetze;
     }
-
-    /**
-     *
-     * @return true, wenn der Ort ein Catering besitzt
-     */
-    public boolean hatCatering() {
-        return catering;
+    
+    public Ort (Ort _o) {
+        name = _o.name;
+        adresse = _o.adresse;
+        plaetze = _o.plaetze;
+        
     }
-
-    /**
-     * Liefert Anzahl der vorhandenen Steckdosen
-     *
-     * @return die Anzahl der vorhandenen Steckdosen
-     */
-    public int getAnzSteckdosen() {
-        return asteckdosen;
+    
+    public Ort(String _name) {
+        name = _name;
     }
-//push test
     
     /**
-     * Liefert Anzahl der vorhandenen Zuschauerplätze
+     * Liefert Anzahl der vorhandenen Zuschauerplaetze
      *
      * @return die Anzahl der vorhandenen Zuschauerplätze
      */
-    public int getAnzZuschauerPl() {
-        return zplaetze;
+    public int getPlaetze() {
+        return plaetze;
     }
 
     @Override
     /**
      * Liefert die Elemente des Ortes als String getrennt durch Leerzeichen in
-     * der Reihenfolge: Name, Adresse, Anzahl der Zuschauerplätze, Anzahl der
+     * der Reihenfolge: Name, Adresse, Anzahl der Zuschauerplaetze, Anzahl der
      * Steckdosen, besitzt Catering
      */
     public String toString() {
-        return name + " " + adresse + " " + zplaetze + " " + asteckdosen + " " + (catering ? "hat Catering" : "hat kein Catering");
+        return name + " " + adresse + " " + plaetze;
     }
 }

@@ -13,17 +13,21 @@ import java.util.GregorianCalendar;
  */
 public abstract class Termin {
 
-    private String ort;
+    private Ort ort;
     private GregorianCalendar von;
     private GregorianCalendar bis;
 
-    public Termin(String _ort, GregorianCalendar _von, GregorianCalendar _bis) {
+    public Termin(Ort _ort, GregorianCalendar _von, GregorianCalendar _bis) {
         ort = _ort;
         von = _von;
         bis = _bis;
     }
+    
+    public Termin(Termin _t) {
+        ort = new Ort(_t.getOrt());
+    }
 
-    public void setDate(String _ort, GregorianCalendar _von, GregorianCalendar _bis) {
+    public void setDate(Ort _ort, GregorianCalendar _von, GregorianCalendar _bis) {
         ort = _ort;
         von = _von;
         bis = _bis;
@@ -35,6 +39,10 @@ public abstract class Termin {
 
     public GregorianCalendar getBis() {
         return bis;
+    }
+    
+    public Ort getOrt() {
+        return ort;
     }
 
     @Override

@@ -42,10 +42,10 @@ public class Test {
         }
         System.out.println("");
 
-        b.termin_hinzufuegen(new Probe("Musterstr. 23", new GregorianCalendar(1995, 6, 5, 18, 0), new GregorianCalendar(1995, 6, 5), 5));
-        b.termin_hinzufuegen(new Probe("Musterstr. 23", new GregorianCalendar(1995, 6, 5, 18, 0), new GregorianCalendar(1995, 6, 5), 20));
-        b.termin_hinzufuegen(new Auftritt("Stadthalle", new GregorianCalendar(1995, 6, 5, 18, 0), new GregorianCalendar(1995, 6, 5), 500));
-        b.termin_hinzufuegen(new Auftritt("Gasometer", new GregorianCalendar(1995, 6, 5, 18, 0), new GregorianCalendar(1995, 6, 5), 800));
+        b.termin_hinzufuegen(new Probe(new Ort("Musterstr. 23"), new GregorianCalendar(1995, 6, 5, 18, 0), new GregorianCalendar(1995, 6, 5), 5));
+        b.termin_hinzufuegen(new Probe(new Ort("Musterstr. 23"), new GregorianCalendar(1995, 6, 5, 18, 0), new GregorianCalendar(1995, 6, 5), 20));
+        b.termin_hinzufuegen(new Auftritt(new Ort("Stadthalle"), new GregorianCalendar(1995, 6, 5, 18, 0), new GregorianCalendar(1995, 6, 5), 500));
+        b.termin_hinzufuegen(new Auftritt(new Ort("Gasometer"), new GregorianCalendar(1995, 6, 5, 18, 0), new GregorianCalendar(1995, 6, 5), 800));
 
         ArrayList<? extends Termin> termine = b.termine_auflisten(von, bis);
 
@@ -75,5 +75,9 @@ public class Test {
         System.out.println("Gesamtumsatz in diesem Zeitraum:" + b.umsatz_summieren(von, bis) + " Euro");
         System.out.println("Macht einen Gesamtgewinn von:" + b.gewinn_summieren(von, bis) + " Euro");
         System.out.println("");
+        
+        b.termin_loeschen(1) {
+            
+        }
     }
 }
