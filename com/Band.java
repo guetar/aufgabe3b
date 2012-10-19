@@ -242,12 +242,14 @@ public class Band {
      * 
      * @return die Orte, die die bestimmte Infrastruktur haben. null, wenn kein
      * Ort die Voraussetzungen erfuellt.
+     * 
      */
     public ArrayList<Ort> finde_ort(int _plaetze) {
         ArrayList<Ort> gef_orte = new ArrayList<Ort>();
         
 		for (Termin t : termine) {
 			Ort o = t.getOrt();
+			
 			if (o.getPlaetze() >= _plaetze) {
 				gef_orte.add(o);
 			}

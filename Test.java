@@ -76,14 +76,15 @@ public class Test {
         System.out.println("Macht einen Gesamtgewinn von:" + b.gewinn_summieren(von, bis) + " Euro");
         System.out.println("");
         
-        System.out.println("Suche Orte mit mehr als 200 Plätze:");
+        System.out.println("Suche Orte mit mehr als 200 Plätze: ");
         System.out.println(b.finde_ort(200)+"\n");
         
-        System.out.println("Suche Orte mit mehr als 3 Plätze:");
+        System.out.println("Suche Orte mit mehr als 3 Plätze: ");
         ArrayList<Ort> orte = b.finde_ort(3);
         for (Ort o : orte) {
         	System.out.println(o);
         }
-        System.out.println("\n");
+        
+        System.out.println("\n"); 
     }
 }
