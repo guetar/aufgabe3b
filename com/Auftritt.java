@@ -14,8 +14,8 @@ public class Auftritt extends Termin {
 
     private int gage;
 
-    public Auftritt(Ort _ort, GregorianCalendar _von, GregorianCalendar _bis, int _gage) {
-        super(_ort, _von, _bis);
+    public Auftritt(Ort _ort, GregorianCalendar _von, String _dauer, int _gage) {
+        super(_ort, _von, _dauer);
         gage = _gage;
     }
 

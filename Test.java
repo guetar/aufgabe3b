@@ -42,10 +42,10 @@ public class Test {
         }
         System.out.println("");
 
-        b.termin_hinzufuegen(new Probe(new Ort("Studio","Musterstr. 23", 8), new GregorianCalendar(1995, 6, 5, 18, 0), new GregorianCalendar(1995, 6, 5), 5));
-        b.termin_hinzufuegen(new Probe(new Ort("Garage","Maxerstr. 32", 4), new GregorianCalendar(1995, 7, 2, 18, 0), new GregorianCalendar(1995, 6, 5), 20));
-        b.termin_hinzufuegen(new Auftritt(new Ort("Stadthalle","Stadthallenstr.1",150), new GregorianCalendar(1995, 6, 5, 18, 0), new GregorianCalendar(1995, 6, 5), 500));
-        b.termin_hinzufuegen(new Auftritt(new Ort("Gasometer","Gasstr.666",3000), new GregorianCalendar(1995, 9, 3, 18, 0), new GregorianCalendar(1995, 6, 5), 800));
+        b.termin_hinzufuegen(new Probe(new Ort("Studio","Musterstr. 23", 8), new GregorianCalendar(1995, 6, 5, 18, 0), "2:30", 30));
+        b.termin_hinzufuegen(new Probe(new Ort("Garage","Maxerstr. 32", 4), new GregorianCalendar(1995, 7, 2, 18, 0), "3:00", 100));
+        b.termin_hinzufuegen(new Auftritt(new Ort("Stadthalle","Stadthallenstr.1",150), new GregorianCalendar(1995, 6, 5, 18, 0), "1:30", 500));
+        b.termin_hinzufuegen(new Auftritt(new Ort("Gasometer","Gasstr.666",3000), new GregorianCalendar(1995, 9, 3, 18, 0), "2:00", 800));
 
         ArrayList<? extends Termin> termine = b.termine_auflisten(von, bis);
 
@@ -84,7 +84,6 @@ public class Test {
         for (Ort o : orte) {
         	System.out.println(o);
         }
-        
         System.out.println("\n"); 
     }
 }

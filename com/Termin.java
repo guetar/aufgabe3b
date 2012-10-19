@@ -14,31 +14,32 @@ import java.util.GregorianCalendar;
 public abstract class Termin {
 
     private Ort ort;
-    private GregorianCalendar von;
-    private GregorianCalendar bis;
+    private GregorianCalendar date;
+    private String dauer;
 
-    public Termin(Ort _ort, GregorianCalendar _von, GregorianCalendar _bis) {
+
+    public Termin(Ort _ort, GregorianCalendar _date, String _dauer) {
         ort = _ort;
-        von = _von;
-        bis = _bis;
+        date = _date;
+        dauer = _dauer;
     }
     
     public Termin(Termin _t) {
         ort = new Ort(_t.getOrt());
     }
 
-    public void setDate(Ort _ort, GregorianCalendar _von, GregorianCalendar _bis) {
+    public void setDate(Ort _ort, GregorianCalendar _date, String _dauer) {
         ort = _ort;
-        von = _von;
-        bis = _bis;
+        date = _date;
+        dauer = _dauer;
     }
 
-    public GregorianCalendar getVon() {
-        return von;
+    public GregorianCalendar getDate() {
+        return date;
     }
 
-    public GregorianCalendar getBis() {
-        return bis;
+    public String getDauer() {
+        return dauer;
     }
     
     public Ort getOrt() {
@@ -48,6 +49,6 @@ public abstract class Termin {
     @Override
     public String toString() {
         SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy hh:mm");
-        return ort + " " + sdf.format(von.getTime()) + " - " + sdf.format(bis.getTime());
+        return ort + " " + sdf.format(date.getTime()) + " - " + dauer;
     }
 }
