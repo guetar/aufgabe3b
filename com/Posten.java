@@ -61,9 +61,9 @@ public class Posten implements Comparable<Posten> {
     
     @Override
     /**
-     * Eigene CompareTo Methode um zwei Termine zu vergleichen
+     * Eigene CompareTo Methode um zwei Posten zu vergleichen
      * 
-     * @param t Vergleichstermin
+     * @param t Vergleichsposten
      * @return 
      */
     public int compareTo(Posten p) {

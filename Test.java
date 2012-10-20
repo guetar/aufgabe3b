@@ -52,10 +52,16 @@ public class Test {
         Song love = new Song("I love you", "04:33", new GregorianCalendar(2012, 2, 2));
         Song nolove = new Song("I loved you but now I love another woman", "03:22", new GregorianCalendar(2012, 2, 4));
         
-        b.song_hinzufuegen(love);
-        b.song_hinzufuegen(nolove);
+        andreas.addSong(love);
+        andreas.addSong(nolove);
         
-        ArrayList<Song> repertoire = b.songs_auflisten();
+        Song herzschmerz = new Song("Mein Herz tut mir so weh!", "03:55", new GregorianCalendar(2012, 4, 4));
+        Song beileid = new Song("Mein Beieid!", "05:20", new GregorianCalendar(2012, 6, 6));
+        
+        michael.addSong(herzschmerz);
+        michael.addSong(beileid);
+        
+        ArrayList<Song> repertoire = b.songs_auflisten(new GregorianCalendar(2004, 8, 8));
 
         System.out.println("Auflistung des Repertoires:");
         for (Song s : repertoire) {

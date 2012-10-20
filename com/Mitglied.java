@@ -18,6 +18,7 @@ public class Mitglied {
     private String instrument;
     private GregorianCalendar von;
     private GregorianCalendar bis;
+    private ArrayList<Song> repertoire;
     private ArrayList<String> messages;
 
     /**
@@ -35,6 +36,7 @@ public class Mitglied {
         this.von = bis;
         this.bis = bis;
         this.instrument = instrument;
+        this.repertoire = new ArrayList<Song>();
         this.messages = new ArrayList<String>();
     }
     
@@ -55,6 +57,23 @@ public class Mitglied {
      */
     public ArrayList<String> getMessages() {
         return messages;
+    }
+    
+    /**
+     * Fuegt dem Repertoire des Mitglieds einen Song hinzu.
+     * 
+     * @param s hinzuzufuegender Song
+     * @return Erfolg
+     */
+    public Boolean addSong(Song s) {
+        return repertoire.add(s);
+    }
+    
+    /**
+     * Gibt das Repertoire des Mitglieds zurück
+     */
+    public ArrayList<Song> getRepertoire() {
+        return repertoire;
     }
 
     /**
