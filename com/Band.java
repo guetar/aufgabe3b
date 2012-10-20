@@ -19,6 +19,7 @@ public class Band {
     private ArrayList<Song> repertoire;
     private TreeSet<Termin> termine;
     private LinkedList<Termin> trash;
+    private Bilanz bilanz;
 
     /**
      * Konstruktor
@@ -28,6 +29,7 @@ public class Band {
         repertoire = new ArrayList<Song>();
         termine = new TreeSet<Termin>();
         trash = new LinkedList<Termin>();
+        bilanz=new Bilanz();
     }
 
     // Mitglieder
@@ -130,6 +132,16 @@ public class Band {
         return repertoire_liste;
     }
 
+    /**
+     * Fügt einen Posten hinzu
+     *
+     * @param p hinzuzufuegender Posten
+     */
+    public void posten_hinzufuegen(Posten p) {
+        bilanz.addPosten(p);
+    }
+  
+    
     // Termine
     
     /**
@@ -138,6 +150,9 @@ public class Band {
      * @param t hinzuzufuegender Termin
      */
     public Boolean termin_hinzufuegen(Termin t) {
+        int wert=(t instanceof Auftritt)?((Auftritt) t).getGage():((Probe) t).getMiete();
+        String beschr=(t instanceof Auftritt)?"Auftritt":"Probe";
+        bilanz.addPosten(new Posten(wert,beschr,t.getDatum(),t));
         return termine.add(t);
     }
     
