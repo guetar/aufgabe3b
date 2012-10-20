@@ -4,8 +4,8 @@
  */
 package com;
 
-import java.util.ArrayList;
 import java.util.GregorianCalendar;
+import java.util.TreeSet;
 
 /**
  *
@@ -13,27 +13,23 @@ import java.util.GregorianCalendar;
  */
 public class Bilanz {
 
-    private ArrayList<Posten> posten;
+    private TreeSet<Posten> posten;
 
     /**
      * Konstruktor
      */
     public Bilanz() {
+        posten = new TreeSet<Posten>();
     }
 
     /**
      * Fügt der Bilanz einen neuen Posten hinzu
      *
-     * @param p
+     * @param p Bilanzposten
+     * @return Erfolg
      */
-    public void addPosten(Posten p) {
-        for (int i = 0; i < posten.size(); i++) {
-            if (p.getDatum().before(posten.get(i).getDatum())) {
-                posten.add(i, p);
-                return;
-            }
-        }
-        posten.add(p);
+    public Boolean addPosten(Posten p) {
+        return posten.add(p);
     }
 
     /**
@@ -48,7 +44,7 @@ public class Bilanz {
      */
     public int sumKosten(boolean showProben,boolean showSonstige, GregorianCalendar von, GregorianCalendar bis) {
         int kosten = 0;
-        ArrayList<Posten> list = listBilanz(false,showProben,showSonstige, von, bis);
+        TreeSet<Posten> list = listBilanz(false,showProben,showSonstige, von, bis);
 
         for (Posten p : list) {
             if (p.getWert() < 0) {
@@ -71,7 +67,7 @@ public class Bilanz {
      */
     public int sumUmsatz(boolean showAuftr, boolean showSonstige, GregorianCalendar von, GregorianCalendar bis) {
         int umsatz = 0;
-        ArrayList<Posten> list = listBilanz(showAuftr, false,showSonstige, von, bis);
+        TreeSet<Posten> list = listBilanz(showAuftr, false,showSonstige, von, bis);
 
         for (Posten p : list) {
             if (p.getWert() > 0) {
@@ -94,7 +90,7 @@ public class Bilanz {
      */
     public int sumGewinn(boolean showAuftr, boolean showProben,boolean showSonstige, GregorianCalendar von, GregorianCalendar bis) {
         int gewinn = 0;
-        ArrayList<Posten> list = listBilanz(showAuftr,showProben,showSonstige, von, bis);
+        TreeSet<Posten> list = listBilanz(showAuftr,showProben,showSonstige, von, bis);
 
         for (Posten p : list) {
             gewinn += p.getWert();
@@ -113,8 +109,8 @@ public class Bilanz {
      * @param bis Ende des Intervalls
      * @return Liste mit Posten der angegebenen Typen im Zeitraum "von"-"bis"
      */
-    public ArrayList<Posten> listBilanz(boolean showAuftr, boolean showProben,boolean showSonstige,GregorianCalendar von, GregorianCalendar bis) {
-        ArrayList<Posten> list = new ArrayList<Posten>();
+    public TreeSet<Posten> listBilanz(boolean showAuftr, boolean showProben,boolean showSonstige,GregorianCalendar von, GregorianCalendar bis) {
+        TreeSet<Posten> list = new TreeSet<Posten>();
 
         for (Posten p : posten) {
             //Ueberpruefung des Datums

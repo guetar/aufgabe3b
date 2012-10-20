@@ -37,6 +37,12 @@ public class Auftritt extends Termin {
         this.gage = a.getGage();
     }
     
+    /**
+     * Aendert die Daten des aktuellen Auftritts
+     * 
+     * @param a neue Daten
+     * @return 
+     */
     public Auftritt setAuftritt(Auftritt a) {
         super.pushToStack(new Auftritt(this));
         super.setTermin(a);

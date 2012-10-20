@@ -38,6 +38,7 @@ public class Band {
      * Fuegt der Band ein Mitglied hinzu.
      * 
      * @param m hinzuzufuegendes Mitglied
+     * @return Erfolg
      */
     public Boolean mitglied_hinzufuegen(Mitglied m) {
         return mitglieder.add(m);
@@ -47,6 +48,7 @@ public class Band {
      * Entfernt ein Mitglied aus der Band.
      * 
      * @param m zu entferndenes Mitglied
+     * @return Erfolg
      */
     public Boolean mitglied_entfernen(Mitglied m) {
         if (mitglieder.contains(m)) {
@@ -89,6 +91,7 @@ public class Band {
      * Fuegt dem Repertoire der Band einen Song hinzu.
      * 
      * @param s hinzuzufuegender Song
+     * @return Erfolg
      */
     public Boolean song_hinzufuegen(Song s) {
         return repertoire.add(s);
@@ -98,6 +101,7 @@ public class Band {
      * Entfernt einen Song aus dem Repertoire der Band.
      * 
      * @param s zu entfernender Song
+     * @return Erfolg
      */
     public Boolean song_entfernen(Song s) {
         if (repertoire.contains(s)) {
@@ -107,6 +111,7 @@ public class Band {
     }
 
     /**
+     * Listet das Repertoire der Band
      * 
      * @return Repertoire
      */
@@ -133,14 +138,14 @@ public class Band {
     }
 
     /**
-     * Fügt einen Posten hinzu
+     * Fügt einen neuen Bilanzposten hinzu
      *
      * @param p hinzuzufuegender Posten
+     * @return Erfolg
      */
-    public void posten_hinzufuegen(Posten p) {
-        bilanz.addPosten(p);
+    public Boolean posten_hinzufuegen(Posten p) {
+        return bilanz.addPosten(p);
     }
-  
     
     // Termine
     
@@ -148,11 +153,12 @@ public class Band {
      * Fügt einen Termin hinzu.
      * 
      * @param t hinzuzufuegender Termin
+     * @return Erfolg
      */
     public Boolean termin_hinzufuegen(Termin t) {
-        int wert=(t instanceof Auftritt)?((Auftritt) t).getGage():((Probe) t).getMiete();
-        String beschr=(t instanceof Auftritt)?"Auftritt":"Probe";
-        bilanz.addPosten(new Posten(wert,beschr,t.getDatum(),t));
+        int wert = (t instanceof Auftritt) ? ((Auftritt) t).getGage() : ((Probe) t).getMiete();
+        String beschr = (t instanceof Auftritt) ? "Auftritt" : "Probe";
+        bilanz.addPosten(new Posten(wert, beschr, t.getDatum(), t));
         return termine.add(t);
     }
     
@@ -160,16 +166,29 @@ public class Band {
      * Aendert einen bereits vorhandenen Termin und speichert dessen alte Version.
      * 
      * @param alt zu aendernder Termin
-     * @param neu 
+     * @param neu neuer Termin
+     * @return Erfolg
      */
     public Boolean termin_aendern(Termin alt, Termin neu) {
         if(termine.contains(alt)) {
+            
             if(alt instanceof Probe) {
+                
                 Probe p = (Probe) alt;
                 p.setProbe((Probe) neu);
+                
+                for(Mitglied m : mitglieder) {
+                    m.message("Folgende Probe wurde geändert:" + p.toString());
+                }
+                
             } else if (alt instanceof Auftritt) {
+                
                 Auftritt a = (Auftritt) alt;
                 a.setAuftritt((Auftritt) neu);
+                
+                for(Mitglied m : mitglieder) {
+                    m.message("Folgender Auftritt wurde geändert:" + a.toString());
+                }
             }
             return true;
         }
@@ -180,11 +199,16 @@ public class Band {
      * Loescht einen Termin
      *
      * @param t die geloeschten Termine
+     * @return Erfolg
      */
     public Boolean termin_loeschen(Termin t) {
         if(termine.contains(t)) {
             trash.add(t);
             termine.remove(t);
+            
+            for(Mitglied m : mitglieder) {
+                m.message("Folgender Termin wurde abgesagt:" + t.toString());
+            }
             return true;
         }
         return false;
@@ -194,6 +218,7 @@ public class Band {
      * Stellt einen Termin wieder her
      * 
      * @param t der wiederherzustellende Termin
+     * @return Erfolg
      */
     public Boolean termin_wiederherstellen(Termin t) {
         Termin alt = t.popFromStack();

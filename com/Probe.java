@@ -27,6 +27,11 @@ public class Probe extends Termin {
         this.miete = miete;
     }
     
+    /**
+     * Aendert die derzeitige Probe und wirft die alte auf den Stack
+     * 
+     * @param a neue Probe
+     */
     public Probe(Probe p) {
         super(p);
         this.miete = p.getMiete();

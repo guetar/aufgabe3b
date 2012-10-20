@@ -10,7 +10,7 @@ import java.util.GregorianCalendar;
  *
  * @author Matthias
  */
-public class Posten {
+public class Posten implements Comparable<Posten> {
 
     private int wert;
     private String beschreibung;
@@ -40,7 +40,7 @@ public class Posten {
      * @return Datum des Postens
      */
     public GregorianCalendar getDatum(){
-    return datum;
+        return datum;
     }
     
     /**
@@ -48,7 +48,7 @@ public class Posten {
      * @return Wert des Postens
      */
     public int getWert(){
-    return wert;
+        return wert;
     }
     
     /**
@@ -56,6 +56,22 @@ public class Posten {
      * @return Beschreibung des Postens
      */
     public String getBeschr(){
-    return beschreibung;
+        return beschreibung;
+    }
+    
+    @Override
+    /**
+     * Eigene CompareTo Methode um zwei Termine zu vergleichen
+     * 
+     * @param t Vergleichstermin
+     * @return 
+     */
+    public int compareTo(Posten p) {
+        if(this.getDatum().before(p.getDatum())) {
+            return -1;
+        } else if(this.getDatum().after(p.getDatum())) {
+            return 1;
+        }
+        return 0;
     }
 }

@@ -4,6 +4,7 @@
  */
 package com;
 
+import java.util.ArrayList;
 import java.util.GregorianCalendar;
 
 /**
@@ -17,6 +18,7 @@ public class Mitglied {
     private String instrument;
     private GregorianCalendar von;
     private GregorianCalendar bis;
+    private ArrayList<String> messages;
 
     /**
      * Konstruktor
@@ -30,9 +32,20 @@ public class Mitglied {
     public Mitglied(String name, String tel, String instrument, GregorianCalendar von, GregorianCalendar bis) {
         this.name = name;
         this.tel = tel;
-        this.instrument = instrument;
         this.von = bis;
         this.bis = bis;
+        this.instrument = instrument;
+        this.messages = new ArrayList<String>();
+    }
+    
+    /**
+     * Speichert die Nachrichten zu Terminaenderungen, die das Mitglied betreffen
+     * 
+     * @param m Nachricht
+     * @return Erfolg
+     */
+    public Boolean message(String m) {
+        return messages.add(m);
     }
 
     /**
