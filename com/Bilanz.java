@@ -114,7 +114,7 @@ public class Bilanz {
      * @return Liste mit Posten der angegebenen Typen im Zeitraum "von"-"bis"
      */
     public ArrayList<Posten> listBilanz(boolean showAuftr, boolean showProben,boolean showSonstige,GregorianCalendar von, GregorianCalendar bis) {
-        ArrayList<Posten> list = new ArrayList<>();
+        ArrayList<Posten> list = new ArrayList<Posten>();
 
         for (Posten p : posten) {
             //Ueberpruefung des Datums

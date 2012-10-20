@@ -149,9 +149,13 @@ public class Band {
      */
     public Boolean termin_aendern(Termin alt, Termin neu) {
         if(termine.contains(alt)) {
-            termine.remove(alt);
-            alt = alt.setTermin(neu);
-            termine.add(alt);
+            if(alt instanceof Probe) {
+                Probe p = (Probe) alt;
+                p.setProbe((Probe) neu);
+            } else if (alt instanceof Auftritt) {
+                Auftritt a = (Auftritt) alt;
+                a.setAuftritt((Auftritt) neu);
+            }
             return true;
         }
         return false;
@@ -180,12 +184,11 @@ public class Band {
         Termin alt = t.popFromStack();
         
         if(alt != null) {
-            termine.remove(t);
-            termine.add(alt);
+            // Eine alte Version des Termins lag am Stack => wird wiederhergestellt
+            t.setTermin(alt);
             return true;
         } else {
-            // keine alte Version vorhanden =>
-            // Termin muss geloescht worden sein
+            // keine alte Version vorhanden => Termin muss geloescht worden sein
             if(trash.contains(t)) {
                 trash.remove(t);
                 termine.add(t);

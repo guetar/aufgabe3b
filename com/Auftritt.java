@@ -32,10 +32,15 @@ public class Auftritt extends Termin {
      * 
      * @param a neuer Auftritt
      */
-    public Auftritt Auftritt(Auftritt a) {
-        super.pushToStack(this);
+    public Auftritt(Auftritt a) {
+        super(a);
+        this.gage = a.getGage();
+    }
+    
+    public Auftritt setAuftritt(Auftritt a) {
+        super.pushToStack(new Auftritt(this));
         super.setTermin(a);
-        gage = a.getGage();
+        this.gage = a.getGage();
         return this;
     }
 

@@ -124,6 +124,7 @@ public class Test {
         
         b.termin_wiederherstellen(p1);
         b.termin_wiederherstellen(p3);
+        b.termin_wiederherstellen(p4);
         
         termine = b.termine_auflisten(von, bis);
 

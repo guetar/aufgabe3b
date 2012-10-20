@@ -32,6 +32,17 @@ public abstract class Termin implements Comparable<Termin> {
         this.dauer = dauer;
         this.stack = new Stack<Termin>();
     }
+    
+    /**
+     * Kopierkonstruktor
+     * 
+     * @param t zu kopierender Termin
+     */
+    public Termin(Termin t) {
+        this.ort = t.getOrt();
+        this.datum = t.getDatum();
+        this.dauer = t.getDauer();
+    }
 
     /**
      * Aendert den derzeitigen Termin
@@ -41,10 +52,9 @@ public abstract class Termin implements Comparable<Termin> {
      * @param dauer Dauer
      */
     protected Termin setTermin(Termin t) {
-        stack.push(t);
-        ort = t.getOrt();
-        datum = t.getDatum();
-        dauer = t.getDauer();
+        this.ort = t.getOrt();
+        this.datum = t.getDatum();
+        this.dauer = t.getDauer();
         return this;
     }
 
@@ -91,9 +101,7 @@ public abstract class Termin implements Comparable<Termin> {
      */
     protected Termin popFromStack() {
         if(!stack.empty()) {
-            Termin t = stack.pop();
-            setTermin(t);
-            return this;
+            return stack.pop();
         }
         return null;
     }
