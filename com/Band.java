@@ -6,6 +6,8 @@ package com;
 
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
+import java.util.LinkedList;
+import java.util.TreeSet;
 
 /**
  *
@@ -15,8 +17,8 @@ public class Band {
 
     private ArrayList<Mitglied> mitglieder;
     private ArrayList<Song> repertoire;
-    private ArrayList<Termin> termine;
-    private ArrayList<Termin> trash;
+    private TreeSet<Termin> termine;
+    private LinkedList<Termin> trash;
 
     /**
      * Konstruktor
@@ -24,8 +26,8 @@ public class Band {
     public Band() {
         mitglieder = new ArrayList<Mitglied>();
         repertoire = new ArrayList<Song>();
-        termine = new ArrayList<Termin>();
-        trash = new ArrayList<Termin>();
+        termine = new TreeSet<Termin>();
+        trash = new LinkedList<Termin>();
     }
 
     // Mitglieder
@@ -134,12 +136,6 @@ public class Band {
      * @param t hinzuzufuegender Termin
      */
     public void termin_hinzufuegen(Termin t) {
-        for (int i = 0; i < termine.size(); i++) {
-            if (t.getDatum().before(termine.get(i).getDatum())) {
-                termine.add(i, t);
-                return;
-            }
-        }
         termine.add(t);
     }
     
@@ -254,7 +250,7 @@ public class Band {
      * 
      * @return trash geloeschte und geaenderte Termine
      */
-    public ArrayList<Termin> trash_auflisten() {
+    public LinkedList<Termin> trash_auflisten() {
         return trash;
     }
 

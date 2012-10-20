@@ -12,7 +12,7 @@ import java.util.Stack;
  *
  * @author Matthias
  */
-public abstract class Termin {
+public abstract class Termin implements Comparable<Termin> {
 
     private Ort ort;
     private GregorianCalendar datum;
@@ -106,5 +106,21 @@ public abstract class Termin {
     public String toString() {
         SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy hh:mm");
         return ort + " " + sdf.format(datum.getTime()) + " - " + dauer;
+    }
+    
+    @Override
+    /**
+     * Eigene CompareTo Methode um zwei Termine zu vergleichen
+     * 
+     * @param t Vergleichstermin
+     * @return 
+     */
+    public int compareTo(Termin t) {
+        if(this.getDatum().before(t.getDatum())) {
+            return -1;
+        } else if(this.getDatum().after(t.getDatum())) {
+            return 1;
+        }
+        return 0;
     }
 }
