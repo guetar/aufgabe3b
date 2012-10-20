@@ -6,6 +6,8 @@ package com;
 
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
+import java.util.LinkedList;
+import java.util.TreeSet;
 
 /**
  *
@@ -15,8 +17,8 @@ public class Band {
 
     private ArrayList<Mitglied> mitglieder;
     private ArrayList<Song> repertoire;
-    private ArrayList<Termin> termine;
-    private ArrayList<Termin> trash;
+    private TreeSet<Termin> termine;
+    private LinkedList<Termin> trash;
 
     /**
      * Konstruktor
@@ -24,7 +26,8 @@ public class Band {
     public Band() {
         mitglieder = new ArrayList<Mitglied>();
         repertoire = new ArrayList<Song>();
-        termine = new ArrayList<Termin>();
+        termine = new TreeSet<Termin>();
+        trash = new LinkedList<Termin>();
     }
 
     // Mitglieder
@@ -133,12 +136,6 @@ public class Band {
      * @param _t hinzuzufuegender Termin
      */
     public void termin_hinzufuegen(Termin _t) {
-        for (int i = 0; i < termine.size(); i++) {
-            if (_t.getDatum().before(termine.get(i).getDatum())) {
-                termine.add(i, _t);
-                return;
-            }
-        }
         termine.add(_t);
     }
     
@@ -150,7 +147,12 @@ public class Band {
      */
     public void termin_aendern(Termin _alt, Termin _neu) {
         if(termine.contains(_alt)) {
+            trash.add(_alt);
             
+            if(_alt instanceof Probe) {
+                Probe neu = new Probe(_neu);
+                
+            }
         }
     }
     
@@ -159,22 +161,23 @@ public class Band {
      *
      * @param t die geloeschten Termine
      */
-    public void termin_loeschen(Termin t) {
-        if(termine.contains(t)) {
-            termine.remove(t);
-        }
-        if(!trash.contains(t)) {
-            trash.add(t);
+    public void termin_loeschen(Termin _t) {
+        if(termine.contains(_t)) {
+            trash.add(_t);
+            termine.remove(_t);
         }
     }
     
     /**
-     * Listet alle geloeschten und geaenderten Termine
+     * Stellt einen Termin wieder her
      * 
-     * @return trash geloeschte und geaenderte Termine
+     * @param _t der wiederherzustellende Termin
      */
-    public ArrayList<Termin> trash_auflisten() {
-        return trash;
+    public void termin_wiederherstellen(Termin _t) {
+        if(trash.contains(_t)) {
+            termin_hinzufuegen(_t);
+            trash.remove(_t);
+        }
     }
 
     /**
@@ -238,6 +241,15 @@ public class Band {
         }
 
         return auftritte_liste;
+    }
+    
+    /**
+     * Listet alle geloeschten und geaenderten Termine
+     * 
+     * @return trash geloeschte und geaenderte Termine
+     */
+    public LinkedList<Termin> trash_auflisten() {
+        return trash;
     }
 
     /**

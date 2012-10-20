@@ -35,9 +35,9 @@ public class Probe extends Termin {
      * @param _dauer Dauer
      * @param _miete Miete
      */
-    public void setDatum(Ort _ort, GregorianCalendar _datum, String _dauer, int _miete) {
-        super.setDatum(_ort, _datum, _dauer);
-        miete = _miete;
+    public void Probe(Probe _p) {
+        super.setTermin(_p);
+        miete = _p.getMiete();
     }
 
     /**

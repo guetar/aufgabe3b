@@ -35,9 +35,9 @@ public class Auftritt extends Termin {
      * @param _dauer Dauer
      * @param _gage Gage
      */
-    public void setDatum(Ort _ort, GregorianCalendar _datum, String _dauer, int _gage) {
-        super.setDatum(_ort, _datum, _dauer);
-        gage = _gage;
+    public void Auftritt(Auftritt _a) {
+        super.setTermin(_a);
+        gage = _a.getGage();
     }
 
     /**

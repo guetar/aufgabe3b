@@ -35,7 +35,7 @@ public abstract class Termin {
      * 
      * @param _t zu kopierender Termin
      */
-    public Termin(Termin _t) {
+    public void setTermin(Termin _t) {
         ort = new Ort(_t.getOrt());
         datum = _t.getDatum();
         dauer = _t.getDauer();

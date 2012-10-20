@@ -28,8 +28,10 @@ public class Test {
         /**
          * Der Band Mitglieder hinzufuegen und diese auflisten
          */
-        b.mitglied_hinzufuegen(new Mitglied("Andreas Kodolsky", "0676/7787986", "Gitarre", new GregorianCalendar(2000, 2, 24), new GregorianCalendar(2010, 2, 24)));
-        b.mitglied_hinzufuegen(new Mitglied("Michael Preis", "0664/8798653", "Bass", new GregorianCalendar(2004, 4, 6), new GregorianCalendar(2006, 4, 6)));
+        Mitglied andreas = new Mitglied("Andreas Kodolsky", "0676/7787986", "Gitarre", new GregorianCalendar(2000, 2, 24), new GregorianCalendar(2010, 2, 24));
+        Mitglied michael = new Mitglied("Michael Preis", "0664/8798653", "Bass", new GregorianCalendar(2004, 4, 6), new GregorianCalendar(2006, 4, 6));
+        b.mitglied_hinzufuegen(andreas);
+        b.mitglied_hinzufuegen(michael);
         ArrayList<Mitglied> mitglieder = b.mitglieder_auflisten(von, bis);
 
         System.out.println("Auflistung der Gruppenmitglieder:");
@@ -41,8 +43,10 @@ public class Test {
         /**
          * Dem Repertoire der Band einige Songs hinzufuegen und und auflisten
          */
-        b.song_hinzufuegen(new Song("I love you", "04:33", new GregorianCalendar(2012, 2, 2)));
-        b.song_hinzufuegen(new Song("I loved you but now I love another woman", "03:22", new GregorianCalendar(2012, 2, 4)));
+        Song love = new Song("I love you", "04:33", new GregorianCalendar(2012, 2, 2));
+        Song nolove = new Song("I loved you but now I love another woman", "03:22", new GregorianCalendar(2012, 2, 4));
+        b.song_hinzufuegen(love);
+        b.song_hinzufuegen(nolove);
         ArrayList<Song> repertoire = b.songs_auflisten();
 
         System.out.println("Auflistung des Repertoires:");
@@ -54,10 +58,14 @@ public class Test {
         /**
          * Einige Termine hinzufuegen und auflisten
          */
-        b.termin_hinzufuegen(new Probe(new Ort("Studio","Musterstr. 23", 8), new GregorianCalendar(1995, 6, 5, 18, 0), "2:30", 30));
-        b.termin_hinzufuegen(new Probe(new Ort("Garage","Maxerstr. 32", 4), new GregorianCalendar(1995, 7, 2, 18, 0), "3:00", 100));
-        b.termin_hinzufuegen(new Auftritt(new Ort("Stadthalle","Stadthallenstr.1",150), new GregorianCalendar(1995, 6, 5, 18, 0), "1:30", 500));
-        b.termin_hinzufuegen(new Auftritt(new Ort("Gasometer","Gasstr.666",3000), new GregorianCalendar(1995, 9, 3, 18, 0), "2:00", 800));
+        Probe p1 = new Probe(new Ort("Studio","Musterstr. 23", 8), new GregorianCalendar(1995, 6, 5, 18, 0), "2:30", 30);
+        Probe p2 = new Probe(new Ort("Garage","Maxerstr. 32", 4), new GregorianCalendar(1995, 7, 2, 18, 0), "3:00", 100);
+        Auftritt t1 = new Auftritt(new Ort("Stadthalle","Stadthallenstr.1",150), new GregorianCalendar(1995, 6, 5, 18, 0), "1:30", 500);
+        Auftritt t2 = new Auftritt(new Ort("Gasometer","Gasstr.666",3000), new GregorianCalendar(1995, 9, 3, 18, 0), "2:00", 800);
+        b.termin_hinzufuegen(p1);
+        b.termin_hinzufuegen(p2);
+        b.termin_hinzufuegen(t1);
+        b.termin_hinzufuegen(t2);
 
         ArrayList<? extends Termin> termine = b.termine_auflisten(von, bis);
 
@@ -80,6 +88,29 @@ public class Test {
         System.out.println("Auflistung aller Auftritte:");
         for (Probe p : proben) {
             System.out.println(p.toString());
+        }
+        System.out.println("");
+        
+        /**
+         * Termin loeschen und anschließend wiederherstellen
+         */
+        b.termin_loeschen(p1);
+        
+        termine = b.termine_auflisten(von, bis);
+
+        System.out.println("Auflistung aller Termine:");
+        for (Termin t : termine) {
+            System.out.println(t.toString());
+        }
+        System.out.println("");
+        
+        b.termin_wiederherstellen(p1);
+        
+        termine = b.termine_auflisten(von, bis);
+
+        System.out.println("Auflistung aller Termine:");
+        for (Termin t : termine) {
+            System.out.println(t.toString());
         }
         System.out.println("");
 
