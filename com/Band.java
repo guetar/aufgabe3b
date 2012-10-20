@@ -33,20 +33,20 @@ public class Band {
     /**
      * Fuegt der Band ein Mitglied hinzu.
      * 
-     * @param _m hinzuzufuegendes Mitglied
+     * @param m hinzuzufuegendes Mitglied
      */
-    public void mitglied_hinzufuegen(Mitglied _m) {
-        mitglieder.add(_m);
+    public void mitglied_hinzufuegen(Mitglied m) {
+        mitglieder.add(m);
     }
 
     /**
      * Entfernt ein Mitglied aus der Band.
      * 
-     * @param _m zu entferndenes Mitglied
+     * @param m zu entferndenes Mitglied
      */
-    public void mitglied_entfernen(Mitglied _m) {
-        if (mitglieder.contains(_m)) {
-            mitglieder.remove(_m);
+    public void mitglied_entfernen(Mitglied m) {
+        if (mitglieder.contains(m)) {
+            mitglieder.remove(m);
         }
     }
 
@@ -62,15 +62,15 @@ public class Band {
     /**
      * Listet alle Personen, die innerhalb eines gesuchten Zeitraums Mitglieder der Band waren.
      * 
-     * @param _von Beginn des gesuchten Zeitraumes
-     * @param _bis Ende des gesuchten Zeitraumes
+     * @param von Beginn des gesuchten Zeitraumes
+     * @param bis Ende des gesuchten Zeitraumes
      * @return Mitglieder innerhalb des gesuchten Zeitraumes
      */
-    public ArrayList<Mitglied> mitglieder_auflisten(GregorianCalendar _von, GregorianCalendar _bis) {
+    public ArrayList<Mitglied> mitglieder_auflisten(GregorianCalendar von, GregorianCalendar bis) {
         ArrayList<Mitglied> mitglieder_liste = new ArrayList<Mitglied>();
 
         for (Mitglied m : mitglieder) {
-            if (m.getVon().before(_bis) && m.getBis().after(_von)) {
+            if (m.getVon().before(bis) && m.getBis().after(von)) {
                 mitglieder_liste.add(m);
             }
         }
@@ -83,20 +83,20 @@ public class Band {
     /**
      * Fuegt dem Repertoire der Band einen Song hinzu.
      * 
-     * @param _s hinzuzufuegender Song
+     * @param s hinzuzufuegender Song
      */
-    public void song_hinzufuegen(Song _s) {
-        repertoire.add(_s);
+    public void song_hinzufuegen(Song s) {
+        repertoire.add(s);
     }
 
     /**
      * Entfernt einen Song aus dem Repertoire der Band.
      * 
-     * @param _s zu entfernender Song
+     * @param s zu entfernender Song
      */
-    public void song_entfernen(Song _s) {
-        if (repertoire.contains(_s)) {
-            repertoire.remove(_s);
+    public void song_entfernen(Song s) {
+        if (repertoire.contains(s)) {
+            repertoire.remove(s);
         }
     }
 
@@ -111,14 +111,14 @@ public class Band {
     /**
      * Listet das Repertoire der Band ab einem gewissen Zeitpunkt.
      * 
-     * @param _von gesuchter Zeitpunkt
+     * @param von gesuchter Zeitpunkt
      * @return Repertoire ab gesuchtem Zeitpunkt
      */
-    public ArrayList<Song> songs_auflisten(GregorianCalendar _von) {
+    public ArrayList<Song> songs_auflisten(GregorianCalendar von) {
         ArrayList<Song> repertoire_liste = new ArrayList<Song>();
 
         for (Song m : repertoire) {
-            if (_von.before(m.getVon())) {
+            if (von.before(m.getVon())) {
                 repertoire_liste.add(m);
             }
         }
@@ -131,29 +131,29 @@ public class Band {
     /**
      * Fügt einen Termin hinzu.
      * 
-     * @param _t hinzuzufuegender Termin
+     * @param t hinzuzufuegender Termin
      */
-    public void termin_hinzufuegen(Termin _t) {
+    public void termin_hinzufuegen(Termin t) {
         for (int i = 0; i < termine.size(); i++) {
-            if (_t.getDatum().before(termine.get(i).getDatum())) {
-                termine.add(i, _t);
+            if (t.getDatum().before(termine.get(i).getDatum())) {
+                termine.add(i, t);
                 return;
             }
         }
-        termine.add(_t);
+        termine.add(t);
     }
     
     /**
      * Aendert einen bereits vorhandenen Termin und speichert dessen alte Version.
      * 
-     * @param _alt zu aendernder Termin
-     * @param _neu 
+     * @param alt zu aendernder Termin
+     * @param neu 
      */
-    public void termin_aendern(Termin _alt, Termin _neu) {
-        if(termine.contains(_alt)) {
-            termine.remove(_alt);
-            _alt = _alt.setTermin(_neu);
-            termine.add(_alt);
+    public void termin_aendern(Termin alt, Termin neu) {
+        if(termine.contains(alt)) {
+            termine.remove(alt);
+            alt = alt.setTermin(neu);
+            termine.add(alt);
         }
     }
     
@@ -162,26 +162,26 @@ public class Band {
      *
      * @param t die geloeschten Termine
      */
-    public void termin_loeschen(Termin _t) {
-        if(termine.contains(_t)) {
-            trash.add(_t);
-            termine.remove(_t);
+    public void termin_loeschen(Termin t) {
+        if(termine.contains(t)) {
+            trash.add(t);
+            termine.remove(t);
         }
     }
     
     /**
      * Stellt einen Termin wieder her
      * 
-     * @param _t der wiederherzustellende Termin
+     * @param t der wiederherzustellende Termin
      */
-    public void termin_wiederherstellen(Termin _t) {
-        if(_t.popFromStack() == null) {
+    public void termin_wiederherstellen(Termin t) {
+        if(t.popFromStack() == null) {
             
             // keine alte Version vorhanden =>
             // Termin muss geloescht worden sein
-            if(trash.contains(_t)) {
-                trash.remove(_t);
-                termine.add(_t);
+            if(trash.contains(t)) {
+                trash.remove(t);
+                termine.add(t);
             }
         }
     }
@@ -189,17 +189,17 @@ public class Band {
     /**
      * Listet alle Termine innerhalb eines gesuchten Zeitraumes
      * 
-     * @param _von Beginn des gesuchten Zeitraumes
-     * @param _bis Ende des gesuchten Zeitraumes
+     * @param von Beginn des gesuchten Zeitraumes
+     * @param bis Ende des gesuchten Zeitraumes
      * @return Termine innerhalb des gesuchten Zeitraumes
      */
-    public ArrayList<? extends Termin> termine_auflisten(GregorianCalendar _von, GregorianCalendar _bis) {
+    public ArrayList<? extends Termin> termine_auflisten(GregorianCalendar von, GregorianCalendar bis) {
         ArrayList<Termin> termine_liste = new ArrayList<Termin>();
 
         for (Termin t : termine) {
-            if (_von.before(t.getDatum()) && _bis.after(t.getDatum())) {
+            if (von.before(t.getDatum()) && bis.after(t.getDatum())) {
                 termine_liste.add( t);
-            } else if (_bis.before(t.getDatum())) {
+            } else if (bis.before(t.getDatum())) {
                 break;
             }
         }
@@ -210,17 +210,17 @@ public class Band {
     /**
      * Listet alle Proben innerhalb eines gesuchten Zeitraumes
      * 
-     * @param _von Beginn des gesuchten Zeitraumes
-     * @param _bis Ende des gesuchten Zeitraumes
+     * @param von Beginn des gesuchten Zeitraumes
+     * @param bis Ende des gesuchten Zeitraumes
      * @return Proben innerhalb des gesuchten Zeitraumes
      */
-    public ArrayList<Probe> proben_auflisten(GregorianCalendar _von, GregorianCalendar _bis) {
+    public ArrayList<Probe> proben_auflisten(GregorianCalendar von, GregorianCalendar bis) {
         ArrayList<Probe> proben_liste = new ArrayList<Probe>();
 
         for (Termin t : termine) {
-            if (t instanceof Probe && _von.before(t.getDatum()) && _bis.after(t.getDatum())) {
+            if (t instanceof Probe && von.before(t.getDatum()) && bis.after(t.getDatum())) {
                 proben_liste.add((Probe) t);
-            } else if (_bis.before(t.getDatum())) {
+            } else if (bis.before(t.getDatum())) {
                 break;
             }
         }
@@ -231,17 +231,17 @@ public class Band {
     /**
      * Listet alle Auftritte innerhalb eines gesuchten Zeitraumes
      * 
-     * @param _von Beginn des gesuchten Zeitraumes
-     * @param _bis Ende des gesuchten Zeitraumes
+     * @param von Beginn des gesuchten Zeitraumes
+     * @param bis Ende des gesuchten Zeitraumes
      * @return Auftritte innerhalb des gesuchten Zeitraumes
      */
-    public ArrayList<Auftritt> auftritte_auflisten(GregorianCalendar _von, GregorianCalendar _bis) {
+    public ArrayList<Auftritt> auftritte_auflisten(GregorianCalendar von, GregorianCalendar bis) {
         ArrayList<Auftritt> auftritte_liste = new ArrayList<Auftritt>();
 
         for (Termin t : termine) {
-            if (t instanceof Auftritt && _von.before(t.getDatum()) && _bis.after(t.getDatum())) {
+            if (t instanceof Auftritt && von.before(t.getDatum()) && bis.after(t.getDatum())) {
                 auftritte_liste.add((Auftritt) t);
-            } else if (_bis.before(t.getDatum())) {
+            } else if (bis.before(t.getDatum())) {
                 break;
             }
         }
@@ -261,13 +261,13 @@ public class Band {
     /**
      * Summiert die Kosten, die innerhalb eines gesuchten Zeitraumes durch das Mieten der Proberaume entstehen
      * 
-     * @param _von Beginn des gesuchten Zeitraumes
-     * @param _bis Ende des gesuchten Zeitraumes
+     * @param von Beginn des gesuchten Zeitraumes
+     * @param bis Ende des gesuchten Zeitraumes
      * @return Kosten, die innerhalb des gesuchten Zeitraumes entstanden sind
      */
-    public int kosten_summieren(GregorianCalendar _von, GregorianCalendar _bis) {
+    public int kosten_summieren(GregorianCalendar von, GregorianCalendar bis) {
         int kosten = 0;
-        ArrayList<Probe> proben_kosten = proben_auflisten(_von, _bis);
+        ArrayList<Probe> proben_kosten = proben_auflisten(von, bis);
 
         for (Probe p : proben_kosten) {
             kosten += p.getMiete();
@@ -279,13 +279,13 @@ public class Band {
     /**
      * Summiert den Umsatz, der innerhalb eines gesuchten Zeitraumes durch Gagen bei den Auftritten verdient wurde
      * 
-     * @param _von Beginn des gesuchten Zeitraumes
-     * @param _bis Ende des gesuchten Zeitraumes
+     * @param von Beginn des gesuchten Zeitraumes
+     * @param bis Ende des gesuchten Zeitraumes
      * @return Umsatz, der innerhalb des gesuchten Zeitraumes erwirtschaftet werden konnte
      */
-    public int umsatz_summieren(GregorianCalendar _von, GregorianCalendar _bis) {
+    public int umsatz_summieren(GregorianCalendar von, GregorianCalendar bis) {
         int umsatz = 0;
-        ArrayList<Auftritt> auftritte_kosten = auftritte_auflisten(_von, _bis);
+        ArrayList<Auftritt> auftritte_kosten = auftritte_auflisten(von, bis);
 
         for (Auftritt a : auftritte_kosten) {
             umsatz += a.getGage();
@@ -297,12 +297,12 @@ public class Band {
     /**
      * Summiert den Gewinn, der innerhalb eines gesuchten Zeitraumes erwirtschaftet werden konnte
      * 
-     * @param _von Beginn des gesuchten Zeitraumes
-     * @param _bis Ende des gesuchten Zeitraumes
+     * @param von Beginn des gesuchten Zeitraumes
+     * @param bis Ende des gesuchten Zeitraumes
      * @return Gewinn, der innerhalb des gesuchten Zeitraumes erwirtschaftet werden konnte
      */
-    public int gewinn_summieren(GregorianCalendar _von, GregorianCalendar _bis) {
-        return umsatz_summieren(_von, _bis) - kosten_summieren(_von, _bis);
+    public int gewinn_summieren(GregorianCalendar von, GregorianCalendar bis) {
+        return umsatz_summieren(von, bis) - kosten_summieren(von, bis);
     }
 
     /**
@@ -313,13 +313,13 @@ public class Band {
      * @return die Orte, die die bestimmte Infrastruktur haben. null, wenn kein
      * Ort die Voraussetzungen erfuellt.
      */
-    public ArrayList<Ort> finde_ort(int _plaetze) {
+    public ArrayList<Ort> finde_ort(int plaetze) {
         ArrayList<Ort> gef_orte = new ArrayList<Ort>();
         
         for (Termin t : termine) {
             Ort o = t.getOrt();
 
-            if (o.getPlaetze() >= _plaetze) {
+            if (o.getPlaetze() >= plaetze) {
                     gef_orte.add(o);
             }
         }

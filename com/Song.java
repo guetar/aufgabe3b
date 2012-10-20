@@ -19,15 +19,15 @@ public class Song
     /**
      * Konstruktor
      * 
-     * @param _name Name
-     * @param _laenge Laenge
-     * @param _von Entstehungsdatum
+     * @param name Name
+     * @param laenge Laenge
+     * @param von Entstehungsdatum
      */
-    public Song(String _name, String _laenge, GregorianCalendar _von)
+    public Song(String name, String laenge, GregorianCalendar von)
     {
-        name = _name;
-        laenge = _laenge;
-        von = _von;
+        this.name = name;
+        this.laenge = laenge;
+        this.von = von;
     }
     
     /**

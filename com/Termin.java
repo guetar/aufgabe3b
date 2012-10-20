@@ -22,29 +22,29 @@ public abstract class Termin {
     /**
      * Konstruktor
      * 
-     * @param _ort Ort
-     * @param _date Datum
-     * @param _dauer Dauer
+     * @param ort Ort
+     * @param date Datum
+     * @param dauer Dauer
      */
-    public Termin(Ort _ort, GregorianCalendar _date, String _dauer) {
-        ort = _ort;
-        datum = _date;
-        dauer = _dauer;
-        stack = new Stack<Termin>();
+    public Termin(Ort ort, GregorianCalendar datum, String dauer) {
+        this.ort = ort;
+        this.datum = datum;
+        this.dauer = dauer;
+        this.stack = new Stack<Termin>();
     }
 
     /**
      * Aendert den derzeitigen Termin
      * 
-     * @param _ort Ort
-     * @param _date Datum
-     * @param _dauer Dauer
+     * @param ort Ort
+     * @param date Datum
+     * @param dauer Dauer
      */
-    protected Termin setTermin(Termin _t) {
-        stack.push(_t);
-        ort = _t.getOrt();
-        datum = _t.getDatum();
-        dauer = _t.getDauer();
+    protected Termin setTermin(Termin t) {
+        stack.push(t);
+        ort = t.getOrt();
+        datum = t.getDatum();
+        dauer = t.getDauer();
         return this;
     }
 
@@ -78,10 +78,10 @@ public abstract class Termin {
     /**
      * Wirft das uebergebene Element auf den Stack
      * 
-     * @param _t 
+     * @param t 
      */
-    protected void pushToStack(Termin _t) {
-        stack.push(_t);
+    protected void pushToStack(Termin t) {
+        stack.push(t);
     }
     
     /**

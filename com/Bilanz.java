@@ -113,7 +113,7 @@ public class Bilanz {
      * @return Liste mit Posten des Typs "filter" im Zeitraum "von"-"bis"
      */
     public ArrayList<Posten> listBilanz(String filter, GregorianCalendar von, GregorianCalendar bis) {
-        ArrayList<Posten> list = new ArrayList<>();
+        ArrayList<Posten> list = new ArrayList<Posten>();
 
         for (Posten p : posten) {
             //Ueberpruefung des Datums
