@@ -37,8 +37,8 @@ public class Band {
      * 
      * @param m hinzuzufuegendes Mitglied
      */
-    public void mitglied_hinzufuegen(Mitglied m) {
-        mitglieder.add(m);
+    public Boolean mitglied_hinzufuegen(Mitglied m) {
+        return mitglieder.add(m);
     }
 
     /**
@@ -46,10 +46,11 @@ public class Band {
      * 
      * @param m zu entferndenes Mitglied
      */
-    public void mitglied_entfernen(Mitglied m) {
+    public Boolean mitglied_entfernen(Mitglied m) {
         if (mitglieder.contains(m)) {
-            mitglieder.remove(m);
+            return mitglieder.remove(m);
         }
+        return false;
     }
 
     /**
@@ -87,8 +88,8 @@ public class Band {
      * 
      * @param s hinzuzufuegender Song
      */
-    public void song_hinzufuegen(Song s) {
-        repertoire.add(s);
+    public Boolean song_hinzufuegen(Song s) {
+        return repertoire.add(s);
     }
 
     /**
@@ -96,10 +97,11 @@ public class Band {
      * 
      * @param s zu entfernender Song
      */
-    public void song_entfernen(Song s) {
+    public Boolean song_entfernen(Song s) {
         if (repertoire.contains(s)) {
-            repertoire.remove(s);
+            return repertoire.remove(s);
         }
+        return false;
     }
 
     /**
@@ -135,8 +137,8 @@ public class Band {
      * 
      * @param t hinzuzufuegender Termin
      */
-    public void termin_hinzufuegen(Termin t) {
-        termine.add(t);
+    public Boolean termin_hinzufuegen(Termin t) {
+        return termine.add(t);
     }
     
     /**
@@ -145,12 +147,14 @@ public class Band {
      * @param alt zu aendernder Termin
      * @param neu 
      */
-    public void termin_aendern(Termin alt, Termin neu) {
+    public Boolean termin_aendern(Termin alt, Termin neu) {
         if(termine.contains(alt)) {
             termine.remove(alt);
             alt = alt.setTermin(neu);
             termine.add(alt);
+            return true;
         }
+        return false;
     }
     
     /**
@@ -158,11 +162,13 @@ public class Band {
      *
      * @param t die geloeschten Termine
      */
-    public void termin_loeschen(Termin t) {
+    public Boolean termin_loeschen(Termin t) {
         if(termine.contains(t)) {
             trash.add(t);
             termine.remove(t);
+            return true;
         }
+        return false;
     }
     
     /**
@@ -170,16 +176,23 @@ public class Band {
      * 
      * @param t der wiederherzustellende Termin
      */
-    public void termin_wiederherstellen(Termin t) {
-        if(t.popFromStack() == null) {
-            
+    public Boolean termin_wiederherstellen(Termin t) {
+        Termin alt = t.popFromStack();
+        
+        if(alt != null) {
+            termine.remove(t);
+            termine.add(alt);
+            return true;
+        } else {
             // keine alte Version vorhanden =>
             // Termin muss geloescht worden sein
             if(trash.contains(t)) {
                 trash.remove(t);
                 termine.add(t);
+                return true;
             }
         }
+        return false;
     }
 
     /**
