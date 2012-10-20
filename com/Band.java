@@ -17,6 +17,7 @@ public class Band {
     private ArrayList<Song> repertoire;
     private ArrayList<Termin> termine;
     private ArrayList<Termin> trash;
+    private Bilanz bilanz;
 
     /**
      * Konstruktor
@@ -26,6 +27,7 @@ public class Band {
         repertoire = new ArrayList<Song>();
         termine = new ArrayList<Termin>();
         trash = new ArrayList<Termin>();
+        bilanz=new Bilanz();
     }
 
     // Mitglieder
@@ -126,14 +128,26 @@ public class Band {
         return repertoire_liste;
     }
 
+     /**
+     * Fügt einen Posten hinzu.
+     * 
+     * @param _p hinzuzufuegender Posten
+     */
+    public void posten_hinzufuegen(Posten _p) {
+        bilanz.addPosten(_p);
+    }   
+    
     // Termine
     
     /**
-     * Fügt einen Termin hinzu.
+     * Fügt einen Termin und einen Posten hinzu.
      * 
      * @param _t hinzuzufuegender Termin
      */
     public void termin_hinzufuegen(Termin _t) {
+        int wert=(_t instanceof Auftritt)?((Auftritt) _t).getGage():((Probe) _t).getMiete();
+        String beschreibung=(_t instanceof Auftritt)?"Auftritt":"Probe";
+        bilanz.addPosten(new Posten(wert,beschreibung,_t.getDatum(),_t));
         for (int i = 0; i < termine.size(); i++) {
             if (_t.getDatum().before(termine.get(i).getDatum())) {
                 termine.add(i, _t);

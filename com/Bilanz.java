@@ -40,15 +40,15 @@ public class Bilanz {
      * Liefert die Summe aller Kosten eines bestimmten Typs in einem bestimmten
      * Intervall
      *
-     * @param filter "Probe" für Proben, "Sonstige" für alle außer "Proben",
-     * null für ALLE Kosten
+     * @param showProben true, wenn Proben aufgelistet werden sollen
+     * @param showSonstige true, wenn "sonstige"  Posten mit einbezogen  werden sollen
      * @param von Start des Intervalls
      * @param bis Ende des Intervalls
      * @return Summe der Kosten
      */
-    public int sumKosten(String filter, GregorianCalendar von, GregorianCalendar bis) {
+    public int sumKosten(boolean showProben,boolean showSonstige, GregorianCalendar von, GregorianCalendar bis) {
         int kosten = 0;
-        ArrayList<Posten> list = listBilanz(filter, von, bis);
+        ArrayList<Posten> list = listBilanz(false,showProben,showSonstige, von, bis);
 
         for (Posten p : list) {
             if (p.getWert() < 0) {
@@ -63,15 +63,15 @@ public class Bilanz {
      * Liefert die Summe aller Umsaetze eines bestimmten Typs in einem
      * bestimmten Intervall
      *
-     * @param filter "Auftritt" für Auftritte, "Sonstige" für alle außer
-     * "Proben", null für ALLE Umsaetze
+     * @param showAuftr true, wenn Auftritte mit einbezogen  werden sollen
+     * @param showSonstige true, wenn "sonstige"  Posten mit einbezogen  werden sollen
      * @param von Start des Intervalls
      * @param bis Ende des Intervalls
      * @return Summe der Umsaetze
      */
-    public int sumUmsatz(String filter, GregorianCalendar von, GregorianCalendar bis) {
+    public int sumUmsatz(boolean showAuftr, boolean showSonstige, GregorianCalendar von, GregorianCalendar bis) {
         int umsatz = 0;
-        ArrayList<Posten> list = listBilanz(filter, von, bis);
+        ArrayList<Posten> list = listBilanz(showAuftr, false,showSonstige, von, bis);
 
         for (Posten p : list) {
             if (p.getWert() > 0) {
@@ -85,15 +85,16 @@ public class Bilanz {
     /**
      * Liefert den Gewinn eines bestimmten Typs in einem bestimmten Intervall
      *
-     * @param filter "Auftritt" für Auftritte, "Probe" für Proben, "Sonstige"
-     * für alle außer "Auftritte" und "Proben", null für ALLE Posten
+     * @param showAuftr true, wenn Auftritte mit einbezogen  werden sollen
+     * @param showProben true, wenn Proben aufgelistet werden sollen
+     * @param showSonstige true, wenn "sonstige"  Posten mit einbezogen  werden sollen
      * @param von Start des Intervalls
      * @param bis Ende des Intervalls
      * @return Summe der Umsaetze
      */
-    public int sumGewinn(String filter, GregorianCalendar von, GregorianCalendar bis) {
+    public int sumGewinn(boolean showAuftr, boolean showProben,boolean showSonstige, GregorianCalendar von, GregorianCalendar bis) {
         int gewinn = 0;
-        ArrayList<Posten> list = listBilanz(filter, von, bis);
+        ArrayList<Posten> list = listBilanz(showAuftr,showProben,showSonstige, von, bis);
 
         for (Posten p : list) {
             gewinn += p.getWert();
@@ -101,31 +102,29 @@ public class Bilanz {
 
         return gewinn;
     }
-
+   
     /**
      * Erzeugt Liste mit Posten eines bestimmten Typs in einem bestimmten
      * Intervall
-     *
-     * @param filter "Auftritt" für Auftritte, "Probe" für Proben, "Sonstige"
-     * für alle außer "Auftritte" und "Proben", null für ALLE Posten
+     * @param showAuftr true, wenn Auftritte aufgelistet werden sollen
+     * @param showProben true, wenn Proben aufgelistet werden sollen
+     * @param showSonstige true, wenn "sonstige"  Posten aufgelistet werden sollen
      * @param von Start des Intervalls
      * @param bis Ende des Intervalls
-     * @return Liste mit Posten des Typs "filter" im Zeitraum "von"-"bis"
+     * @return Liste mit Posten der angegebenen Typen im Zeitraum "von"-"bis"
      */
-    public ArrayList<Posten> listBilanz(String filter, GregorianCalendar von, GregorianCalendar bis) {
+    public ArrayList<Posten> listBilanz(boolean showAuftr, boolean showProben,boolean showSonstige,GregorianCalendar von, GregorianCalendar bis) {
         ArrayList<Posten> list = new ArrayList<>();
 
         for (Posten p : posten) {
             //Ueberpruefung des Datums
             if (von.before(p.getDatum()) && bis.after(p.getDatum())) {
-                if (filter != null) {
+
                     //Ueberpruefung des Filters
-                    if (filter.equals(p.getBeschr()) || (filter.equals("Sonstiges") && !p.getBeschr().equals("Auftritt") && !p.getBeschr().equals("Probe"))) {
+                    if ((showAuftr&&p.getBeschr().equals("Auftritt"))||(showProben&&p.getBeschr().equals("Probe"))||(showSonstige&&!p.getBeschr().equals("Auftritt")&&!p.getBeschr().equals("Probe"))) {
                         list.add(p);
                     }
-                } else {
-                    list.add(p);
-                }
+                 
             } else if (bis.before(p.getDatum())) {
                 break;
             }
