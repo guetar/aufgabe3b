@@ -58,12 +58,16 @@ public class Test {
         /**
          * Einige Termine hinzufuegen und auflisten
          */
-        Probe p1 = new Probe(new Ort("Studio","Musterstr. 23", 8), new GregorianCalendar(1995, 6, 5, 18, 0), "2:30", 30);
-        Probe p2 = new Probe(new Ort("Garage","Maxerstr. 32", 4), new GregorianCalendar(1995, 7, 2, 18, 0), "3:00", 100);
-        Auftritt t1 = new Auftritt(new Ort("Stadthalle","Stadthallenstr.1",150), new GregorianCalendar(1995, 6, 5, 18, 0), "1:30", 500);
-        Auftritt t2 = new Auftritt(new Ort("Gasometer","Gasstr.666",3000), new GregorianCalendar(1995, 9, 3, 18, 0), "2:00", 800);
+        Probe p1 = new Probe(new Ort("p1 Studio","Musterstr. 23", 8), new GregorianCalendar(1995, 6, 5, 18, 0), "3:00", 30);
+        Probe p2 = new Probe(new Ort("p2 Garage","Maxerstr. 32", 4), new GregorianCalendar(1995, 7, 2, 18, 0), "3:00", 100);
+        Probe p3 = new Probe(new Ort("p3 Keller","Maxerstr. 32", 4), new GregorianCalendar(1995, 7, 4, 18, 0), "3:00", 100);
+        Probe p4 = new Probe(new Ort("p4 Standort","Maxerstr. 32", 4), new GregorianCalendar(1995, 7, 6, 18, 0), "3:00", 100);
+        Auftritt t1 = new Auftritt(new Ort("t1 Stadthalle","Stadthallenstr.1",150), new GregorianCalendar(1995, 6, 5, 18, 0), "1:30", 500);
+        Auftritt t2 = new Auftritt(new Ort("t2 Gasometer","Gasstr.666",3000), new GregorianCalendar(1995, 9, 3, 18, 0), "2:00", 800);
         b.termin_hinzufuegen(p1);
         b.termin_hinzufuegen(p2);
+        b.termin_hinzufuegen(p3);
+        b.termin_hinzufuegen(p4);
         b.termin_hinzufuegen(t1);
         b.termin_hinzufuegen(t2);
 
@@ -95,20 +99,23 @@ public class Test {
          * Termin loeschen und anschließend wiederherstellen
          */
         b.termin_loeschen(p1);
+        b.termin_aendern(p2, p3);
         
         termine = b.termine_auflisten(von, bis);
 
-        System.out.println("Auflistung aller Termine:");
+        System.out.println("Auflistung der Termine nach dem Loeschen von p1,");
+        System.out.println("sowie dem Ändern von p2 in p3:");
         for (Termin t : termine) {
             System.out.println(t.toString());
         }
         System.out.println("");
         
         b.termin_wiederherstellen(p1);
+        b.termin_wiederherstellen(p3);
         
         termine = b.termine_auflisten(von, bis);
 
-        System.out.println("Auflistung aller Termine:");
+        System.out.println("Auflistung der Termine nach der Wiederherstellung:");
         for (Termin t : termine) {
             System.out.println(t.toString());
         }

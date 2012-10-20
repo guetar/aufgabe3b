@@ -6,6 +6,7 @@ package com;
 
 import java.text.SimpleDateFormat;
 import java.util.GregorianCalendar;
+import java.util.Stack;
 
 /**
  *
@@ -16,6 +17,7 @@ public abstract class Termin {
     private Ort ort;
     private GregorianCalendar datum;
     private String dauer;
+    private Stack<Termin> stack;
 
     /**
      * Konstruktor
@@ -28,17 +30,7 @@ public abstract class Termin {
         ort = _ort;
         datum = _date;
         dauer = _dauer;
-    }
-    
-    /**
-     * Kopierkonstruktor
-     * 
-     * @param _t zu kopierender Termin
-     */
-    public void setTermin(Termin _t) {
-        ort = new Ort(_t.getOrt());
-        datum = _t.getDatum();
-        dauer = _t.getDauer();
+        stack = new Stack<Termin>();
     }
 
     /**
@@ -48,10 +40,12 @@ public abstract class Termin {
      * @param _date Datum
      * @param _dauer Dauer
      */
-    public void setDatum(Ort _ort, GregorianCalendar _date, String _dauer) {
-        ort = _ort;
-        datum = _date;
-        dauer = _dauer;
+    protected Termin setTermin(Termin _t) {
+        stack.push(_t);
+        ort = _t.getOrt();
+        datum = _t.getDatum();
+        dauer = _t.getDauer();
+        return this;
     }
 
     /**
@@ -59,7 +53,7 @@ public abstract class Termin {
      * 
      * @return 
      */
-    public GregorianCalendar getDatum() {
+    protected GregorianCalendar getDatum() {
         return datum;
     }
 
@@ -68,7 +62,7 @@ public abstract class Termin {
      * 
      * @return 
      */
-    public String getDauer() {
+    protected String getDauer() {
         return dauer;
     }
     
@@ -77,8 +71,31 @@ public abstract class Termin {
      * 
      * @return 
      */
-    public Ort getOrt() {
+    protected Ort getOrt() {
         return ort;
+    }
+    
+    /**
+     * Wirft das uebergebene Element auf den Stack
+     * 
+     * @param _t 
+     */
+    protected void pushToStack(Termin _t) {
+        stack.push(_t);
+    }
+    
+    /**
+     * Holt das letzte Element vom Stack
+     * 
+     * @return 
+     */
+    protected Termin popFromStack() {
+        if(!stack.empty()) {
+            Termin t = stack.pop();
+            setTermin(t);
+            return this;
+        }
+        return null;
     }
 
     @Override

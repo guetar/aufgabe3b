@@ -151,12 +151,9 @@ public class Band {
      */
     public void termin_aendern(Termin _alt, Termin _neu) {
         if(termine.contains(_alt)) {
-            trash.add(_alt);
-            
-            if(_alt instanceof Probe) {
-                Probe neu = new Probe((Probe) _neu);
-                
-            }
+            termine.remove(_alt);
+            _alt = _alt.setTermin(_neu);
+            termine.add(_alt);
         }
     }
     
@@ -178,9 +175,14 @@ public class Band {
      * @param _t der wiederherzustellende Termin
      */
     public void termin_wiederherstellen(Termin _t) {
-        if(trash.contains(_t)) {
-            termin_hinzufuegen(_t);
-            trash.remove(_t);
+        if(_t.popFromStack() == null) {
+            
+            // keine alte Version vorhanden =>
+            // Termin muss geloescht worden sein
+            if(trash.contains(_t)) {
+                trash.remove(_t);
+                termine.add(_t);
+            }
         }
     }
 

@@ -28,17 +28,15 @@ public class Probe extends Termin {
     }
 
     /**
-     * Aendert die derzeitige Probe
+     * Aendert die derzeitige Probe und wirft die alte auf den Stack
      * 
-     * @param _ort Ort
-     * @param _datum Datum
-     * @param _dauer Dauer
-     * @param _miete Miete
+     * @param _p neue Probe
      */
-    /*public Probe(Probe _p) {
+    public Probe setTermin(Probe _p) {
         super.setTermin(_p);
         miete = _p.getMiete();
-    }*/
+        return this;
+    }
 
     /**
      * Getter für Miete

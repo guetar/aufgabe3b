@@ -28,16 +28,15 @@ public class Auftritt extends Termin {
     }
 
     /**
-     * Aendert den derzeitigen Auftritt
+     * Aendert den derzeitigen Auftritt und wirft den alten auf den Stack
      * 
-     * @param _ort Ort
-     * @param _datum Datum
-     * @param _dauer Dauer
-     * @param _gage Gage
+     * @param _a neuer Auftritt
      */
-    public void Auftritt(Auftritt _a) {
+    public Auftritt Auftritt(Auftritt _a) {
+        super.pushToStack(this);
         super.setTermin(_a);
         gage = _a.getGage();
+        return this;
     }
 
     /**
