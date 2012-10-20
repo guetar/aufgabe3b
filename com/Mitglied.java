@@ -47,6 +47,15 @@ public class Mitglied {
     public Boolean message(String m) {
         return messages.add(m);
     }
+    
+    /**
+     * Liefert alle eingegangenen Nachrichten
+     * 
+     * @return Nachrichten 
+     */
+    public ArrayList<String> getMessages() {
+        return messages;
+    }
 
     /**
      * Eintrittsdatum in die Band

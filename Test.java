@@ -126,6 +126,15 @@ public class Test {
         b.termin_wiederherstellen(p3);
         b.termin_wiederherstellen(p4);
         
+        System.out.println("Dominiks Nachrichten:");
+        
+        ArrayList<String> messages = dominik.getMessages();
+        
+        for(String s : messages) {
+            System.out.println(s);
+        }
+        System.out.println("");
+        
         termine = b.termine_auflisten(von, bis);
 
         System.out.println("Auflistung der Termine nach der Wiederherstellung:");

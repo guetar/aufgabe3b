@@ -178,7 +178,7 @@ public class Band {
                 p.setProbe((Probe) neu);
                 
                 for(Mitglied m : mitglieder) {
-                    m.message("Folgende Probe wurde geändert:" + p.toString());
+                    m.message("Folgende Probe wurde geändert: " + p.toString());
                 }
                 
             } else if (alt instanceof Auftritt) {
@@ -187,7 +187,7 @@ public class Band {
                 a.setAuftritt((Auftritt) neu);
                 
                 for(Mitglied m : mitglieder) {
-                    m.message("Folgender Auftritt wurde geändert:" + a.toString());
+                    m.message("Folgender Auftritt wurde geändert: " + a.toString());
                 }
             }
             return true;
@@ -207,7 +207,7 @@ public class Band {
             termine.remove(t);
             
             for(Mitglied m : mitglieder) {
-                m.message("Folgender Termin wurde abgesagt:" + t.toString());
+                m.message("Folgender Termin wurde abgesagt: " + t.toString());
             }
             return true;
         }
