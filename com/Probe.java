@@ -35,10 +35,10 @@ public class Probe extends Termin {
      * @param _dauer Dauer
      * @param _miete Miete
      */
-    public void Probe(Probe _p) {
+    /*public Probe(Probe _p) {
         super.setTermin(_p);
         miete = _p.getMiete();
-    }
+    }*/
 
     /**
      * Getter für Miete
