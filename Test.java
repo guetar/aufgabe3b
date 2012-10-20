@@ -29,7 +29,7 @@ public class Test {
          * Der Band Mitglieder hinzufuegen und diese auflisten
          */
         Mitglied andreas = new Mitglied("Andreas Kodolsky", "0676/7787986", "Gitarre", new GregorianCalendar(2000, 2, 24), new GregorianCalendar(2010, 2, 24));
-        Mitglied michael = new Mitglied("Michael Preis", "0664/8798653", "Bass", new GregorianCalendar(2004, 4, 6), new GregorianCalendar(2006, 4, 6));
+        Mitglied michael = new Mitglied("Michael Preis", "0664/8798653", "Bass", new GregorianCalendar(2000, 4, 6), new GregorianCalendar(2006, 4, 6));
         Mitglied lukas = new Mitglied("Lukas Permanschlager", "0676/4382904839", "Schlagzeug", new GregorianCalendar(2000, 2, 10), new GregorianCalendar(2010, 8, 12));
         Mitglied dominik = new Mitglied("Dominik Haltauf", "0664/473892347", "Bass", new GregorianCalendar(2006, 4, 6), new GregorianCalendar(2008, 4, 6));
         
@@ -51,6 +51,10 @@ public class Test {
          */
         Song love = new Song("I love you", "04:33", new GregorianCalendar(2012, 2, 2));
         Song nolove = new Song("I loved you but now I love another woman", "03:22", new GregorianCalendar(2012, 2, 4));
+        Song notso = new Song("I love you not so much any more", "04:33", new GregorianCalendar(2012, 2, 2));
+        Song hate = new Song("I loved you now I hate you", "03:22", new GregorianCalendar(2012, 2, 4));
+        love.addVersion(notso);
+        nolove.addVersion(hate);
         
         andreas.addSong(love);
         andreas.addSong(nolove);
@@ -61,7 +65,7 @@ public class Test {
         michael.addSong(herzschmerz);
         michael.addSong(beileid);
         
-        ArrayList<Song> repertoire = b.songs_auflisten(new GregorianCalendar(2004, 8, 8));
+        ArrayList<Song> repertoire = b.songs_auflisten(new GregorianCalendar(2004, 8, 8), true);
 
         System.out.println("Auflistung des Repertoires:");
         for (Song s : repertoire) {

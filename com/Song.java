@@ -4,6 +4,7 @@
  */
 package com;
 
+import java.util.ArrayList;
 import java.util.GregorianCalendar;
 
 /**
@@ -15,6 +16,7 @@ public class Song
     private String name;
     private String laenge;
     private GregorianCalendar von;
+    private ArrayList<Song> versionen;
     
     /**
      * Konstruktor
@@ -28,6 +30,33 @@ public class Song
         this.name = name;
         this.laenge = laenge;
         this.von = von;
+        this.versionen = new ArrayList<Song>();
+        this.versionen.add(new Song(this));
+    }
+    
+    /**
+     * Kopierkonstruktor
+     * 
+     * @param s zu kopierender Song
+     */
+    public Song(Song s) {
+        this.name = s.name;
+        this.laenge = s.laenge;
+        this.von = s.von;
+    }
+    
+    /**
+     * Fuegt eine neue Version des Songs zu dessen Versionen hinzu.
+     * 
+     * @param s hinzuzufuegender Song
+     * @return Erfolg
+     */
+    public Boolean addVersion(Song s) {
+        return versionen.add(new Song(s));
+    }
+    
+    public ArrayList<Song> getVersionen() {
+        return versionen;
     }
     
     /**

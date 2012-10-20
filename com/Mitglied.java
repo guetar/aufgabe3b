@@ -33,7 +33,7 @@ public class Mitglied {
     public Mitglied(String name, String tel, String instrument, GregorianCalendar von, GregorianCalendar bis) {
         this.name = name;
         this.tel = tel;
-        this.von = bis;
+        this.von = von;
         this.bis = bis;
         this.instrument = instrument;
         this.repertoire = new ArrayList<Song>();

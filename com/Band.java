@@ -125,12 +125,18 @@ public class Band {
      * @param datum gesuchter Zeitpunkt
      * @return Repertoire zu dem gesuchten Zeitpunkt
      */
-    public ArrayList<Song> songs_auflisten(GregorianCalendar datum) {
+    public ArrayList<Song> songs_auflisten(GregorianCalendar datum, Boolean versionen) {
         ArrayList<Song> repertoire_liste = new ArrayList<Song>();
 
         for(Mitglied m : mitglieder) {
             if(m.getVon().before(datum) && m.getBis().after(datum)) {
-                repertoire_liste.addAll(m.getRepertoire());
+                if(!versionen) {
+                    repertoire_liste.addAll(m.getRepertoire());
+                } else {
+                    for(Song s : m.getRepertoire()) {
+                        repertoire_liste.addAll(s.getVersionen());
+                    }
+                }
             }
         }
 
