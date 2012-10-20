@@ -21,18 +21,18 @@ public class Mitglied {
     /**
      * Konstruktor
      * 
-     * @param _name Name
-     * @param _tel Telefonnummer
-     * @param _instrument Instrument
-     * @param _von Eintrittsdatum in die Band
-     * @param _bis Austrittsdatum aus der Band
+     * @param name Name
+     * @param tel Telefonnummer
+     * @param instrument Instrument
+     * @param von Eintrittsdatum in die Band
+     * @param bis Austrittsdatum aus der Band
      */
-    public Mitglied(String _name, String _tel, String _instrument, GregorianCalendar _von, GregorianCalendar _bis) {
-        name = _name;
-        tel = _tel;
-        instrument = _instrument;
-        von = _bis;
-        bis = _bis;
+    public Mitglied(String name, String tel, String instrument, GregorianCalendar von, GregorianCalendar bis) {
+        this.name = name;
+        this.tel = tel;
+        this.instrument = instrument;
+        this.von = bis;
+        this.bis = bis;
     }
 
     /**

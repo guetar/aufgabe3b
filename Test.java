@@ -104,7 +104,7 @@ public class Test {
         termine = b.termine_auflisten(von, bis);
 
         System.out.println("Auflistung der Termine nach dem Loeschen von p1,");
-        System.out.println("sowie dem Ändern von p2 in p3:");
+        System.out.println("sowie dem Aendern von p2 in p3:");
         for (Termin t : termine) {
             System.out.println(t.toString());
         }

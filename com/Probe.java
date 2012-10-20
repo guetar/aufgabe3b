@@ -17,24 +17,24 @@ public class Probe extends Termin {
     /**
      * Konstruktor
      * 
-     * @param _ort Ort
-     * @param _datum Datum
-     * @param _dauer Dauer
-     * @param _miete Miete
+     * @param ort Ort
+     * @param datum Datum
+     * @param dauer Dauer
+     * @param miete Miete
      */
-    public Probe(Ort _ort, GregorianCalendar _datum, String _dauer, int _miete) {
-        super(_ort, _datum, _dauer);
-        miete = _miete;
+    public Probe(Ort ort, GregorianCalendar datum, String dauer, int miete) {
+        super(ort, datum, dauer);
+        this.miete = miete;
     }
 
     /**
      * Aendert die derzeitige Probe und wirft die alte auf den Stack
      * 
-     * @param _p neue Probe
+     * @param p neue Probe
      */
-    public Probe setTermin(Probe _p) {
-        super.setTermin(_p);
-        miete = _p.getMiete();
+    public Probe setTermin(Probe p) {
+        super.setTermin(p);
+        miete = p.getMiete();
         return this;
     }
 

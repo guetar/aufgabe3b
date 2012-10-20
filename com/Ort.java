@@ -23,21 +23,21 @@ public class Ort {
      * @param asteckdosen Anzahl der vorhandenen Steckdosen
      * @param catering true, wenn Catering vorhanden ist
      */
-    public Ort(String _name, String _adresse, int _plaetze) {
-        name = _name;
-        adresse = _adresse;
-        plaetze = _plaetze;
+    public Ort(String name, String adresse, int plaetze) {
+        this.name = name;
+        this.adresse = adresse;
+        this.plaetze = plaetze;
     }
     
     /**
      * Kopierkonstruktor
      * 
-     * @param _o zu kopierender Ort
+     * @param o zu kopierender Ort
      */
-    public Ort (Ort _o) {
-        name = _o.name;
-        adresse = _o.adresse;
-        plaetze = _o.plaetze;
+    public Ort (Ort o) {
+        name = o.name;
+        adresse = o.adresse;
+        plaetze = o.plaetze;
     }
     
     /**

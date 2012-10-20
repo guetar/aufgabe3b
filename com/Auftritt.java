@@ -17,25 +17,25 @@ public class Auftritt extends Termin {
     /**
      * Konstruktor
      * 
-     * @param _ort Ort
-     * @param _datum Datum
-     * @param _dauer Dauer
-     * @param _gage Gage
+     * @param ort Ort
+     * @param datum Datum
+     * @param dauer Dauer
+     * @param gage Gage
      */
-    public Auftritt(Ort _ort, GregorianCalendar _datum, String _dauer, int _gage) {
-        super(_ort, _datum, _dauer);
-        gage = _gage;
+    public Auftritt(Ort ort, GregorianCalendar datum, String dauer, int gage) {
+        super(ort, datum, dauer);
+        this.gage = gage;
     }
 
     /**
      * Aendert den derzeitigen Auftritt und wirft den alten auf den Stack
      * 
-     * @param _a neuer Auftritt
+     * @param a neuer Auftritt
      */
-    public Auftritt Auftritt(Auftritt _a) {
+    public Auftritt Auftritt(Auftritt a) {
         super.pushToStack(this);
-        super.setTermin(_a);
-        gage = _a.getGage();
+        super.setTermin(a);
+        gage = a.getGage();
         return this;
     }
 
