@@ -22,8 +22,8 @@ public class Abstimmung {
      * Initialisierung 
      */
     public Abstimmung(ArrayList<Mitglied> _mitglieder, Termin _vorgeschlTermin) {
-        dafuers = new HashMap<>();
-        begruendungen = new HashMap<>();
+        dafuers = new HashMap<Mitglied, Boolean>();
+        begruendungen = new HashMap<Mitglied, String>();
         mitglieder = _mitglieder;
         vorgeschlTermin = _vorgeschlTermin;
     }

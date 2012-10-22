@@ -77,6 +77,15 @@ public class Mitglied {
     }
 
     /**
+     * Getter für Name
+     * 
+     * @return Name
+     */
+    public String getName() {
+        return name;
+    }
+
+    /**
      * Eintrittsdatum in die Band
      * 
      * @return Eintrittsdatum in die Band
