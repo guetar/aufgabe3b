@@ -13,14 +13,14 @@ import java.util.TreeSet;
  *
  * @author guetar
  */
-public class Terminverwaltung {
+public class Kalender {
     
     private TreeSet<Termin> termine;
+    private ArrayList<Mitglied> mitglieder;
     private LinkedList<Termin> trash;
     private Bilanz bilanz;
-    private ArrayList<Mitglied> mitglieder;
     
-    public Terminverwaltung(ArrayList<Mitglied> mitglieder, Bilanz bilanz) {
+    public Kalender(ArrayList<Mitglied> mitglieder, Bilanz bilanz) {
         this.termine = new TreeSet<Termin>();
         this.trash = new LinkedList<Termin>();
         this.bilanz = bilanz;

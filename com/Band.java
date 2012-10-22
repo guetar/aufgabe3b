@@ -15,7 +15,7 @@ public class Band {
 
     private ArrayList<Mitglied> mitglieder;
     private ArrayList<Song> repertoire;
-    private Terminverwaltung terminverwaltung;
+    private Kalender kalender;
     private Bilanz bilanz;
 
     /**
@@ -25,8 +25,8 @@ public class Band {
         this.mitglieder = new ArrayList<Mitglied>();
         this.repertoire = new ArrayList<Song>();
         this.bilanz = new Bilanz();
-        this.terminverwaltung = new Terminverwaltung(mitglieder, bilanz);
-        this.bilanz.setTerminverwaltung(terminverwaltung);
+        this.kalender = new Kalender(mitglieder, bilanz);
+        this.bilanz.setKalender(kalender);
     }
 
     // Mitglieder
@@ -151,31 +151,31 @@ public class Band {
      * @return 
      */
     public Boolean termin_hinzufuegen(Termin t) {
-        return terminverwaltung.termin_hinzufuegen(t);
+        return kalender.termin_hinzufuegen(t);
     }
     
     public ArrayList<? extends Termin> termine_auflisten(GregorianCalendar von, GregorianCalendar bis) {
-        return terminverwaltung.termine_auflisten(von, bis);
+        return kalender.termine_auflisten(von, bis);
     }
     
     public ArrayList<Probe> proben_auflisten(GregorianCalendar von, GregorianCalendar bis) {
-        return terminverwaltung.proben_auflisten(von, bis);
+        return kalender.proben_auflisten(von, bis);
     }
     
     public ArrayList<Auftritt> auftritte_auflisten(GregorianCalendar von, GregorianCalendar bis) {
-        return terminverwaltung.auftritte_auflisten(von, bis);
+        return kalender.auftritte_auflisten(von, bis);
     }
     
     public Boolean termin_aendern(Termin alt, Termin neu) {
-        return terminverwaltung.termin_aendern(alt, neu);
+        return kalender.termin_aendern(alt, neu);
     }
     
     public Boolean termin_loeschen(Termin t) {
-        return terminverwaltung.termin_loeschen(t);
+        return kalender.termin_loeschen(t);
     }
     
     public Boolean termin_wiederherstellen(Termin t) {
-        return terminverwaltung.termin_wiederherstellen(t);
+        return kalender.termin_wiederherstellen(t);
     }
 
     /**
@@ -197,7 +197,7 @@ public class Band {
      */
     public int kosten_summieren(GregorianCalendar von, GregorianCalendar bis) {
         int kosten = 0;
-        ArrayList<Probe> proben_kosten = terminverwaltung.proben_auflisten(von, bis);
+        ArrayList<Probe> proben_kosten = kalender.proben_auflisten(von, bis);
 
         for (Probe p : proben_kosten) {
             kosten += p.getMiete();
@@ -215,7 +215,7 @@ public class Band {
      */
     public int umsatz_summieren(GregorianCalendar von, GregorianCalendar bis) {
         int umsatz = 0;
-        ArrayList<Auftritt> auftritte_kosten = terminverwaltung.auftritte_auflisten(von, bis);
+        ArrayList<Auftritt> auftritte_kosten = kalender.auftritte_auflisten(von, bis);
 
         for (Auftritt a : auftritte_kosten) {
             umsatz += a.getGage();
@@ -246,7 +246,7 @@ public class Band {
     public ArrayList<Ort> finde_ort(int plaetze) {
         ArrayList<Ort> gef_orte = new ArrayList<Ort>();
         
-        for (Termin t : terminverwaltung.termine_auflisten()) {
+        for (Termin t : kalender.termine_auflisten()) {
             Ort o = t.getOrt();
 
             if (o.getPlaetze() >= plaetze) {

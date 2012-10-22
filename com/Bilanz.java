@@ -14,7 +14,7 @@ import java.util.TreeSet;
 public class Bilanz {
 
     private TreeSet<Posten> posten;
-    private Terminverwaltung terminverwaltung;
+    private Kalender kalender;
 
     /**
      * Konstruktor
@@ -28,8 +28,8 @@ public class Bilanz {
      * 
      * @param t Terminverwaltung
      */
-    public void setTerminverwaltung(Terminverwaltung terminverwaltung) {
-        this.terminverwaltung = terminverwaltung;
+    public void setKalender(Kalender kalender) {
+        this.kalender = kalender;
     }
 
     /**
@@ -136,7 +136,7 @@ public class Bilanz {
             }
         }
         
-        for(Termin t : terminverwaltung.termine_auflisten(von, bis)) {
+        for(Termin t : kalender.termine_auflisten(von, bis)) {
             Posten p = new Posten(t);
             if(!list.contains(p)) {
                 
