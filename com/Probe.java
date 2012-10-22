@@ -41,6 +41,7 @@ public class Probe extends Termin {
      * Aendert die derzeitige Probe und wirft die alte auf den Stack
      * 
      * @param p neue Probe
+     * @return geaenderte Probe
      */
     public Probe setProbe(Probe p) {
         super.pushToStack(new Probe(this));

@@ -5,6 +5,7 @@
 package com;
 
 import java.util.GregorianCalendar;
+import java.util.LinkedList;
 import java.util.TreeSet;
 
 /**
@@ -14,32 +15,81 @@ import java.util.TreeSet;
 public class Bilanz {
 
     private TreeSet<Posten> posten;
-    private Kalender kalender;
+    private LinkedList<Posten> trash;
 
     /**
      * Konstruktor
      */
     public Bilanz() {
         this.posten = new TreeSet<Posten>();
+        this.trash = new LinkedList<Posten>();
     }
     
     /**
-     * Setzen der Terminverwaltung
+     * Gibt den Posten fuer den betreffenden Termin zurueck
      * 
-     * @param t Terminverwaltung
+     * @param t Termin
+     * @return Posten
      */
-    public void setKalender(Kalender kalender) {
-        this.kalender = kalender;
+    public Posten getPosten(Termin t) {
+        Posten p = new Posten(t);
+        if(posten.contains(p)) {
+            return p;
+        }
+        return null;
     }
 
     /**
-     * Fügt der Bilanz einen neuen Posten hinzu
+     * Fuegt der Bilanz einen neuen Posten hinzu
      *
      * @param p Bilanzposten
      * @return Erfolg
      */
-    public boolean addPosten(Posten p) {
+    public boolean postenHinzufuegen(Posten p) {
         return posten.add(p);
+    }
+    
+    public Posten postenAendern(Posten alt, Posten neu) {
+        return alt.setPosten(neu);
+    }
+    
+    /**
+     * Loescht einen Posten
+     *
+     * @param p der zu loeschende Posten
+     * @return Erfolg
+     */
+    public boolean postenLoeschen(Posten p) {
+        if(posten.contains(p)) {
+            trash.add(p);
+            posten.remove(p);
+            return true;
+        }
+        return false;
+    }
+    
+    /**
+     * Stellt einen Posten wieder her
+     * 
+     * @param p wiederherzustellender Posten
+     * @return 
+     */
+    public Posten postenWiederherstellen(Posten p) {
+        Posten alt = p.popFromStack();
+        
+        if(alt != null) {
+            return alt.setPosten(p);
+            
+        } else {
+            
+            // keine alte Version vorhanden => Termin muss geloescht worden sein
+            if(trash.contains(p)) {
+                trash.remove(p);
+                posten.add(p);
+                return p;
+            }
+        }
+        return null;
     }
 
     /**
@@ -52,9 +102,9 @@ public class Bilanz {
      * @param bis Ende des Intervalls
      * @return Summe der Kosten
      */
-    public int sumKosten(boolean showProben, boolean showSonstige, GregorianCalendar von, GregorianCalendar bis) {
+    public int kosten(boolean showProben, boolean showSonstige, GregorianCalendar von, GregorianCalendar bis) {
         int kosten = 0;
-        TreeSet<Posten> list = listBilanz(false, showProben, showSonstige, von, bis);
+        TreeSet<Posten> list = bilanzAuflisten(false, showProben, showSonstige, von, bis);
 
         for (Posten p : list) {
             if (p.getWert() < 0) {
@@ -75,9 +125,9 @@ public class Bilanz {
      * @param bis Ende des Intervalls
      * @return Summe der Umsaetze
      */
-    public int sumUmsatz(boolean showAuftr, boolean showSonstige, GregorianCalendar von, GregorianCalendar bis) {
+    public int umsatz(boolean showAuftr, boolean showSonstige, GregorianCalendar von, GregorianCalendar bis) {
         int umsatz = 0;
-        TreeSet<Posten> list = listBilanz(showAuftr, false,showSonstige, von, bis);
+        TreeSet<Posten> list = bilanzAuflisten(showAuftr, false,showSonstige, von, bis);
 
         for (Posten p : list) {
             if (p.getWert() > 0) {
@@ -98,9 +148,9 @@ public class Bilanz {
      * @param bis Ende des Intervalls
      * @return Summe der Umsaetze
      */
-    public int sumGewinn(boolean showAuftr, boolean showProben, boolean showSonstige, GregorianCalendar von, GregorianCalendar bis) {
+    public int gewinn(boolean showAuftr, boolean showProben, boolean showSonstige, GregorianCalendar von, GregorianCalendar bis) {
         int gewinn = 0;
-        TreeSet<Posten> list = listBilanz(showAuftr, showProben, showSonstige, von, bis);
+        TreeSet<Posten> list = bilanzAuflisten(showAuftr, showProben, showSonstige, von, bis);
 
         for (Posten p : list) {
             gewinn += p.getWert();
@@ -119,7 +169,7 @@ public class Bilanz {
      * @param bis Ende des Intervalls
      * @return Liste mit Posten der angegebenen Typen im Zeitraum "von"-"bis"
      */
-    public TreeSet<Posten> listBilanz(boolean showAuftr, boolean showProben, boolean showSonstige, GregorianCalendar von, GregorianCalendar bis) {
+    public TreeSet<Posten> bilanzAuflisten(boolean showAuftr, boolean showProben, boolean showSonstige, GregorianCalendar von, GregorianCalendar bis) {
         TreeSet<Posten> list = new TreeSet<Posten>();
 
         for (Posten p : posten) {
@@ -133,17 +183,6 @@ public class Bilanz {
                  
             } else if (bis.before(p.getDatum())) {
                 break;
-            }
-        }
-        
-        for(Termin t : kalender.termine_auflisten(von, bis)) {
-            Posten p = new Posten(t);
-            if(!list.contains(p)) {
-                
-                //Ueberpruefung des Filters
-                if ((showAuftr&&p.getBeschr().equals("Auftritt"))||(showProben&&p.getBeschr().equals("Probe"))||(showSonstige&&!p.getBeschr().equals("Auftritt")&&!p.getBeschr().equals("Probe"))) {
-                    list.add(p);
-                }
             }
         }
 

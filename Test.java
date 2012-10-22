@@ -33,12 +33,12 @@ public class Test {
         Mitglied lukas = new Mitglied("Lukas Permanschlager", "0676/4382904839", "Schlagzeug", new GregorianCalendar(2000, 2, 10), new GregorianCalendar(2010, 8, 12));
         Mitglied dominik = new Mitglied("Dominik Haltauf", "0664/473892347", "Bass", new GregorianCalendar(2006, 4, 6), new GregorianCalendar(2008, 4, 6));
         
-        b.mitglied_hinzufuegen(andreas);
-        b.mitglied_hinzufuegen(michael);
-        b.mitglied_hinzufuegen(lukas);
-        b.mitglied_hinzufuegen(dominik);
+        b.mitgliedHinzufuegen(andreas);
+        b.mitgliedHinzufuegen(michael);
+        b.mitgliedHinzufuegen(lukas);
+        b.mitgliedHinzufuegen(dominik);
         
-        ArrayList<Mitglied> mitglieder = b.mitglieder_auflisten(von, bis);
+        ArrayList<Mitglied> mitglieder = b.mitgliederAuflisten(von, bis);
 
         System.out.println("Auflistung der Gruppenmitglieder:");
         for (Mitglied m : mitglieder) {
@@ -65,7 +65,7 @@ public class Test {
         michael.addSong(herzschmerz);
         michael.addSong(beileid);
         
-        ArrayList<Song> repertoire = b.songs_auflisten(new GregorianCalendar(2004, 8, 8), true);
+        ArrayList<Song> repertoire = b.songsAuflisten(new GregorianCalendar(2004, 8, 8), true);
 
         System.out.println("Auflistung des Repertoires:");
         for (Song s : repertoire) {
@@ -85,14 +85,14 @@ public class Test {
         Auftritt a1 = new Auftritt(new Ort("a1 Gasometer", "Gasstr.666", 3000), new GregorianCalendar(1995, 9, 2, 18, 0), "2:00", 800);
         Auftritt a2 = new Auftritt(new Ort("a2 Gasometer", "Gasstr.666", 3000), new GregorianCalendar(1995, 9, 3, 18, 0), "2:00", 800);
         
-        b.termin_hinzufuegen(p1);
-        b.termin_hinzufuegen(p2);
-        b.termin_hinzufuegen(p3);
-        b.termin_hinzufuegen(p4);
-        b.termin_hinzufuegen(a1);
-        b.termin_hinzufuegen(a2);
+        b.terminHinzufuegen(p1);
+        b.terminHinzufuegen(p2);
+        b.terminHinzufuegen(p3);
+        b.terminHinzufuegen(p4);
+        b.terminHinzufuegen(a1);
+        b.terminHinzufuegen(a2);
 
-        ArrayList<? extends Termin> termine = b.termine_auflisten(von, bis);
+        ArrayList<? extends Termin> termine = b.termineAuflisten(von, bis);
 
         System.out.println("Auflistung aller Termine:");
         for (Termin t : termine) {
@@ -100,7 +100,7 @@ public class Test {
         }
         System.out.println("");
 
-        ArrayList<Probe> proben = b.proben_auflisten(von, bis);
+        ArrayList<Probe> proben = b.probenAuflisten(von, bis);
 
         System.out.println("Auflistung aller Proben:");
         for (Probe p : proben) {
@@ -108,7 +108,7 @@ public class Test {
         }
         System.out.println("");
 
-        ArrayList<Auftritt> auftritte = b.auftritte_auflisten(von, bis);
+        ArrayList<Auftritt> auftritte = b.auftritteAuflisten(von, bis);
 
         System.out.println("Auflistung aller Auftritte:");
         for (Auftritt a : auftritte) {
@@ -119,11 +119,11 @@ public class Test {
         /**
          * Termin loeschen und anschließend wiederherstellen
          */
-        b.termin_loeschen(p1);
-        b.termin_aendern(p3, p5);
-        b.termin_aendern(p4, p6);
+        b.terminLoeschen(p1);
+        b.terminAendern(p3, p5);
+        b.terminAendern(p4, p6);
         
-        termine = b.termine_auflisten(von, bis);
+        termine = b.termineAuflisten(von, bis);
 
         System.out.println("Auflistung der Termine nach dem Loeschen von p1,");
         System.out.println("sowie dem Aendern von p3 in p5 bzw p4 in p6:");
@@ -132,9 +132,9 @@ public class Test {
         }
         System.out.println("");
         
-        b.termin_wiederherstellen(p1);
-        b.termin_wiederherstellen(p3);
-        b.termin_wiederherstellen(p4);
+        b.terminWiederherstellen(p1);
+        b.terminWiederherstellen(p3);
+        b.terminWiederherstellen(p4);
         
         System.out.println("Dominiks Nachrichten:");
         
@@ -145,7 +145,7 @@ public class Test {
         }
         System.out.println("");
         
-        termine = b.termine_auflisten(von, bis);
+        termine = b.termineAuflisten(von, bis);
 
         System.out.println("Auflistung der Termine nach der Wiederherstellung:");
         for (Termin t : termine) {
@@ -156,16 +156,16 @@ public class Test {
         /**
          * Eine Bilanz über den gesuchten Zeitraum erstellen
          */
-        System.out.println("Gesamtkosten in diesem Zeitraum:" + b.kosten_summieren(von, bis) + " Euro");
-        System.out.println("Gesamtumsatz in diesem Zeitraum:" + b.umsatz_summieren(von, bis) + " Euro");
-        System.out.println("Macht einen Gesamtgewinn von:" + b.gewinn_summieren(von, bis) + " Euro");
+        System.out.println("Gesamtkosten in diesem Zeitraum:" + b.kostenSummieren(von, bis) + " Euro");
+        System.out.println("Gesamtumsatz in diesem Zeitraum:" + b.umsatzSummieren(von, bis) + " Euro");
+        System.out.println("Macht einen Gesamtgewinn von:" + b.gewinnSummieren(von, bis) + " Euro");
         System.out.println("");
         
         /**
          * Einige Orte hinzufuegen und auflisten
          */
         System.out.println("Orte mit mehr als 200 Plätzen:");
-        ArrayList<Ort> orte = b.finde_ort(200);
+        ArrayList<Ort> orte = b.findeOrt(200);
         for (Ort o : orte) {
         	System.out.println(o);
         }

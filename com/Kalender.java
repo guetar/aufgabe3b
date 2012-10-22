@@ -16,14 +16,14 @@ import java.util.TreeSet;
 public class Kalender {
     
     private TreeSet<Termin> termine;
-    private ArrayList<Mitglied> mitglieder;
     private LinkedList<Termin> trash;
-    private Bilanz bilanz;
     
-    public Kalender(ArrayList<Mitglied> mitglieder, Bilanz bilanz) {
+    /**
+     * Konstruktor
+     */
+    public Kalender() {
         this.termine = new TreeSet<Termin>();
         this.trash = new LinkedList<Termin>();
-        this.bilanz = bilanz;
     }
     
     // Termine
@@ -34,10 +34,9 @@ public class Kalender {
      * @param t hinzuzufuegender Termin
      * @return Erfolg
      */
-    public Boolean termin_hinzufuegen(Termin t) {
+    public boolean terminHinzufuegen(Termin t) {
         int wert = (t instanceof Auftritt) ? ((Auftritt) t).getGage() : ((Probe) t).getMiete();
         String beschr = (t instanceof Auftritt) ? "Auftritt" : "Probe";
-        bilanz.addPosten(new Posten(t));
         return termine.add(t);
     }
     
@@ -48,46 +47,35 @@ public class Kalender {
      * @param neu neuer Termin
      * @return Erfolg
      */
-    public Boolean termin_aendern(Termin alt, Termin neu) {
+    public Termin terminAendern(Termin alt, Termin neu) {
         if(termine.contains(alt)) {
             
             if(alt instanceof Probe) {
                 
                 Probe p = (Probe) alt;
                 p.setProbe((Probe) neu);
-                
-                for(Mitglied m : mitglieder) {
-                    m.message("Folgende Probe wurde geändert: " + p.toString());
-                }
+                return p;
                 
             } else if (alt instanceof Auftritt) {
                 
                 Auftritt a = (Auftritt) alt;
                 a.setAuftritt((Auftritt) neu);
-                
-                for(Mitglied m : mitglieder) {
-                    m.message("Folgender Auftritt wurde geändert: " + a.toString());
-                }
+                return a;
             }
-            return true;
         }
-        return false;
+        return null;
     }
     
     /**
      * Loescht einen Termin
      *
-     * @param t die geloeschten Termine
+     * @param t der zu loeschende Termin
      * @return Erfolg
      */
-    public Boolean termin_loeschen(Termin t) {
+    public boolean terminLoeschen(Termin t) {
         if(termine.contains(t)) {
             trash.add(t);
             termine.remove(t);
-            
-            for(Mitglied m : mitglieder) {
-                m.message("Folgender Termin wurde abgesagt: " + t.toString());
-            }
             return true;
         }
         return false;
@@ -99,25 +87,37 @@ public class Kalender {
      * @param t der wiederherzustellende Termin
      * @return Erfolg
      */
-    public Boolean termin_wiederherstellen(Termin t) {
+    public Termin terminWiederherstellen(Termin t) {
         Termin alt = t.popFromStack();
         
         if(alt != null) {
             // Eine alte Version des Termins lag am Stack => wird wiederhergestellt
-            t.setTermin(alt);
-            return true;
+            if(alt instanceof Auftritt) {
+                
+                Auftritt a_alt = (Auftritt) alt;
+                Auftritt t_alt = (Auftritt) t;
+                return t_alt.setAuftritt(a_alt);
+                
+            } else if(alt instanceof Probe) {
+                
+                Probe p_alt = (Probe) alt;
+                Probe t_alt = (Probe) t;
+                return t_alt.setProbe(p_alt);
+            }
+            
         } else {
+            
             // keine alte Version vorhanden => Termin muss geloescht worden sein
             if(trash.contains(t)) {
                 trash.remove(t);
                 termine.add(t);
-                return true;
+                return t;
             }
         }
-        return false;
+        return null;
     }
     
-    public TreeSet<? extends Termin> termine_auflisten() {
+    public TreeSet<? extends Termin> termineAuflisten() {
         return termine;
     }
 
@@ -128,7 +128,7 @@ public class Kalender {
      * @param bis Ende des gesuchten Zeitraumes
      * @return Termine innerhalb des gesuchten Zeitraumes
      */
-    public ArrayList<? extends Termin> termine_auflisten(GregorianCalendar von, GregorianCalendar bis) {
+    public ArrayList<? extends Termin> termineAuflisten(GregorianCalendar von, GregorianCalendar bis) {
         ArrayList<Termin> termine_liste = new ArrayList<Termin>();
 
         for (Termin t : termine) {
@@ -149,18 +149,18 @@ public class Kalender {
      * @param bis Ende des gesuchten Zeitraumes
      * @return Proben innerhalb des gesuchten Zeitraumes
      */
-    public ArrayList<Probe> proben_auflisten(GregorianCalendar von, GregorianCalendar bis) {
-        ArrayList<Probe> proben_liste = new ArrayList<Probe>();
+    public ArrayList<Probe> probenAuflisten(GregorianCalendar von, GregorianCalendar bis) {
+        ArrayList<Probe> probenListe = new ArrayList<Probe>();
 
         for (Termin t : termine) {
             if (t instanceof Probe && von.before(t.getDatum()) && bis.after(t.getDatum())) {
-                proben_liste.add((Probe) t);
+                probenListe.add((Probe) t);
             } else if (bis.before(t.getDatum())) {
                 break;
             }
         }
 
-        return proben_liste;
+        return probenListe;
     }
 
     /**
@@ -170,18 +170,18 @@ public class Kalender {
      * @param bis Ende des gesuchten Zeitraumes
      * @return Auftritte innerhalb des gesuchten Zeitraumes
      */
-    public ArrayList<Auftritt> auftritte_auflisten(GregorianCalendar von, GregorianCalendar bis) {
-        ArrayList<Auftritt> auftritte_liste = new ArrayList<Auftritt>();
+    public ArrayList<Auftritt> auftritteAuflisten(GregorianCalendar von, GregorianCalendar bis) {
+        ArrayList<Auftritt> auftritteListe = new ArrayList<Auftritt>();
 
         for (Termin t : termine) {
             if (t instanceof Auftritt && von.before(t.getDatum()) && bis.after(t.getDatum())) {
-                auftritte_liste.add((Auftritt) t);
+                auftritteListe.add((Auftritt) t);
             } else if (bis.before(t.getDatum())) {
                 break;
             }
         }
 
-        return auftritte_liste;
+        return auftritteListe;
     }
     
     /**
@@ -189,7 +189,7 @@ public class Kalender {
      * 
      * @return trash geloeschte und geaenderte Termine
      */
-    public LinkedList<Termin> trash_auflisten() {
+    public LinkedList<Termin> trashAuflisten() {
         return trash;
     }
 }

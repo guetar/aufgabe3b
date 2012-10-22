@@ -24,9 +24,8 @@ public class Band {
     public Band() {
         this.mitglieder = new ArrayList<Mitglied>();
         this.repertoire = new ArrayList<Song>();
+        this.kalender = new Kalender();
         this.bilanz = new Bilanz();
-        this.kalender = new Kalender(mitglieder, bilanz);
-        this.bilanz.setKalender(kalender);
     }
 
     // Mitglieder
@@ -37,7 +36,7 @@ public class Band {
      * @param m hinzuzufuegendes Mitglied
      * @return Erfolg
      */
-    public Boolean mitglied_hinzufuegen(Mitglied m) {
+    public Boolean mitgliedHinzufuegen(Mitglied m) {
         return mitglieder.add(m);
     }
 
@@ -47,7 +46,7 @@ public class Band {
      * @param m zu entferndenes Mitglied
      * @return Erfolg
      */
-    public Boolean mitglied_entfernen(Mitglied m) {
+    public Boolean mitgliedEntfernen(Mitglied m) {
         if (mitglieder.contains(m)) {
             return mitglieder.remove(m);
         }
@@ -59,7 +58,7 @@ public class Band {
      * 
      * @return Mitglieder
      */
-    public ArrayList<Mitglied> mitglieder_auflisten() {
+    public ArrayList<Mitglied> mitgliederAuflisten() {
         return mitglieder;
     }
 
@@ -70,7 +69,7 @@ public class Band {
      * @param bis Ende des gesuchten Zeitraumes
      * @return Mitglieder innerhalb des gesuchten Zeitraumes
      */
-    public ArrayList<Mitglied> mitglieder_auflisten(GregorianCalendar von, GregorianCalendar bis) {
+    public ArrayList<Mitglied> mitgliederAuflisten(GregorianCalendar von, GregorianCalendar bis) {
         ArrayList<Mitglied> mitglieder_liste = new ArrayList<Mitglied>();
 
         for (Mitglied m : mitglieder) {
@@ -90,7 +89,7 @@ public class Band {
      * @param s hinzuzufuegender Song
      * @return Erfolg
      */
-    public Boolean song_hinzufuegen(Song s) {
+    public Boolean songHinzufuegen(Song s) {
         return repertoire.add(s);
     }
 
@@ -100,7 +99,7 @@ public class Band {
      * @param s zu entfernender Song
      * @return Erfolg
      */
-    public Boolean song_entfernen(Song s) {
+    public Boolean songEntfernen(Song s) {
         if (repertoire.contains(s)) {
             return repertoire.remove(s);
         }
@@ -112,7 +111,7 @@ public class Band {
      * 
      * @return Repertoire
      */
-    public ArrayList<Song> songs_auflisten() {
+    public ArrayList<Song> songsAuflisten() {
         return repertoire;
     }
 
@@ -122,7 +121,7 @@ public class Band {
      * @param datum gesuchter Zeitpunkt
      * @return Repertoire zu dem gesuchten Zeitpunkt
      */
-    public ArrayList<Song> songs_auflisten(GregorianCalendar datum, Boolean versionen) {
+    public ArrayList<Song> songsAuflisten(GregorianCalendar datum, Boolean versionen) {
         ArrayList<Song> repertoire_liste = new ArrayList<Song>();
 
         for(Mitglied m : mitglieder) {
@@ -141,7 +140,7 @@ public class Band {
     }
     
     /**
-     * Terminverwaltung
+     * Kalender und Bilanz
      * 
      * @param t Termin
      * @param von Beginn des gesuchten Zeitraums
@@ -150,32 +149,48 @@ public class Band {
      * @param neu neuer Termin
      * @return 
      */
-    public Boolean termin_hinzufuegen(Termin t) {
-        return kalender.termin_hinzufuegen(t);
+    public Boolean terminHinzufuegen(Termin t) {
+        return  kalender.terminHinzufuegen(t) && bilanz.postenHinzufuegen(new Posten(t));
     }
     
-    public ArrayList<? extends Termin> termine_auflisten(GregorianCalendar von, GregorianCalendar bis) {
-        return kalender.termine_auflisten(von, bis);
+    public ArrayList<? extends Termin> termineAuflisten(GregorianCalendar von, GregorianCalendar bis) {
+        return kalender.termineAuflisten(von, bis);
     }
     
-    public ArrayList<Probe> proben_auflisten(GregorianCalendar von, GregorianCalendar bis) {
-        return kalender.proben_auflisten(von, bis);
+    public ArrayList<Probe> probenAuflisten(GregorianCalendar von, GregorianCalendar bis) {
+        return kalender.probenAuflisten(von, bis);
     }
     
-    public ArrayList<Auftritt> auftritte_auflisten(GregorianCalendar von, GregorianCalendar bis) {
-        return kalender.auftritte_auflisten(von, bis);
+    public ArrayList<Auftritt> auftritteAuflisten(GregorianCalendar von, GregorianCalendar bis) {
+        return kalender.auftritteAuflisten(von, bis);
     }
     
-    public Boolean termin_aendern(Termin alt, Termin neu) {
-        return kalender.termin_aendern(alt, neu);
+    public Boolean terminAendern(Termin alt, Termin neu) {
+        Termin t = kalender.terminAendern(alt, neu);
+        
+        if(t != null) {
+            bilanz.postenAendern(new Posten(alt), new Posten(neu));
+            for(Mitglied m : mitglieder) {
+                m.message("Folgender Termin wurde geändert: " + t.toString());
+            }
+            return true;
+        }
+        return false;
     }
     
-    public Boolean termin_loeschen(Termin t) {
-        return kalender.termin_loeschen(t);
+    public Boolean terminLoeschen(Termin t) {
+        if(kalender.terminLoeschen(t)) {
+            bilanz.postenLoeschen(new Posten(t));
+            for(Mitglied m : mitglieder) {
+                m.message("Folgender Termin wurde abgesagt: " + t.toString());
+            }
+            return true;
+        }
+        return false;
     }
     
-    public Boolean termin_wiederherstellen(Termin t) {
-        return kalender.termin_wiederherstellen(t);
+    public Boolean terminWiederherstellen(Termin t) {
+        return (kalender.terminWiederherstellen(t) != null) ? true : false;
     }
 
     /**
@@ -184,8 +199,8 @@ public class Band {
      * @param p hinzuzufuegender Posten
      * @return Erfolg
      */
-    public Boolean posten_hinzufuegen(Posten p) {
-        return bilanz.addPosten(p);
+    public Boolean postenHinzufuegen(Posten p) {
+        return bilanz.postenHinzufuegen(p);
     }
     
     /**
@@ -195,11 +210,11 @@ public class Band {
      * @param bis Ende des gesuchten Zeitraumes
      * @return Kosten, die innerhalb des gesuchten Zeitraumes entstanden sind
      */
-    public int kosten_summieren(GregorianCalendar von, GregorianCalendar bis) {
+    public int kostenSummieren(GregorianCalendar von, GregorianCalendar bis) {
         int kosten = 0;
-        ArrayList<Probe> proben_kosten = kalender.proben_auflisten(von, bis);
+        ArrayList<Probe> probenKosten = kalender.probenAuflisten(von, bis);
 
-        for (Probe p : proben_kosten) {
+        for (Probe p : probenKosten) {
             kosten += p.getMiete();
         }
 
@@ -213,11 +228,11 @@ public class Band {
      * @param bis Ende des gesuchten Zeitraumes
      * @return Umsatz, der innerhalb des gesuchten Zeitraumes erwirtschaftet werden konnte
      */
-    public int umsatz_summieren(GregorianCalendar von, GregorianCalendar bis) {
+    public int umsatzSummieren(GregorianCalendar von, GregorianCalendar bis) {
         int umsatz = 0;
-        ArrayList<Auftritt> auftritte_kosten = kalender.auftritte_auflisten(von, bis);
+        ArrayList<Auftritt> auftritteKosten = kalender.auftritteAuflisten(von, bis);
 
-        for (Auftritt a : auftritte_kosten) {
+        for (Auftritt a : auftritteKosten) {
             umsatz += a.getGage();
         }
 
@@ -231,8 +246,8 @@ public class Band {
      * @param bis Ende des gesuchten Zeitraumes
      * @return Gewinn, der innerhalb des gesuchten Zeitraumes erwirtschaftet werden konnte
      */
-    public int gewinn_summieren(GregorianCalendar von, GregorianCalendar bis) {
-        return umsatz_summieren(von, bis) - kosten_summieren(von, bis);
+    public int gewinnSummieren(GregorianCalendar von, GregorianCalendar bis) {
+        return umsatzSummieren(von, bis) - kostenSummieren(von, bis);
     }
 
     /**
@@ -243,17 +258,17 @@ public class Band {
      * @return die Orte, die die bestimmte Infrastruktur haben. null, wenn kein
      * Ort die Voraussetzungen erfuellt.
      */
-    public ArrayList<Ort> finde_ort(int plaetze) {
-        ArrayList<Ort> gef_orte = new ArrayList<Ort>();
+    public ArrayList<Ort> findeOrt(int plaetze) {
+        ArrayList<Ort> gefOrte = new ArrayList<Ort>();
         
-        for (Termin t : kalender.termine_auflisten()) {
+        for (Termin t : kalender.termineAuflisten()) {
             Ort o = t.getOrt();
 
             if (o.getPlaetze() >= plaetze) {
-                    gef_orte.add(o);
+                    gefOrte.add(o);
             }
         }
 
-        return gef_orte;
+        return gefOrte;
     }
 }

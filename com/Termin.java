@@ -42,6 +42,7 @@ public abstract class Termin implements Comparable<Termin> {
         this.ort = t.getOrt();
         this.datum = t.getDatum();
         this.dauer = t.getDauer();
+        this.stack = new Stack<Termin>();
     }
 
     /**

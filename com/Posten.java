@@ -5,6 +5,7 @@
 package com;
 
 import java.util.GregorianCalendar;
+import java.util.Stack;
 
 /**
  *
@@ -15,7 +16,7 @@ public class Posten implements Comparable<Posten> {
     private int wert;
     private String beschreibung;
     private GregorianCalendar datum;
-    private Termin termin;
+    private Stack<Posten> stack;
 
     /**
      * Erstellt eine neue Instanz von Posten
@@ -27,27 +28,49 @@ public class Posten implements Comparable<Posten> {
      * @param termin Termin, auf den sich der Posten bezieht, sonst null
      */
     public Posten(int wert, String beschreibung, GregorianCalendar datum) {
+        this.beschreibung = beschreibung;
         this.wert = wert;
         this.datum = datum;
-        if (termin != null) {
-            this.beschreibung = (termin instanceof Auftritt) ? "Auftritt" : "Probe";
-        } else {
-            this.beschreibung = beschreibung;
-        }
+        this.stack = new Stack<Posten>();
     }
     
+    /**
+     * Erstellt einen Posten aus einem Termin
+     * 
+     * @param t Termin
+     */
     public Posten(Termin t) {
         if(t instanceof Auftritt) {
+            
             Auftritt a = (Auftritt) t;
             this.beschreibung = "Auftritt";
             this.wert = a.getGage();
+            
         } else if(t instanceof Probe) {
+            
             Probe p = (Probe) t;
             this.beschreibung = "Probe";
             this.wert = p.getMiete();
+            
         }
         this.datum = t.getDatum();
+        this.stack = new Stack<Posten>();
     }
+    
+    /**
+     * Aendert den derzeitigen Posten und wirft den alten auf den Stack
+     * 
+     * @param p neuer Posten
+     * @return geqenderter Posten
+     */
+    public Posten setPosten(Posten p) {
+        stack.push(this);
+        this.beschreibung = p.getBeschr();
+        this.wert = p.getWert();
+        this.datum = p.getDatum();
+        return this;
+    }
+    
     /**
      * Getter Methode des Datums
      * @return Datum des Postens
@@ -70,6 +93,27 @@ public class Posten implements Comparable<Posten> {
      */
     public String getBeschr(){
         return beschreibung;
+    }
+    
+    /**
+     * Wirft das uebergebene Element auf den Stack
+     * 
+     * @param p 
+     */
+    protected void pushToStack(Posten p) {
+        stack.push(p);
+    }
+    
+    /**
+     * Holt das letzte Element vom Stack
+     * 
+     * @return 
+     */
+    protected Posten popFromStack() {
+        if(!stack.empty()) {
+            return stack.pop();
+        }
+        return null;
     }
     
     @Override
