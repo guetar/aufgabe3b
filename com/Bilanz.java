@@ -14,12 +14,22 @@ import java.util.TreeSet;
 public class Bilanz {
 
     private TreeSet<Posten> posten;
+    private Terminverwaltung terminverwaltung;
 
     /**
      * Konstruktor
      */
     public Bilanz() {
-        posten = new TreeSet<Posten>();
+        this.posten = new TreeSet<Posten>();
+    }
+    
+    /**
+     * Setzen der Terminverwaltung
+     * 
+     * @param t Terminverwaltung
+     */
+    public void setTerminverwaltung(Terminverwaltung terminverwaltung) {
+        this.terminverwaltung = terminverwaltung;
     }
 
     /**
@@ -28,7 +38,7 @@ public class Bilanz {
      * @param p Bilanzposten
      * @return Erfolg
      */
-    public Boolean addPosten(Posten p) {
+    public boolean addPosten(Posten p) {
         return posten.add(p);
     }
 
@@ -42,9 +52,9 @@ public class Bilanz {
      * @param bis Ende des Intervalls
      * @return Summe der Kosten
      */
-    public int sumKosten(boolean showProben,boolean showSonstige, GregorianCalendar von, GregorianCalendar bis) {
+    public int sumKosten(boolean showProben, boolean showSonstige, GregorianCalendar von, GregorianCalendar bis) {
         int kosten = 0;
-        TreeSet<Posten> list = listBilanz(false,showProben,showSonstige, von, bis);
+        TreeSet<Posten> list = listBilanz(false, showProben, showSonstige, von, bis);
 
         for (Posten p : list) {
             if (p.getWert() < 0) {
@@ -88,9 +98,9 @@ public class Bilanz {
      * @param bis Ende des Intervalls
      * @return Summe der Umsaetze
      */
-    public int sumGewinn(boolean showAuftr, boolean showProben,boolean showSonstige, GregorianCalendar von, GregorianCalendar bis) {
+    public int sumGewinn(boolean showAuftr, boolean showProben, boolean showSonstige, GregorianCalendar von, GregorianCalendar bis) {
         int gewinn = 0;
-        TreeSet<Posten> list = listBilanz(showAuftr,showProben,showSonstige, von, bis);
+        TreeSet<Posten> list = listBilanz(showAuftr, showProben, showSonstige, von, bis);
 
         for (Posten p : list) {
             gewinn += p.getWert();
@@ -109,12 +119,12 @@ public class Bilanz {
      * @param bis Ende des Intervalls
      * @return Liste mit Posten der angegebenen Typen im Zeitraum "von"-"bis"
      */
-    public TreeSet<Posten> listBilanz(boolean showAuftr, boolean showProben,boolean showSonstige,GregorianCalendar von, GregorianCalendar bis) {
+    public TreeSet<Posten> listBilanz(boolean showAuftr, boolean showProben, boolean showSonstige, GregorianCalendar von, GregorianCalendar bis) {
         TreeSet<Posten> list = new TreeSet<Posten>();
 
         for (Posten p : posten) {
             //Ueberpruefung des Datums
-            if (von.before(p.getDatum()) && bis.after(p.getDatum())) {
+            if (von.before(p.getDatum())&&bis.after(p.getDatum())) {
 
                     //Ueberpruefung des Filters
                     if ((showAuftr&&p.getBeschr().equals("Auftritt"))||(showProben&&p.getBeschr().equals("Probe"))||(showSonstige&&!p.getBeschr().equals("Auftritt")&&!p.getBeschr().equals("Probe"))) {
@@ -123,6 +133,17 @@ public class Bilanz {
                  
             } else if (bis.before(p.getDatum())) {
                 break;
+            }
+        }
+        
+        for(Termin t : terminverwaltung.termine_auflisten(von, bis)) {
+            Posten p = new Posten(t);
+            if(!list.contains(p)) {
+                
+                //Ueberpruefung des Filters
+                if ((showAuftr&&p.getBeschr().equals("Auftritt"))||(showProben&&p.getBeschr().equals("Probe"))||(showSonstige&&!p.getBeschr().equals("Auftritt")&&!p.getBeschr().equals("Probe"))) {
+                    list.add(p);
+                }
             }
         }
 

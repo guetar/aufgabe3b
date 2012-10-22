@@ -26,7 +26,7 @@ public class Posten implements Comparable<Posten> {
      * @param datum Datum
      * @param termin Termin, auf den sich der Posten bezieht, sonst null
      */
-    public Posten(int wert, String beschreibung, GregorianCalendar datum, Termin termin) {
+    public Posten(int wert, String beschreibung, GregorianCalendar datum) {
         this.wert = wert;
         this.datum = datum;
         if (termin != null) {
@@ -34,6 +34,19 @@ public class Posten implements Comparable<Posten> {
         } else {
             this.beschreibung = beschreibung;
         }
+    }
+    
+    public Posten(Termin t) {
+        if(t instanceof Auftritt) {
+            Auftritt a = (Auftritt) t;
+            this.beschreibung = "Auftritt";
+            this.wert = a.getGage();
+        } else if(t instanceof Probe) {
+            Probe p = (Probe) t;
+            this.beschreibung = "Probe";
+            this.wert = p.getMiete();
+        }
+        this.datum = t.getDatum();
     }
     /**
      * Getter Methode des Datums

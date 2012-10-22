@@ -26,6 +26,7 @@ public class Band {
         this.repertoire = new ArrayList<Song>();
         this.bilanz = new Bilanz();
         this.terminverwaltung = new Terminverwaltung(mitglieder, bilanz);
+        this.bilanz.setTerminverwaltung(terminverwaltung);
     }
 
     // Mitglieder
