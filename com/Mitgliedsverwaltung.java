@@ -28,6 +28,7 @@ public class Mitgliedsverwaltung {
     
     public Mitgliedsverwaltung() {
         mitglieder = new HashSet<Mitglied>();
+        ersatzMitglieder = new HashSet<Mitglied>();
         snapShots = new HashMap<GregorianCalendar, HashSet<Mitglied>>();
         snapDates = new ArrayList<GregorianCalendar>();
     }
@@ -45,6 +46,12 @@ public class Mitgliedsverwaltung {
             makeSnapShot(date);
         }
         return ok; 
+    }
+    
+    
+    
+    public boolean ersatzMitgliedHinzufuegen(Mitglied m) {
+        return ersatzMitglieder.add(m);
     }
   
      
@@ -70,15 +77,11 @@ public class Mitgliedsverwaltung {
      * @param m das betroffene Mitglied
      * @return "true" wenn Mitglied in Sets vorhanden ist, "false" wenn nicht
      */
-    public boolean swapMitglied(Mitglied m, GregorianCalendar date) {
-        if (mitglieder.contains(m)) {
-            mitglieder.remove(m);
-            ersatzMitglieder.add(m);
-            makeSnapShot(date);
-            return true;
-        } else if (ersatzMitglieder.contains(m)) {
-            ersatzMitglieder.remove(m);
-            mitglieder.add(m);
+    public boolean swapMitglied(Mitglied mAusErsatz, Mitglied mAusFix, GregorianCalendar date) {
+        if (mitglieder.contains(mAusFix)) {
+            mitglieder.remove(mAusFix);
+            ersatzMitglieder.add(mAusFix);
+            mitglieder.add(mAusErsatz);
             makeSnapShot(date);
             return true;
         } else {
@@ -114,6 +117,7 @@ public class Mitgliedsverwaltung {
      * @return Ein Mitglieds-Set zu dem bestimmten Datum
      */
     public HashSet<Mitglied> mitgliederAuflisten(GregorianCalendar date) {
+       
         
        // Laufvariable
        GregorianCalendar tmpSnapDate = snapDates.get(0);

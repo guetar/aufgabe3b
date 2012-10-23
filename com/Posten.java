@@ -124,7 +124,7 @@ public class Posten implements Comparable<Posten> {
      */
     public String toString() {
         SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy hh:mm");
-        return beschreibung + " " + sdf.format(datum.getTime()) + " " + wert + " Euro";
+        return sdf.format(datum.getTime()) + ",\t " + wert + " Euro\t" +  beschreibung;
     }
     
     @Override

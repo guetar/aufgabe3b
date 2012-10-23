@@ -6,6 +6,7 @@
 import com.*;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.TreeSet;
 
@@ -33,7 +34,7 @@ public class Test {
         Mitglied andreas = new Mitglied("Andreas Kodolsky", "0676/7787986", "Gitarre");
         Mitglied michael = new Mitglied("Michael Preis", "0664/8798653", "Bass");
         Mitglied lukas = new Mitglied("Lukas Permanschlager", "0676/4382904839", "Schlagzeug");
-        Mitglied dominik = new Mitglied("Dominik Haltauf", "0664/473892347", "Bass");
+        Mitglied dominik = new Mitglied("Dominik Haltauf", "0664/473892347", "Bass");         
         
         Song love = new Song("Love: I love you", "04:33", new GregorianCalendar(2002, 2, 2));
         Song nolove = new Song("No Love: I loved you but now I love another woman", "03:22", new GregorianCalendar(2003, 2, 4));
@@ -159,12 +160,12 @@ public class Test {
         System.out.println("Erwarteter Output:\n\n4 Proben, 2 Auftritte\nNach dem Löschen und Ändern: P2, P5, A1, P6, A2\nNach dem Wiederherstellen: P2, P3, A1, P4, A2");
         System.out.println("----------------------------------------------------\n");
         
-        Probe p1 = new Probe(new Ort("P1 Studio", "Musterstr. 23", 8), new GregorianCalendar(2001, 6, 5, 18, 0), "3:00", mitglieder, 30);
-        Probe p2 = new Probe(new Ort("P2 Garage", "Maxerstr. 32", 4), new GregorianCalendar(2001, 7, 2, 18, 0), "3:00", mitglieder, 100);
-        Probe p3 = new Probe(new Ort("P3 Keller", "Maxerstr. 32", 4), new GregorianCalendar(2001, 7, 4, 18, 0), "3:00", mitglieder, 100);
-        Probe p4 = new Probe(new Ort("P4 Standort", "Maxerstr. 32", 4), new GregorianCalendar(2002, 7, 6, 18, 0), "3:00", mitglieder, 100);
-        Probe p5 = new Probe(new Ort("P5 Keller", "Maxerstr. 32", 4), new GregorianCalendar(2002, 7, 8, 18, 0), "3:00", mitglieder, 100);
-        Probe p6 = new Probe(new Ort("P6 Standort", "Maxerstr. 32", 4), new GregorianCalendar(2003, 7, 10, 18, 0), "3:00", mitglieder, 100);
+        Probe p1 = new Probe(new Ort("P1 Studio", "Musterstr. 23", 8), new GregorianCalendar(2001, 6, 5, 18, 0), "3:00", mitglieder, -30);
+        Probe p2 = new Probe(new Ort("P2 Garage", "Maxerstr. 32", 4), new GregorianCalendar(2001, 7, 2, 18, 0), "3:00", mitglieder, -100);
+        Probe p3 = new Probe(new Ort("P3 Keller", "Maxerstr. 32", 4), new GregorianCalendar(2001, 7, 4, 18, 0), "3:00", mitglieder, -100);
+        Probe p4 = new Probe(new Ort("P4 Standort", "Maxerstr. 32", 4), new GregorianCalendar(2002, 7, 6, 18, 0), "3:00", mitglieder, -100);
+        Probe p5 = new Probe(new Ort("P5 Keller", "Maxerstr. 32", 4), new GregorianCalendar(2002, 7, 8, 18, 0), "3:00", mitglieder, -100);
+        Probe p6 = new Probe(new Ort("P6 Standort", "Maxerstr. 32", 4), new GregorianCalendar(2003, 7, 10, 18, 0), "3:00", mitglieder, -100);
         Auftritt a1 = new Auftritt(new Ort("A1 Rauschhaus", "Alkgasse 13", 50), new GregorianCalendar(2001, 9, 2, 18, 0), "2:00", mitglieder, 800);
         Auftritt a2 = new Auftritt(new Ort("A2 Gasometer", "Gasstr.666", 3000), new GregorianCalendar(2002, 9, 3, 18, 0), "2:00", mitglieder, 800);
         
@@ -236,17 +237,51 @@ public class Test {
         }
         System.out.println("");
         
+        
+        /**
+         * Ausgabe bestimmter Termine + Mitglieder, Ausgabe Termine eines Mitglieds, 
+         * Ersatzmitglied erstellen und mit aktivem Mitglied austauschen
+         */
+        System.out.println("\nAusgabe Teilnehmer--------------------------------");
+        System.out.println("Erwarteter Output: \nTeilnehmer des gesuchten Termins, (3) fuer A1\nAusgabe Termine von Andreas\nAusgabe Band vor und nach Wechsel von Mitglider und Ersatz");        
+        System.out.println("----------------------------------------------------\n");
+        termine = b.termineAuflisten(new GregorianCalendar(2001, 8, 3), new GregorianCalendar(2002, 1, 1));
+        
+        for (Termin t : termine) {
+            System.out.println(t + "\nDaran nehmen teil:");
+            HashSet<Mitglied> teilnehmer = t.getTeilnehmer();
+            for (Mitglied m : teilnehmer) {
+                System.out.println(m);
+            }
+        }
+        
+        System.out.println("\nTermine von Andreas:");
+        termine = andreas.getTermine();
+        for (Termin t : termine) {
+            System.out.println(t);
+        }
+        
+        // Ersatzmitglied erstellen und mit fixem austauschen
+        Mitglied jonas = new Mitglied("Jonas Katamay", "0999/9966699", "Gitarre");
+        b.ersatzMitgliedHinzufuegen(jonas);
+        System.out.println("\nBand derzeit:\n" + b.printMitglieder());
+        b.swapMitglied(jonas, andreas, new GregorianCalendar(2004, 3, 9));
+        System.out.println("Band nach Tausch von Ersatzmitglied und fixem Mitglied:\n" + b.printMitglieder());
+        
+       
+        
+        
+        
         /**
          * Abstimmen ueber einen Auftritt
-         */        
-        
+         */                
         System.out.println("\nAusgabe Abstimmung----------------------------------");
         System.out.println("Erwarteter Output: \nAbstimmung ueber zwei Termine, Entscheidungen der Mitglieder + Begruendungen,\nein Termin findet nicht statt, der andere schon und wird angelegt");        
         System.out.println("----------------------------------------------------\n");
         
         Auftritt moeglAuftritt1 = new Auftritt(new Ort("a2 Gasometer", "Gasstr.666", 3000), new GregorianCalendar(2004, 9, 3, 18, 0), "2:00", mitglieder, 800);
         Abstimmung abstimmungAuftritt1 = b.abstimmenTermin(moeglAuftritt1);
-        abstimmungAuftritt1.abstimmen(andreas, true, "passt");
+        abstimmungAuftritt1.abstimmen(jonas, true, "passt");
         abstimmungAuftritt1.abstimmen(michael, true, "Leiwand!");
         abstimmungAuftritt1.abstimmen(lukas, false, "do kau i ned!!");
                
@@ -266,9 +301,9 @@ public class Test {
         System.out.println("");
         
         
-        Probe moeglProbe1 = new Probe(new Ort("p Unter Bruecke", "Sandlerhaus 3", 30), new GregorianCalendar(2004, 10, 3, 18, 0), "2:00", mitglieder, 200);
+        Probe moeglProbe1 = new Probe(new Ort("p Unter Bruecke", "Sandlerhaus 3", 30), new GregorianCalendar(2004, 10, 3, 18, 0), "2:00", mitglieder, -200);
         Abstimmung abstimmungProbe1 = b.abstimmenTermin(moeglProbe1);
-        abstimmungProbe1.abstimmen(andreas, true, "passt");
+        abstimmungProbe1.abstimmen(jonas, true, "passt");
         abstimmungProbe1.abstimmen(michael, true, "Leiwand!");
         abstimmungProbe1.abstimmen(lukas, true, "yeah, Mann!");
                
@@ -294,19 +329,45 @@ public class Test {
          * Eine Bilanz über den gesuchten Zeitraum erstellen
          */
         System.out.println("\nAusgabe Bilanz------------------------------------");
-        System.out.println("Erwarteter Output: \nEINZUFUEGEN");       
+        System.out.println("Erwarteter Output: \nAuflistung der gesamten Posten, dann nur Proben und sonstige Posten, dann nur Auftritte\nDann Summe der Kosten, Einnahmen und Gewinnrechnung");       
         System.out.println("----------------------------------------------------\n");
         
-        TreeSet<Posten> bilanz = b.bilanzAuflisten(von, bis);
+        b.postenHinzufuegen(new Posten(-150, "Gras", new GregorianCalendar(2002, 4, 8, 1, 00)));
+        b.postenHinzufuegen(new Posten(-400, "Koks", new GregorianCalendar(2002, 4, 8, 1, 00)));
+        b.postenHinzufuegen(new Posten(-900, "Nutten", new GregorianCalendar(2002, 4, 8, 3, 00)));       
+        b.postenHinzufuegen(new Posten(-15, "Pille danach", new GregorianCalendar(2002, 4, 9, 11, 00)));
+        b.postenHinzufuegen(new Posten(30, "Plasmaspende", new GregorianCalendar(2002, 4, 10)));
+        b.postenHinzufuegen(new Posten(500, "Nierenverkauf", new GregorianCalendar(2002, 5, 26, 11, 00)));
+        b.postenHinzufuegen(new Posten(-500, "Alk", new GregorianCalendar(2002, 5, 26, 11, 05)));
         
+        // Auflistung aller Posten
+        TreeSet<Posten> bilanz = b.postenAuflisten(true, true, true, von, bis);
+        System.out.println("Alle Posten:");
         for(Posten p : bilanz) {
             System.out.println(p.toString());
         }
         System.out.println("");
         
-        System.out.println("Gesamtkosten in diesem Zeitraum:" + b.kostenSummieren(true, true, von, bis) + " Euro");
-        System.out.println("Gesamtumsatz in diesem Zeitraum:" + b.umsatzSummieren(true, true, von, bis) + " Euro");
-        System.out.println("Macht einen Gesamtgewinn von:" + b.gewinnSummieren(true, true, true, von, bis) + " Euro");
+        // Auflistung der Proben und sonstigen Posten
+        bilanz = b.postenAuflisten(false, true, true, von, bis);
+        System.out.println("Proben und sonstige Posten:");
+        for(Posten p : bilanz) {
+            System.out.println(p.toString());
+        }
+        System.out.println("");
+        
+        // Auflistung der Auftritte
+        bilanz = b.postenAuflisten(true, false, false, von, bis);
+        System.out.println("Auftritte:");
+        for(Posten p : bilanz) {
+            System.out.println(p.toString());
+        }
+        System.out.println("");
+        
+        
+        System.out.println("Gesamtkosten in diesem Zeitraum: " + b.postenSummieren(false, true, true, von, bis) + " Euro");
+        System.out.println("Gesamtumsatz in diesem Zeitraum: " + b.postenSummieren(true, false, true, von, bis) + " Euro");
+        System.out.println("Macht einen Gesamtgewinn von: " + b.postenSummieren(true, true, true, von, bis) + " Euro");
         System.out.println("");
         
         /**
