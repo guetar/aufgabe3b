@@ -8,7 +8,7 @@ package com;
  *
  * @author Matthias
  */
-public class Ort {
+public class Ort implements Comparable<Ort> {
 
     private String name;
     private String adresse;
@@ -20,26 +20,24 @@ public class Ort {
      * @param name Name des Ortes
      * @param adresse Adresse des Ortes
      * @param zplaetze Anzahl der Zuschauerplätze
-     * @param asteckdosen Anzahl der vorhandenen Steckdosen
-     * @param catering true, wenn Catering vorhanden ist
      */
     public Ort(String name, String adresse, int plaetze) {
         this.name = name;
         this.adresse = adresse;
         this.plaetze = plaetze;
     }
-    
+
     /**
      * Kopierkonstruktor
-     * 
+     *
      * @param o zu kopierender Ort
      */
-    public Ort (Ort o) {
+    public Ort(Ort o) {
         name = o.name;
         adresse = o.adresse;
         plaetze = o.plaetze;
     }
-    
+
     /**
      * Liefert Anzahl der vorhandenen Zuschauerplaetze
      *
@@ -56,5 +54,15 @@ public class Ort {
      */
     public String toString() {
         return name + " " + adresse + " " + plaetze;
+    }
+
+    @Override
+    public int compareTo(Ort o) {
+        if (this.name.compareTo(o.name) < 0) {
+            return -1;
+        } else if (this.name.compareTo(o.name) > 0) {
+            return 1;
+        }
+        return 0;
     }
 }

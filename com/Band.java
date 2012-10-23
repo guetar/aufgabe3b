@@ -261,24 +261,24 @@ public class Band {
     }
 
     /**
+     * Fügt einen Ort hinzu
+     *
+     * @param o hinzuzufuegender Ort
+     * @return Erfolg
+     */
+    public boolean ortHinzufuegen(Ort o) {
+        return kalender.ortHinzufuegen(o);
+    }
+
+    /**
      * liefert Liste mit Orten, die eine bestimmte Infrastruktur haben.
      *
      * @param plaetze Gesuchte Anzahl an Zuschauerplaetzen(oder 0, wenn egal)
      *
-     * @return die Orte, die die bestimmte Infrastruktur haben. null, wenn kein
-     * Ort die Voraussetzungen erfuellt.
+     * @return die Orte, die die bestimmte Infrastruktur haben. Leere Liste,
+     * wenn kein Ort die Voraussetzungen erfuellt.
      */
     public ArrayList<Ort> findeOrt(int plaetze) {
-        ArrayList<Ort> gefOrte = new ArrayList<Ort>();
-
-        for (Termin t : kalender.termineAuflisten()) {
-            Ort o = t.getOrt();
-
-            if (o.getPlaetze() >= plaetze) {
-                gefOrte.add(o);
-            }
-        }
-
-        return gefOrte;
+        return kalender.findeOrt(plaetze);
     }
 }
