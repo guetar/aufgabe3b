@@ -31,10 +31,9 @@ public class Band {
     }
 
     // Mitglieder
-    
     /**
      * Fuegt der Band ein Mitglied hinzu.
-     * 
+     *
      * @param m hinzuzufuegendes Mitglied
      * @return Erfolg
      */
@@ -52,7 +51,7 @@ public class Band {
 
     /**
      * Entfernt ein Mitglied aus der Band.
-     * 
+     *
      * @param m zu entferndenes Mitglied
      * @return Erfolg
      */
@@ -62,7 +61,7 @@ public class Band {
 
     /**
      * Listet alle Mitglieder der Band.
-     * 
+     *
      * @return Mitglieder
      */
     public HashSet<Mitglied> mitgliederAuflisten() {
@@ -70,8 +69,9 @@ public class Band {
     }
 
     /**
-     * Listet alle Personen, die innerhalb eines gesuchten Zeitraums Mitglieder der Band waren.
-     * 
+     * Listet alle Personen, die innerhalb eines gesuchten Zeitraums Mitglieder
+     * der Band waren.
+     *
      * @param von Beginn des gesuchten Zeitraumes
      * @param bis Ende des gesuchten Zeitraumes
      * @return Mitglieder innerhalb des gesuchten Zeitraumes
@@ -81,10 +81,9 @@ public class Band {
     }
 
     // Repertoire
-    
     /**
      * Fuegt dem Repertoire der Band einen Song hinzu.
-     * 
+     *
      * @param s hinzuzufuegender Song
      * @return Erfolg
      */
@@ -94,7 +93,7 @@ public class Band {
 
     /**
      * Entfernt einen Song aus dem Repertoire der Band.
-     * 
+     *
      * @param s zu entfernender Song
      * @return Erfolg
      */
@@ -107,7 +106,7 @@ public class Band {
 
     /**
      * Listet das Repertoire der Band
-     * 
+     *
      * @return Repertoire
      */
     public ArrayList<Song> songsAuflisten() {
@@ -116,7 +115,7 @@ public class Band {
 
     /**
      * Listet das Repertoire der Band zu einem gewissen Zeitpunkt.
-     * 
+     *
      * @param datum gesuchter Zeitpunkt
      * @return Repertoire zu dem gesuchten Zeitpunkt
      */
@@ -169,12 +168,11 @@ public class Band {
     public boolean terminAendern(Termin alt, Termin neu) {
         HashSet<Mitglied> mitglieder = mitgliedsVerwaltung.mitgliederAuflisten();
         
-        Termin t = kalender.terminAendern(alt, neu);
+        Termin t = kalender.terminAendern(alt.getDatum(), neu);
         
         if(t != null) {
-            Posten a = new Posten(alt);
-            Posten n = new Posten(neu);
-            if(bilanz.postenExistiert(a)) bilanz.postenAendern(a, n);
+            Posten p = new Posten(alt);
+            if(bilanz.postenExistiert(p)) bilanz.postenAendern(p, new Posten(neu));
             for(Mitglied m : mitglieder) {
                 m.message("Folgender Termin wurde geändert: " + t.toString());
                 m.terminAendern(alt, neu);
@@ -214,7 +212,7 @@ public class Band {
     public Termin terminWiederherstellen(Termin t) {
         Posten p = new Posten(t);
         if(bilanz.postenExistiert(p)) bilanz.postenWiederherstellen(p);
-        return kalender.terminWiederherstellen(t);
+        return kalender.terminWiederherstellen(t.getDatum());
     }
     
     /**
@@ -259,7 +257,7 @@ public class Band {
     public boolean postenHinzufuegen(Posten p) {
         return bilanz.postenHinzufuegen(p);
     }
-    
+
     /**
      * Aendert einen Posten
      * 
@@ -307,47 +305,51 @@ public class Band {
 //    }
 
     /**
-     * Summiert den Umsatz, der innerhalb eines gesuchten Zeitraumes durch Gagen bei den Auftritten verdient wurde
-     * 
+     * Summiert den Umsatz, der innerhalb eines gesuchten Zeitraumes durch Gagen
+     * bei den Auftritten verdient wurde
+     *
      * @param von Beginn des gesuchten Zeitraumes
      * @param bis Ende des gesuchten Zeitraumes
-     * @return Umsatz, der innerhalb des gesuchten Zeitraumes erwirtschaftet werden konnte
+     * @return Umsatz, der innerhalb des gesuchten Zeitraumes erwirtschaftet
+     * werden konnte
      */
 //    public int umsatzSummieren(boolean showAuftr, boolean showSonstige, GregorianCalendar von, GregorianCalendar bis) {
 //        return bilanz.umsatz(showAuftr, showSonstige, von, bis);
 //    }
 
     /**
-     * Summiert den Gewinn, der innerhalb eines gesuchten Zeitraumes erwirtschaftet werden konnte
-     * 
+     * Summiert den Gewinn, der innerhalb eines gesuchten Zeitraumes
+     * erwirtschaftet werden konnte
+     *
      * @param von Beginn des gesuchten Zeitraumes
      * @param bis Ende des gesuchten Zeitraumes
-     * @return Gewinn, der innerhalb des gesuchten Zeitraumes erwirtschaftet werden konnte
+     * @return Gewinn, der innerhalb des gesuchten Zeitraumes erwirtschaftet
+     * werden konnte
      */
     public int postenSummieren(boolean showAuftr, boolean showProben, boolean showSonstige, GregorianCalendar von, GregorianCalendar bis) {
         return bilanz.postenSummieren(showAuftr, showProben, showSonstige, von, bis);
     }
 
     /**
+     * Fügt einen Ort hinzu
+     *
+     * @param o hinzuzufuegender Ort
+     * @return Erfolg
+     */
+    public boolean ortHinzufuegen(Ort o) {
+        return kalender.ortHinzufuegen(o);
+    }
+
+    /**
      * liefert Liste mit Orten, die eine bestimmte Infrastruktur haben.
      *
      * @param plaetze Gesuchte Anzahl an Zuschauerplaetzen(oder 0, wenn egal)
-     * 
-     * @return die Orte, die die bestimmte Infrastruktur haben. null, wenn kein
-     * Ort die Voraussetzungen erfuellt.
+     *
+     * @return die Orte, die die bestimmte Infrastruktur haben. Leere Liste,
+     * wenn kein Ort die Voraussetzungen erfuellt.
      */
     public ArrayList<Ort> findeOrt(int plaetze) {
-        ArrayList<Ort> gefOrte = new ArrayList<Ort>();
-        
-        for (Termin t : kalender.termineAuflisten()) {
-            Ort o = t.getOrt();
-
-            if (o.getPlaetze() >= plaetze) {
-                    gefOrte.add(o);
-            }
-        }
-
-        return gefOrte;
+        return kalender.findeOrt(plaetze);
     }
     
     public String printMitglieder() {
