@@ -88,7 +88,7 @@ public class Test {
                 System.out.println(m.toString());
             }
         }
-        else { System.out.println("Ungültiges Datum"); }
+        else { System.out.println("Ungueltiges Datum"); }
         
         System.out.println("\nAuflistung der Gruppenmitglieder zum Datum 2001, 2, 2 :");
         mitglieder = b.mitgliederAuflisten(new GregorianCalendar(2001, 2, 2));
@@ -198,7 +198,7 @@ public class Test {
         System.out.println("");
         
         /**
-         * Termin loeschen und anschließend wiederherstellen
+         * Termin loeschen und anschliessend wiederherstellen
          */
         b.terminLoeschen(p1);
         b.terminAendern(p3, new Probe(new Ort("P5 Keller", "Maxerstr. 32", 4), new GregorianCalendar(2002, 7, 8, 18, 0), "3:00", mitglieder, 70));
@@ -266,7 +266,7 @@ public class Test {
    
 
         /**
-         * Eine Bilanz über den gesuchten Zeitraum erstellen
+         * Eine Bilanz ueber den gesuchten Zeitraum erstellen
          */
         System.out.println("\nAusgabe Bilanz------------------------------------");
         System.out.println("Erwarteter Output: \nEINZUFUEGEN");       
@@ -310,7 +310,7 @@ public class Test {
         System.out.println("Erwarteter Output:\nErste Abfrage gibt Orte mit mehr als 200 Plaetze aus,\nzweite mit mehr als 20 Plaetze\ndritte mit mehr als 100.000");
         System.out.println("----------------------------------------------------\n");
         
-        System.out.println("\nOrte mit mehr als 200 Plätzen:");
+        System.out.println("\nOrte mit mehr als 200 Plaetzen:");
         ArrayList<Ort> orte = b.findeOrt(200);
         if(!orte.isEmpty()) {
             for (Ort o : orte) {
@@ -319,7 +319,7 @@ public class Test {
         }
         else  {System.out.println("Keinen Ort gefunden!");}
         
-        System.out.println("\nOrte mit mehr als 20 Plätzen:");
+        System.out.println("\nOrte mit mehr als 20 Plaetzen:");
         orte = b.findeOrt(20);
         if(!orte.isEmpty()) {
             for (Ort o : orte) {
