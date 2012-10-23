@@ -7,6 +7,7 @@ package com;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
 import java.util.HashSet;
+import java.util.TreeSet;
 
 /**
  *
@@ -112,20 +113,20 @@ public class Band {
      * @return Repertoire zu dem gesuchten Zeitpunkt
      */
     public ArrayList<Song> songsAuflisten(GregorianCalendar datum, boolean versionen) {
-        ArrayList<Song> repertoire_liste = new ArrayList<Song>();
+        ArrayList<Song> repertoireListe = new ArrayList<Song>();
         HashSet<Mitglied> mitglieder = mitgliedsVerwaltung.mitgliederAuflisten(datum);
 
         for(Mitglied m : mitglieder) {
             if(!versionen) {
-                repertoire_liste.addAll(m.getRepertoire());
+                repertoireListe.addAll(m.getRepertoire(datum));
             } else {
-                for(Song s : m.getRepertoire()) {
-                    repertoire_liste.addAll(s.getVersionen());
+                for(Song s : m.getRepertoire(datum)) {
+                    repertoireListe.addAll(s.getVersionen());
                 }
             }
         }
 
-        return repertoire_liste;
+        return repertoireListe;
     }
     
     // Kalender und Bilanz
@@ -280,6 +281,10 @@ public class Band {
      */
     public Posten postenWiederherstellen(Posten p) {
         return bilanz.postenWiederherstellen(p);
+    }
+    
+    public TreeSet<Posten> bilanzAuflisten(GregorianCalendar von, GregorianCalendar bis) {
+        return bilanz.bilanzAuflisten(true, true, true, von, bis);
     }
     
     /**
