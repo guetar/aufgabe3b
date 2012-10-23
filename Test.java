@@ -328,7 +328,7 @@ public class Test {
         }
         else  {System.out.println("Keinen Ort gefunden!");}
         
-        System.out.println("\nOrte mit mehr als 100.000 Plätzen:");
+        System.out.println("\nOrte mit mehr als 100.000 Plaetzen:");
         orte = b.findeOrt(100000);
         if(!orte.isEmpty()) {
             for (Ort o : orte) {
