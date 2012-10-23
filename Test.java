@@ -146,13 +146,15 @@ public class Test {
         Probe p5 = new Probe(new Ort("p5 Keller", "Maxerstr. 32", 4), new GregorianCalendar(2002, 7, 8, 18, 0), "3:00", mitglieder, 100);
         Probe p6 = new Probe(new Ort("p6 Standort", "Maxerstr. 32", 4), new GregorianCalendar(2003, 7, 10, 18, 0), "3:00", mitglieder, 100);
         Auftritt a1 = new Auftritt(new Ort("a1 Rauschhaus", "Alkgasse 13", 50), new GregorianCalendar(2001, 9, 2, 18, 0), "2:00", mitglieder, 800);
-        Auftritt a2 = new Auftritt(new Ort("a2 Gasometer", "Gasstr.666", 3000), new GregorianCalendar(2002, 9, 3, 18, 0), "2:00", mitglieder, 800);
+        Auftritt a2 = new Auftritt(new Ort("a2 Gasometer", "Gasstr.666", 3000), new GregorianCalendar(2002, 9, 3, 18, 0), "2:00", mitglieder, 800);   
+        Auftritt a3 = new Auftritt(new Ort("a3 Testhaus", "Teststr.123", 20), new GregorianCalendar(2013, 3, 30, 18, 0), "2:00", mitglieder, 200);        
         
         b.terminHinzufuegen(p1);
         b.terminHinzufuegen(p2);
         b.terminHinzufuegen(p3);
         b.terminHinzufuegen(p4);
         b.terminHinzufuegen(a1);
+        b.terminHinzufuegen(a3);
         b.terminHinzufuegen(a2);
 
         ArrayList<? extends Termin> termine = b.termineAuflisten(von, bis);
@@ -251,12 +253,14 @@ public class Test {
          * Eine Bilanz über den gesuchten Zeitraum erstellen
          */
         System.out.println("\nAusgabe Bilanz------------------------------------");
-        System.out.println("Erwarteter Output: \nEINZUFUEGEN");       
+        System.out.println("Erwarteter Output: \nKosten durch Proben in diesem Zeitraum: 330 Euro"
+                + "\nUmsatz durch Auftritte in diesem Zeitraum: 1600 Euro"
+                + "\nMacht einen Gesamtgewinn von: 1270 Euro");       
         System.out.println("----------------------------------------------------\n");
-        
-        System.out.println("Gesamtkosten in diesem Zeitraum:" + b.kostenSummieren(von, bis) + " Euro");
-        System.out.println("Gesamtumsatz in diesem Zeitraum:" + b.umsatzSummieren(von, bis) + " Euro");
-        System.out.println("Macht einen Gesamtgewinn von:" + b.gewinnSummieren(von, bis) + " Euro");
+        Bilanz bilanz=b.getBilanz();
+        System.out.println("Kosten durch Proben in diesem Zeitraum: " + bilanz.kosten(true, false, von, bis) + " Euro");
+        System.out.println("Umsatz durch Auftritte in diesem Zeitraum: " + bilanz.umsatz(true, false, von, bis) + " Euro");
+        System.out.println("Macht einen Gesamtgewinn von: " +bilanz.gewinn(true, true, false, von, bis) + " Euro");
         System.out.println("");
         
         /**
