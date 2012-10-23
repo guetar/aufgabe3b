@@ -38,6 +38,16 @@ public class Bilanz {
         }
         return null;
     }
+    
+    /**
+     * Ueberprueft, ob der uebergebene Posten existiert
+     * 
+     * @param p zu ueberpruefender Posten
+     * @return dessen Existenz
+     */
+    public boolean postenExistiert(Posten p) {
+        return posten.contains(p);
+    }
 
     /**
      * Fuegt der Bilanz einen neuen Posten hinzu
