@@ -57,8 +57,8 @@ public class Test {
         lukas.songHinzufuegen(schloger);
         lukas.songHinzufuegen(schlogzeg);
         
-        Song triest = new Song("Kuhflade: Das Leben ist eine Kuhflade und ich scheiß darauf", "06:30", new GregorianCalendar(2003, 5, 7));
-        Song happy = new Song("Mut: Das Leben ist plötzlich voll gut und ich hab wieder Mut", "08:24", new GregorianCalendar(2003, 7, 5));
+        Song triest = new Song("Kuhflade: Das Leben ist eine Kuhflade und ich scheiss darauf", "06:30", new GregorianCalendar(2003, 5, 7));
+        Song happy = new Song("Mut: Das Leben ist ploetzlich voll gut und ich hab wieder Mut", "08:24", new GregorianCalendar(2003, 7, 5));
         
         dominik.songHinzufuegen(triest);
         dominik.songHinzufuegen(happy);
@@ -88,7 +88,7 @@ public class Test {
                 System.out.println(m.toString());
             }
         } else {
-            System.out.println("Ungültiges Datum");
+            System.out.println("Ungueltiges Datum");
         }
 
         System.out.println("\nAuflistung der Gruppenmitglieder zum Datum 2001, 2, 2:");
@@ -98,7 +98,7 @@ public class Test {
                 System.out.println(m.toString());
             }
         } else {
-            System.out.println("Ungültiges Datum");
+            System.out.println("Ungueltiges Datum");
         }
 
         System.out.println("\nAuflistung der Gruppenmitglieder zum Datum 2002, 3, 2:");
@@ -108,7 +108,7 @@ public class Test {
                 System.out.println(m.toString());
             }
         } else {
-            System.out.println("Ungültiges Datum");
+            System.out.println("Ungueltiges Datum");
         }
 
         System.out.println("\nAuflistung der Gruppenmitglieder zum Datum 2003, 3, 2:");
@@ -118,7 +118,7 @@ public class Test {
                 System.out.println(m.toString());
             }
         } else {
-            System.out.println("Ungültiges Datum");
+            System.out.println("Ungueltiges Datum");
         }
 
         System.out.println("\nAuflistung der aktuellen Gruppenmitglieder:");
@@ -128,7 +128,7 @@ public class Test {
                 System.out.println(m.toString());
             }
         } else {
-            System.out.println("Ungültiges Datum");
+            System.out.println("Ungueltiges Datum");
         }
         System.out.println("");
 
@@ -160,7 +160,7 @@ public class Test {
          * Einige Termine hinzufuegen und auflisten
          */
         System.out.println("\nAusgabe Termine-------------------------------------");
-        System.out.println("Erwarteter Output:\n\n4 Proben, 2 Auftritte\nNach dem Löschen und Ändern: P2, P5, A1, P6, A2\nNach dem Wiederherstellen: P2, P3, A1, P4, A2");
+        System.out.println("Erwarteter Output:\n\n4 Proben, 2 Auftritte\nNach dem Loeschen und Aendern: P2, P5, A1, P6, A2\nNach dem Wiederherstellen: P2, P3, A1, P4, A2");
         System.out.println("----------------------------------------------------\n");
         
         Probe p1 = new Probe(new Ort("P1 Studio", "Musterstr. 23", 8), new GregorianCalendar(2001, 6, 5, 18, 0), "3:00", mitglieder, 30);
@@ -323,7 +323,7 @@ public class Test {
         System.out.println("Erwarteter Output:\nErste Abfrage gibt Orte mit mehr als 200 Plaetze aus,\nzweite mit mehr als 20 Plaetze\ndritte mit mehr als 100.000");
         System.out.println("----------------------------------------------------\n");
 
-        System.out.println("\nOrte mit mehr als 200 Plätzen:");
+        System.out.println("\nOrte mit mehr als 200 Plaetzen:");
         ArrayList<Ort> orte = b.findeOrt(200);
         if (!orte.isEmpty()) {
             for (Ort o : orte) {
@@ -333,7 +333,7 @@ public class Test {
             System.out.println("Keinen Ort gefunden!");
         }
 
-        System.out.println("\nOrte mit mehr als 20 Plätzen:");
+        System.out.println("\nOrte mit mehr als 20 Plaetzen:");
         orte = b.findeOrt(20);
         if (!orte.isEmpty()) {
             for (Ort o : orte) {
@@ -343,7 +343,7 @@ public class Test {
             System.out.println("Keinen Ort gefunden!");
         }
 
-        System.out.println("\nOrte mit mehr als 100.000 Plätzen:");
+        System.out.println("\nOrte mit mehr als 100.000 Plaetzen:");
         orte = b.findeOrt(100000);
         if (!orte.isEmpty()) {
             for (Ort o : orte) {
