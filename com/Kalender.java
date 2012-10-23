@@ -35,8 +35,6 @@ public class Kalender {
      * @return Erfolg
      */
     public boolean terminHinzufuegen(Termin t) {
-        int wert = (t instanceof Auftritt) ? ((Auftritt) t).getGage() : ((Probe) t).getMiete();
-        String beschr = (t instanceof Auftritt) ? "Auftritt" : "Probe";
         return termine.add(t);
     }
     

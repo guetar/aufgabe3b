@@ -254,9 +254,9 @@ public class Test {
         System.out.println("Erwarteter Output: \nEINZUFUEGEN");       
         System.out.println("----------------------------------------------------\n");
         
-        System.out.println("Gesamtkosten in diesem Zeitraum:" + b.kostenSummieren(von, bis) + " Euro");
-        System.out.println("Gesamtumsatz in diesem Zeitraum:" + b.umsatzSummieren(von, bis) + " Euro");
-        System.out.println("Macht einen Gesamtgewinn von:" + b.gewinnSummieren(von, bis) + " Euro");
+        System.out.println("Gesamtkosten in diesem Zeitraum:" + b.kostenSummieren(true, true, von, bis) + " Euro");
+        System.out.println("Gesamtumsatz in diesem Zeitraum:" + b.umsatzSummieren(true, true, von, bis) + " Euro");
+        System.out.println("Macht einen Gesamtgewinn von:" + b.gewinnSummieren(true, true, true, von, bis) + " Euro");
         System.out.println("");
         
         /**

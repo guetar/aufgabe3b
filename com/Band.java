@@ -37,7 +37,7 @@ public class Band {
      * @param m hinzuzufuegendes Mitglied
      * @return Erfolg
      */
-    public Boolean mitgliedHinzufuegen(Mitglied m, GregorianCalendar eintrittsDatum) {
+    public boolean mitgliedHinzufuegen(Mitglied m, GregorianCalendar eintrittsDatum) {
         return mitgliedsVerwaltung.mitgliedHinzufuegen(m, eintrittsDatum);
     }
 
@@ -47,7 +47,7 @@ public class Band {
      * @param m zu entferndenes Mitglied
      * @return Erfolg
      */
-    public Boolean mitgliedEntfernen(Mitglied m, GregorianCalendar austrittsdatum) {
+    public boolean mitgliedEntfernen(Mitglied m, GregorianCalendar austrittsdatum) {
         return mitgliedsVerwaltung.mitgliedEntfernen(m, austrittsdatum);
     }
 
@@ -79,7 +79,7 @@ public class Band {
      * @param s hinzuzufuegender Song
      * @return Erfolg
      */
-    public Boolean songHinzufuegen(Song s) {
+    public boolean songHinzufuegen(Song s) {
         return repertoire.add(s);
     }
 
@@ -89,7 +89,7 @@ public class Band {
      * @param s zu entfernender Song
      * @return Erfolg
      */
-    public Boolean songEntfernen(Song s) {
+    public boolean songEntfernen(Song s) {
         if (repertoire.contains(s)) {
             return repertoire.remove(s);
         }
@@ -111,7 +111,7 @@ public class Band {
      * @param datum gesuchter Zeitpunkt
      * @return Repertoire zu dem gesuchten Zeitpunkt
      */
-    public ArrayList<Song> songsAuflisten(GregorianCalendar datum, Boolean versionen) {
+    public ArrayList<Song> songsAuflisten(GregorianCalendar datum, boolean versionen) {
         ArrayList<Song> repertoire_liste = new ArrayList<Song>();
         HashSet<Mitglied> mitglieder = mitgliedsVerwaltung.mitgliederAuflisten(datum);
 
@@ -128,43 +128,44 @@ public class Band {
         return repertoire_liste;
     }
     
+    // Kalender und Bilanz
+    
     /**
-     * Kalender und Bilanz
+     * Fuegt dem Kalender der Band einen Termin hinzu
      * 
-     * @param t Termin
-     * @param von Beginn des gesuchten Zeitraums
-     * @param bis Ende des gesuchten Zeitraums
-     * @param alt alter Termin
-     * @param neu neuer Termin
-     * @return 
+     * @param t hinzuzufuegender Termin
+     * @return Erfolg
      */
-    public Boolean terminHinzufuegen(Termin t) {
+    public boolean terminHinzufuegen(Termin t) {
         return  kalender.terminHinzufuegen(t) && bilanz.postenHinzufuegen(new Posten(t));
     }
     
-    public ArrayList<? extends Termin> termineAuflisten(GregorianCalendar von, GregorianCalendar bis) {
-        return kalender.termineAuflisten(von, bis);
+    /**
+     * Erzeugt eine neue Abstimmung zu einem Termin
+     * 
+     * @param t abzustimmender Termin
+     * @return Abstimmung
+     */
+    public Abstimmung abstimmenTermin(Termin t) {
+        return new Abstimmung(mitgliedsVerwaltung.mitgliederAuflisten(), t);
     }
     
-    public ArrayList<Probe> probenAuflisten(GregorianCalendar von, GregorianCalendar bis) {
-        return kalender.probenAuflisten(von, bis);
-    }
-    
-    public ArrayList<Auftritt> auftritteAuflisten(GregorianCalendar von, GregorianCalendar bis) {
-        return kalender.auftritteAuflisten(von, bis);
-    }
-    
-    public Abstimmung abstimmenTermin(Termin _t) {
-        return new Abstimmung(mitgliedsVerwaltung.mitgliederAuflisten(), _t);
-    }
-    
-    public Boolean terminAendern(Termin alt, Termin neu) {
+    /**
+     * Aendert einen Termin
+     * 
+     * @param alt zu aendernder Termin
+     * @param neu neuer Termin
+     * @return Erfolg
+     */
+    public boolean terminAendern(Termin alt, Termin neu) {
         HashSet<Mitglied> mitglieder = mitgliedsVerwaltung.mitgliederAuflisten();
         
         Termin t = kalender.terminAendern(alt, neu);
         
         if(t != null) {
-            bilanz.postenAendern(new Posten(alt), new Posten(neu));
+            Posten a = new Posten(alt);
+            Posten n = new Posten(neu);
+            if(bilanz.postenExistiert(a)) bilanz.postenAendern(a, n);
             for(Mitglied m : mitglieder) {
                 m.message("Folgender Termin wurde geändert: " + t.toString());
             }
@@ -173,11 +174,18 @@ public class Band {
         return false;
     }
     
-    public Boolean terminLoeschen(Termin t) {
+    /**
+     * loescht einen Termin
+     * 
+     * @param t zu loeschender Termin
+     * @return Erfolg
+     */
+    public boolean terminLoeschen(Termin t) {
         HashSet<Mitglied> mitglieder = mitgliedsVerwaltung.mitgliederAuflisten();
         
         if(kalender.terminLoeschen(t)) {
-            bilanz.postenLoeschen(new Posten(t));
+            Posten p = new Posten(t);
+            if (bilanz.postenExistiert(p)) bilanz.postenLoeschen(p);
             for(Mitglied m : mitglieder) {
                 m.message("Folgender Termin wurde abgesagt: " + t.toString());
             }
@@ -186,18 +194,90 @@ public class Band {
         return false;
     }
     
-    public Boolean terminWiederherstellen(Termin t) {
-        return (kalender.terminWiederherstellen(t) != null) ? true : false;
-    }
-
     /**
-     * Fügt einen neuen Bilanzposten hinzu
-     *
+     * Stellt einen zuvor geaenderten Termin wieder her
+     * 
+     * @param t wiederherzustellender Termin
+     * @return Erfolg
+     */
+    public Termin terminWiederherstellen(Termin t) {
+        Posten p = new Posten(t);
+        if(bilanz.postenExistiert(p)) bilanz.postenWiederherstellen(p);
+        return kalender.terminWiederherstellen(t);
+    }
+    
+    /**
+     * Listet alle Termine innerhalb des gesuchten Zeitraums
+     * 
+     * @param von Beginn des gesuchten Zeitraums
+     * @param bis Ende des gesuchten Zeitraum
+     * @return Liste der gesuchten Termine
+     */
+    public ArrayList<? extends Termin> termineAuflisten(GregorianCalendar von, GregorianCalendar bis) {
+        return kalender.termineAuflisten(von, bis);
+    }
+    
+    /**
+     * Listet alle Proben innerhalb des gesuchten Zeitraums
+     * 
+     * @param von Beginn des gesuchten Zeitraums
+     * @param bis Ende des gesuchten Zeitraum
+     * @return Liste der gesuchten Proben
+     */
+    public ArrayList<Probe> probenAuflisten(GregorianCalendar von, GregorianCalendar bis) {
+        return kalender.probenAuflisten(von, bis);
+    }
+    
+    /**
+     * Listet alle Auftritte innerhalb des gesuchten Zeitraums
+     * 
+     * @param von Beginn des gesuchten Zeitraums
+     * @param bis Ende des gesuchten Zeitraum
+     * @return Liste der gesuchten Auftritte
+     */
+    public ArrayList<Auftritt> auftritteAuflisten(GregorianCalendar von, GregorianCalendar bis) {
+        return kalender.auftritteAuflisten(von, bis);
+    }
+    
+    /**
+     * Fuegt der Bilanz einen Posten hinzu
+     * 
      * @param p hinzuzufuegender Posten
      * @return Erfolg
      */
-    public Boolean postenHinzufuegen(Posten p) {
+    public boolean postenHinzufuegen(Posten p) {
         return bilanz.postenHinzufuegen(p);
+    }
+    
+    /**
+     * Aendert einen Posten
+     * 
+     * @param alt zu aendernder Posten
+     * @param neu neuer Posten
+     * @return neuer Posten
+     */
+    public Posten postenAendern(Posten alt, Posten neu) {
+        return bilanz.postenAendern(alt, neu);
+    }
+    
+    /**
+     * Loescht einen Posten
+     * 
+     * @param p zu loeschender Posten
+     * @return Erfolg
+     */
+    public boolean postenLoeschen(Posten p) {
+        return bilanz.postenLoeschen(p);
+    }
+    
+    /**
+     * Stellt einen zuvor geaenderten Posten wieder her
+     * 
+     * @param p wiederherzustellender POsten
+     * @return wiederhergestellter Posten
+     */
+    public Posten postenWiederherstellen(Posten p) {
+        return bilanz.postenWiederherstellen(p);
     }
     
     /**
@@ -207,15 +287,8 @@ public class Band {
      * @param bis Ende des gesuchten Zeitraumes
      * @return Kosten, die innerhalb des gesuchten Zeitraumes entstanden sind
      */
-    public int kostenSummieren(GregorianCalendar von, GregorianCalendar bis) {
-        int kosten = 0;
-        ArrayList<Probe> probenKosten = kalender.probenAuflisten(von, bis);
-
-        for (Probe p : probenKosten) {
-            kosten += p.getMiete();
-        }
-
-        return kosten;
+    public int kostenSummieren(boolean showProben, boolean showSonstige, GregorianCalendar von, GregorianCalendar bis) {
+        return bilanz.kosten(showProben, showSonstige, von, bis);
     }
 
     /**
@@ -225,15 +298,8 @@ public class Band {
      * @param bis Ende des gesuchten Zeitraumes
      * @return Umsatz, der innerhalb des gesuchten Zeitraumes erwirtschaftet werden konnte
      */
-    public int umsatzSummieren(GregorianCalendar von, GregorianCalendar bis) {
-        int umsatz = 0;
-        ArrayList<Auftritt> auftritteKosten = kalender.auftritteAuflisten(von, bis);
-
-        for (Auftritt a : auftritteKosten) {
-            umsatz += a.getGage();
-        }
-
-        return umsatz;
+    public int umsatzSummieren(boolean showAuftr, boolean showSonstige, GregorianCalendar von, GregorianCalendar bis) {
+        return bilanz.umsatz(showAuftr, showSonstige, von, bis);
     }
 
     /**
@@ -243,8 +309,8 @@ public class Band {
      * @param bis Ende des gesuchten Zeitraumes
      * @return Gewinn, der innerhalb des gesuchten Zeitraumes erwirtschaftet werden konnte
      */
-    public int gewinnSummieren(GregorianCalendar von, GregorianCalendar bis) {
-        return umsatzSummieren(von, bis) - kostenSummieren(von, bis);
+    public int gewinnSummieren(boolean showAuftr, boolean showProben, boolean showSonstige, GregorianCalendar von, GregorianCalendar bis) {
+        return bilanz.gewinn(showAuftr, showProben, showSonstige, von, bis);
     }
 
     /**
