@@ -5,6 +5,7 @@
 package com;
 
 import java.util.GregorianCalendar;
+import java.util.HashSet;
 
 /**
  *
@@ -22,8 +23,8 @@ public class Auftritt extends Termin {
      * @param dauer Dauer
      * @param gage Gage
      */
-    public Auftritt(Ort ort, GregorianCalendar datum, String dauer, int gage) {
-        super(ort, datum, dauer);
+    public Auftritt(Ort ort, GregorianCalendar datum, String dauer, HashSet<Mitglied> teilnehmer, int gage) {
+        super(ort, datum, dauer, teilnehmer);
         this.gage = gage;
     }
 

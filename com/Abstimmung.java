@@ -4,8 +4,8 @@
  */
 package com;
 
-import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 
 /**
  *
@@ -14,14 +14,14 @@ import java.util.HashMap;
 public class Abstimmung {
     private HashMap<Mitglied, Boolean> dafuers; //beinhaltet die Entscheidungen der Mitglieder
     private HashMap<Mitglied, String> begruendungen; // Begruendung der Mitglieder
-    private ArrayList<Mitglied> mitglieder; //Alle zur Abstimmung teilnehmenden Mitglieder
+    private HashSet<Mitglied> mitglieder; //Alle zur Abstimmung teilnehmenden Mitglieder
     private Termin vorgeschlTermin; //Der vorgeschlagene Termin
     
     
     /**
      * Initialisierung 
      */
-    public Abstimmung(ArrayList<Mitglied> _mitglieder, Termin _vorgeschlTermin) {
+    public Abstimmung(HashSet<Mitglied> _mitglieder, Termin _vorgeschlTermin) {
         dafuers = new HashMap<Mitglied, Boolean>();
         begruendungen = new HashMap<Mitglied, String>();
         mitglieder = _mitglieder;
@@ -72,7 +72,7 @@ public class Abstimmung {
                     result[1] += " ist dafür; '";
                 }
                 else {
-                    // eine Gegenstimme reicht und der Termin soll nicht stattfinden
+                    // eine Gegenstimme reicht und der Termin findet nicht statt
                     result[1] += " ist dagegen; '";
                     result[0] = "0";
                 }

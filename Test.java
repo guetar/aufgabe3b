@@ -6,6 +6,7 @@
 import com.*;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
+import java.util.HashSet;
 
 /**
  *
@@ -26,46 +27,103 @@ public class Test {
         Band b = new Band();
 
         /**
-         * Der Band Mitglieder hinzufuegen und diese auflisten
+         * Mitglieder erzeugen
          */
-        Mitglied andreas = new Mitglied("Andreas Kodolsky", "0676/7787986", "Gitarre", new GregorianCalendar(2000, 2, 24), new GregorianCalendar(2010, 2, 24));
-        Mitglied michael = new Mitglied("Michael Preis", "0664/8798653", "Bass", new GregorianCalendar(2000, 4, 6), new GregorianCalendar(2006, 4, 6));
-        Mitglied lukas = new Mitglied("Lukas Permanschlager", "0676/4382904839", "Schlagzeug", new GregorianCalendar(2000, 2, 10), new GregorianCalendar(2010, 8, 12));
-        Mitglied dominik = new Mitglied("Dominik Haltauf", "0664/473892347", "Bass", new GregorianCalendar(2006, 4, 6), new GregorianCalendar(2008, 4, 6));
+        Mitglied andreas = new Mitglied("Andreas Kodolsky", "0676/7787986", "Gitarre");
+        Mitglied michael = new Mitglied("Michael Preis", "0664/8798653", "Bass");
+        Mitglied lukas = new Mitglied("Lukas Permanschlager", "0676/4382904839", "Schlagzeug");
+        Mitglied dominik = new Mitglied("Dominik Haltauf", "0664/473892347", "Bass");
         
-        b.mitgliedHinzufuegen(andreas);
-        b.mitgliedHinzufuegen(michael);
-        b.mitgliedHinzufuegen(lukas);
-        b.mitgliedHinzufuegen(dominik);
+        /**
+         * Mitglieder der band hinzufuegen, entfernen und wieder hinzfuegen
+         */
+        b.mitgliedHinzufuegen(andreas, new GregorianCalendar(2000, 2, 24));
+        b.mitgliedHinzufuegen(michael, new GregorianCalendar(2000, 2, 24));
+        b.mitgliedHinzufuegen(lukas, new GregorianCalendar(2000, 2, 24));
+        b.mitgliedHinzufuegen(dominik, new GregorianCalendar(2000, 4, 6));  
+        b.mitgliedEntfernen(lukas, new GregorianCalendar(2001, 3, 2));
+        b.mitgliedEntfernen(dominik, new GregorianCalendar(2002, 5, 2));
+        b.mitgliedHinzufuegen(lukas, new GregorianCalendar(2003, 5, 6));
         
-        ArrayList<Mitglied> mitglieder = b.mitgliederAuflisten(von, bis);
-
-        System.out.println("Auflistung der Gruppenmitglieder:");
-        for (Mitglied m : mitglieder) {
-            System.out.println(m.toString());
+        /**
+         * Ausgabe der Mitglieder zu bestimmten Zeitpunkten
+         */
+        System.out.println("\nAusgabe Mitglieder----------------------------------");
+        System.out.println("Erwarteter Output: \n2000, 3, 12: 3 Mitglieder\n2001, 2, 2: 4 Mitglieder\n2002, 3, 2: 3 Mitglieder\n2003, 3, 2: 2 Mitglieder\naktuell: 3 Mitglieder");
+        System.out.println("----------------------------------------------------\n");
+        
+        System.out.println("Auflistung der Gruppenmitglieder zum Datum 2000, 3, 12:");
+        HashSet<Mitglied> mitglieder = b.mitgliederAuflisten(new GregorianCalendar(2000, 3, 3));
+        if (mitglieder != null) {
+            for (Mitglied m : mitglieder) {
+                System.out.println(m.toString());
+            }
         }
+        else { System.out.println("Ungültiges Datum"); }
+        
+        System.out.println("\nAuflistung der Gruppenmitglieder zum Datum 2001, 2, 2:");
+        mitglieder = b.mitgliederAuflisten(new GregorianCalendar(2001, 2, 2));
+        if (mitglieder != null) {
+            for (Mitglied m : mitglieder) {
+                System.out.println(m.toString());
+            }
+        }
+        else { System.out.println("Ungültiges Datum"); }
+        
+        System.out.println("\nAuflistung der Gruppenmitglieder zum Datum 2002, 3, 2:");
+        mitglieder = b.mitgliederAuflisten(new GregorianCalendar(2002, 3, 2));
+        if (mitglieder != null) {
+            for (Mitglied m : mitglieder) {
+                System.out.println(m.toString());
+            }
+        }
+        else { System.out.println("Ungültiges Datum"); }
+        
+        System.out.println("\nAuflistung der Gruppenmitglieder zum Datum 2003, 3, 2:");
+        mitglieder = b.mitgliederAuflisten(new GregorianCalendar(2003, 3, 2));
+        if (mitglieder != null) {
+            for (Mitglied m : mitglieder) {
+                System.out.println(m.toString());
+            }
+        } 
+        else { System.out.println("Ungültiges Datum"); }
+        
+        System.out.println("\nAuflistung der aktuellen Gruppenmitglieder:");
+        mitglieder = b.mitgliederAuflisten();
+        if (mitglieder != null) {
+            for (Mitglied m : mitglieder) {
+                System.out.println(m.toString());
+            }
+        }
+        else { System.out.println("Ungültiges Datum"); }
         System.out.println("");
+    
 
         /**
          * Dem Repertoire der Band einige Songs hinzufuegen und und auflisten
          */
-        Song love = new Song("I love you", "04:33", new GregorianCalendar(2012, 2, 2));
-        Song nolove = new Song("I loved you but now I love another woman", "03:22", new GregorianCalendar(2012, 2, 4));
-        Song notso = new Song("I love you not so much any more", "04:33", new GregorianCalendar(2012, 2, 2));
-        Song hate = new Song("I loved you now I hate you", "03:22", new GregorianCalendar(2012, 2, 4));
+        
+        System.out.println("\nAusgabe Songs---------------------------------------");
+        System.out.println("Erwarteter Output: \nEINZUFUEGEN");
+        System.out.println("----------------------------------------------------\n");
+        
+        Song love = new Song("I love you", "04:33", new GregorianCalendar(2002, 2, 2));
+        Song nolove = new Song("I loved you but now I love another woman", "03:22", new GregorianCalendar(2003, 2, 4));
+        Song notso = new Song("I love you not so much any more", "04:33", new GregorianCalendar(2003, 7, 22));
+        Song hate = new Song("I loved you now I hate you", "03:22", new GregorianCalendar(2001, 1, 4));
         love.addVersion(notso);
         nolove.addVersion(hate);
         
         andreas.addSong(love);
         andreas.addSong(nolove);
         
-        Song herzschmerz = new Song("Mein Herz tut mir so weh!", "03:55", new GregorianCalendar(2012, 4, 4));
-        Song beileid = new Song("Mein Beieid!", "05:20", new GregorianCalendar(2012, 6, 6));
+        Song herzschmerz = new Song("Mein Herz tut mir so weh!", "03:55", new GregorianCalendar(2000, 8, 4));
+        Song beileid = new Song("Mein Beieid!", "05:20", new GregorianCalendar(2002, 6, 6));
         
         michael.addSong(herzschmerz);
         michael.addSong(beileid);
         
-        ArrayList<Song> repertoire = b.songsAuflisten(new GregorianCalendar(2004, 8, 8), true);
+        ArrayList<Song> repertoire = b.songsAuflisten(new GregorianCalendar(2002, 8, 8), true);
 
         System.out.println("Auflistung des Repertoires:");
         for (Song s : repertoire) {
@@ -76,14 +134,19 @@ public class Test {
         /**
          * Einige Termine hinzufuegen und auflisten
          */
-        Probe p1 = new Probe(new Ort("p1 Studio", "Musterstr. 23", 8), new GregorianCalendar(1995, 6, 5, 18, 0), "3:00", 30);
-        Probe p2 = new Probe(new Ort("p2 Garage", "Maxerstr. 32", 4), new GregorianCalendar(1995, 7, 2, 18, 0), "3:00", 100);
-        Probe p3 = new Probe(new Ort("p3 Keller", "Maxerstr. 32", 4), new GregorianCalendar(1995, 7, 4, 18, 0), "3:00", 100);
-        Probe p4 = new Probe(new Ort("p4 Standort", "Maxerstr. 32", 4), new GregorianCalendar(1995, 7, 6, 18, 0), "3:00", 100);
-        Probe p5 = new Probe(new Ort("p5 Keller", "Maxerstr. 32", 4), new GregorianCalendar(1995, 7, 8, 18, 0), "3:00", 100);
-        Probe p6 = new Probe(new Ort("p6 Standort", "Maxerstr. 32", 4), new GregorianCalendar(1995, 7, 10, 18, 0), "3:00", 100);
-        Auftritt a1 = new Auftritt(new Ort("a1 Gasometer", "Gasstr.666", 3000), new GregorianCalendar(1995, 9, 2, 18, 0), "2:00", 800);
-        Auftritt a2 = new Auftritt(new Ort("a2 Gasometer", "Gasstr.666", 3000), new GregorianCalendar(1995, 9, 3, 18, 0), "2:00", 800);
+        
+        System.out.println("\nAusgabe Termine-------------------------------------");
+        System.out.println("Erwarteter Output: \nEINZUFUEGEN");
+        System.out.println("----------------------------------------------------\n");
+        
+        Probe p1 = new Probe(new Ort("p1 Studio", "Musterstr. 23", 8), new GregorianCalendar(2001, 6, 5, 18, 0), "3:00", mitglieder, 30);
+        Probe p2 = new Probe(new Ort("p2 Garage", "Maxerstr. 32", 4), new GregorianCalendar(2001, 7, 2, 18, 0), "3:00", mitglieder, 100);
+        Probe p3 = new Probe(new Ort("p3 Keller", "Maxerstr. 32", 4), new GregorianCalendar(2001, 7, 4, 18, 0), "3:00", mitglieder, 100);
+        Probe p4 = new Probe(new Ort("p4 Standort", "Maxerstr. 32", 4), new GregorianCalendar(2002, 7, 6, 18, 0), "3:00", mitglieder, 100);
+        Probe p5 = new Probe(new Ort("p5 Keller", "Maxerstr. 32", 4), new GregorianCalendar(2002, 7, 8, 18, 0), "3:00", mitglieder, 100);
+        Probe p6 = new Probe(new Ort("p6 Standort", "Maxerstr. 32", 4), new GregorianCalendar(2003, 7, 10, 18, 0), "3:00", mitglieder, 100);
+        Auftritt a1 = new Auftritt(new Ort("a1 Rauschhaus", "Alkgasse 13", 50), new GregorianCalendar(2001, 9, 2, 18, 0), "2:00", mitglieder, 800);
+        Auftritt a2 = new Auftritt(new Ort("a2 Gasometer", "Gasstr.666", 3000), new GregorianCalendar(2002, 9, 3, 18, 0), "2:00", mitglieder, 800);
         
         b.terminHinzufuegen(p1);
         b.terminHinzufuegen(p2);
@@ -152,10 +215,45 @@ public class Test {
             System.out.println(t.toString());
         }
         System.out.println("");
+        
+        /**
+         * Abstimmen ueber einen Auftritt
+         */        
+        
+        System.out.println("\nAusgabe Abstimmung----------------------------------");
+        System.out.println("Erwarteter Output: \nDer Termin, die Abstimmungsergebnisse inklusive Begruendungen der Mitglider,\nLukas ist dagegen und daher findet der Termin nicht statt");        
+        System.out.println("----------------------------------------------------\n");
+        
+        Auftritt moeglAuftritt1 = new Auftritt(new Ort("a2 Gasometer", "Gasstr.666", 3000), new GregorianCalendar(1995, 9, 3, 18, 0), "2:00", mitglieder, 800);
+        Abstimmung abstimmungProbe1 = b.abstimmenTermin(moeglAuftritt1);
+        abstimmungProbe1.abstimmen(andreas, true, "passt");
+        abstimmungProbe1.abstimmen(michael, true, "Leiwand!");
+        abstimmungProbe1.abstimmen(lukas, false, "do kau i ned!!");
+        abstimmungProbe1.abstimmen(dominik, true, "haut hi");
+               
+        /**
+         * Ausgabe des Ergebnis der Abstimmung
+         */
+        String[] ergebnisAbstimmung = abstimmungProbe1.getResult();
+        System.out.println(ergebnisAbstimmung[1]);
+        
+        if(ergebnisAbstimmung[0].equals("1")) {
+            b.terminHinzufuegen(moeglAuftritt1);
+            System.out.println(">> Termin findet statt");
+        }
+        else if(ergebnisAbstimmung[0].equals("0")) {
+            System.out.println(">> Termin findet nicht statt");
+        }
+        System.out.println("");
+   
 
         /**
          * Eine Bilanz über den gesuchten Zeitraum erstellen
          */
+        System.out.println("\nAusgabe Bilanz------------------------------------");
+        System.out.println("Erwarteter Output: \nEINZUFUEGEN");       
+        System.out.println("----------------------------------------------------\n");
+        
         System.out.println("Gesamtkosten in diesem Zeitraum:" + b.kostenSummieren(von, bis) + " Euro");
         System.out.println("Gesamtumsatz in diesem Zeitraum:" + b.umsatzSummieren(von, bis) + " Euro");
         System.out.println("Macht einen Gesamtgewinn von:" + b.gewinnSummieren(von, bis) + " Euro");
@@ -164,11 +262,37 @@ public class Test {
         /**
          * Einige Orte hinzufuegen und auflisten
          */
-        System.out.println("Orte mit mehr als 200 Plätzen:");
+        System.out.println("\nAusgabe Orte----------------------------------------");
+        System.out.println("Erwarteter Output:\nErste Abfrage gibt Orte mit mehr als 200 Plaetze aus,\nzweite mit mehr als 20 Plaetze\ndritte mit mehr als 100.000");
+        System.out.println("----------------------------------------------------\n");
+        
+        System.out.println("\nOrte mit mehr als 200 Plätzen:");
         ArrayList<Ort> orte = b.findeOrt(200);
-        for (Ort o : orte) {
-        	System.out.println(o);
+        if(!orte.isEmpty()) {
+            for (Ort o : orte) {
+                    System.out.println(o);
+            }
         }
+        else  {System.out.println("Keinen Ort gefunden!");}
+        
+        System.out.println("\nOrte mit mehr als 20 Plätzen:");
+        orte = b.findeOrt(20);
+        if(!orte.isEmpty()) {
+            for (Ort o : orte) {
+                    System.out.println(o);
+            }
+        }
+        else  {System.out.println("Keinen Ort gefunden!");}
+        
+        System.out.println("\nOrte mit mehr als 100.000 Plätzen:");
+        orte = b.findeOrt(100000);
+        if(!orte.isEmpty()) {
+            for (Ort o : orte) {
+                    System.out.println(o);
+            }
+        }
+        else  {System.out.println("Keinen Ort gefunden!");}
+        
         System.out.println(""); 
     }
 }

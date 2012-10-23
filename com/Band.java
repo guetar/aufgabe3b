@@ -6,6 +6,7 @@ package com;
 
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
+import java.util.HashSet;
 
 /**
  *
@@ -13,7 +14,7 @@ import java.util.GregorianCalendar;
  */
 public class Band {
 
-    private ArrayList<Mitglied> mitglieder;
+    private Mitgliedsverwaltung mitgliedsVerwaltung;
     private ArrayList<Song> repertoire;
     private Kalender kalender;
     private Bilanz bilanz;
@@ -22,7 +23,7 @@ public class Band {
      * Konstruktor
      */
     public Band() {
-        this.mitglieder = new ArrayList<Mitglied>();
+        this.mitgliedsVerwaltung = new Mitgliedsverwaltung();
         this.repertoire = new ArrayList<Song>();
         this.kalender = new Kalender();
         this.bilanz = new Bilanz();
@@ -36,8 +37,8 @@ public class Band {
      * @param m hinzuzufuegendes Mitglied
      * @return Erfolg
      */
-    public Boolean mitgliedHinzufuegen(Mitglied m) {
-        return mitglieder.add(m);
+    public Boolean mitgliedHinzufuegen(Mitglied m, GregorianCalendar eintrittsDatum) {
+        return mitgliedsVerwaltung.mitgliedHinzufuegen(m, eintrittsDatum);
     }
 
     /**
@@ -46,11 +47,8 @@ public class Band {
      * @param m zu entferndenes Mitglied
      * @return Erfolg
      */
-    public Boolean mitgliedEntfernen(Mitglied m) {
-        if (mitglieder.contains(m)) {
-            return mitglieder.remove(m);
-        }
-        return false;
+    public Boolean mitgliedEntfernen(Mitglied m, GregorianCalendar austrittsdatum) {
+        return mitgliedsVerwaltung.mitgliedEntfernen(m, austrittsdatum);
     }
 
     /**
@@ -58,8 +56,8 @@ public class Band {
      * 
      * @return Mitglieder
      */
-    public ArrayList<Mitglied> mitgliederAuflisten() {
-        return mitglieder;
+    public HashSet<Mitglied> mitgliederAuflisten() {
+        return mitgliedsVerwaltung.mitgliederAuflisten();
     }
 
     /**
@@ -69,16 +67,8 @@ public class Band {
      * @param bis Ende des gesuchten Zeitraumes
      * @return Mitglieder innerhalb des gesuchten Zeitraumes
      */
-    public ArrayList<Mitglied> mitgliederAuflisten(GregorianCalendar von, GregorianCalendar bis) {
-        ArrayList<Mitglied> mitglieder_liste = new ArrayList<Mitglied>();
-
-        for (Mitglied m : mitglieder) {
-            if (m.getVon().before(bis) && m.getBis().after(von)) {
-                mitglieder_liste.add(m);
-            }
-        }
-
-        return mitglieder_liste;
+    public HashSet<Mitglied> mitgliederAuflisten(GregorianCalendar date) {
+        return mitgliedsVerwaltung.mitgliederAuflisten(date);
     }
 
     // Repertoire
@@ -123,15 +113,14 @@ public class Band {
      */
     public ArrayList<Song> songsAuflisten(GregorianCalendar datum, Boolean versionen) {
         ArrayList<Song> repertoire_liste = new ArrayList<Song>();
+        HashSet<Mitglied> mitglieder = mitgliedsVerwaltung.mitgliederAuflisten(datum);
 
         for(Mitglied m : mitglieder) {
-            if(m.getVon().before(datum) && m.getBis().after(datum)) {
-                if(!versionen) {
-                    repertoire_liste.addAll(m.getRepertoire());
-                } else {
-                    for(Song s : m.getRepertoire()) {
-                        repertoire_liste.addAll(s.getVersionen());
-                    }
+            if(!versionen) {
+                repertoire_liste.addAll(m.getRepertoire());
+            } else {
+                for(Song s : m.getRepertoire()) {
+                    repertoire_liste.addAll(s.getVersionen());
                 }
             }
         }
@@ -165,7 +154,13 @@ public class Band {
         return kalender.auftritteAuflisten(von, bis);
     }
     
+    public Abstimmung abstimmenTermin(Termin _t) {
+        return new Abstimmung(mitgliedsVerwaltung.mitgliederAuflisten(), _t);
+    }
+    
     public Boolean terminAendern(Termin alt, Termin neu) {
+        HashSet<Mitglied> mitglieder = mitgliedsVerwaltung.mitgliederAuflisten();
+        
         Termin t = kalender.terminAendern(alt, neu);
         
         if(t != null) {
@@ -179,6 +174,8 @@ public class Band {
     }
     
     public Boolean terminLoeschen(Termin t) {
+        HashSet<Mitglied> mitglieder = mitgliedsVerwaltung.mitgliederAuflisten();
+        
         if(kalender.terminLoeschen(t)) {
             bilanz.postenLoeschen(new Posten(t));
             for(Mitglied m : mitglieder) {

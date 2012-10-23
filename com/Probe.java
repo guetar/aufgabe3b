@@ -5,6 +5,7 @@
 package com;
 
 import java.util.GregorianCalendar;
+import java.util.HashSet;
 
 /**
  *
@@ -22,8 +23,8 @@ public class Probe extends Termin {
      * @param dauer Dauer
      * @param miete Miete
      */
-    public Probe(Ort ort, GregorianCalendar datum, String dauer, int miete) {
-        super(ort, datum, dauer);
+    public Probe(Ort ort, GregorianCalendar datum, String dauer, HashSet<Mitglied> teilnehmer, int miete) {
+        super(ort, datum, dauer, teilnehmer);
         this.miete = miete;
     }
     

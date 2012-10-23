@@ -16,10 +16,9 @@ public class Mitglied {
     private String name;
     private String tel;
     private String instrument;
-    private GregorianCalendar von;
-    private GregorianCalendar bis;
     private ArrayList<Song> repertoire;
     private ArrayList<String> messages;
+    private ArrayList<Termin> termine;
 
     /**
      * Konstruktor
@@ -30,14 +29,13 @@ public class Mitglied {
      * @param von Eintrittsdatum in die Band
      * @param bis Austrittsdatum aus der Band
      */
-    public Mitglied(String name, String tel, String instrument, GregorianCalendar von, GregorianCalendar bis) {
+    public Mitglied(String name, String tel, String instrument) {
         this.name = name;
         this.tel = tel;
-        this.von = von;
-        this.bis = bis;
         this.instrument = instrument;
         this.repertoire = new ArrayList<Song>();
         this.messages = new ArrayList<String>();
+        this.termine = new ArrayList<Termin>();
     }
     
     /**
@@ -75,6 +73,26 @@ public class Mitglied {
     public ArrayList<Song> getRepertoire() {
         return repertoire;
     }
+    
+    /**
+     * Fügt Termin hinzu
+     * 
+     * @param t hinzuzufügender Song
+     * @return "true" wenn erfolgreich, "false", wenn schon vorhanden
+     */
+    public boolean addTermin(Termin t) {
+        return termine.add(t);
+    }
+    
+    /**
+     * Entfernt Termin
+     * 
+     * @param t zu entfernender Termin
+     * @return "true" wenn erfolgreich, "false", wenn nicht vorhanden
+     */
+    public boolean removeTermin(Termin t) {
+        return termine.remove(t);
+    }
 
     /**
      * Getter für Name
@@ -83,24 +101,6 @@ public class Mitglied {
      */
     public String getName() {
         return name;
-    }
-
-    /**
-     * Eintrittsdatum in die Band
-     * 
-     * @return Eintrittsdatum in die Band
-     */
-    public GregorianCalendar getVon() {
-        return von;
-    }
-
-    /**
-     * Austrittsdatum aus der Band
-     * 
-     * @return Austrittsdatum aus der Band
-     */
-    public GregorianCalendar getBis() {
-        return bis;
     }
 
     @Override

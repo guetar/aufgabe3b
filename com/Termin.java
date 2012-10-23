@@ -6,6 +6,7 @@ package com;
 
 import java.text.SimpleDateFormat;
 import java.util.GregorianCalendar;
+import java.util.HashSet;
 import java.util.Stack;
 
 /**
@@ -18,6 +19,7 @@ public abstract class Termin implements Comparable<Termin> {
     private GregorianCalendar datum;
     private String dauer;
     private Stack<Termin> stack;
+    private HashSet<Mitglied> teilnehmer;
 
     /**
      * Konstruktor
@@ -26,11 +28,16 @@ public abstract class Termin implements Comparable<Termin> {
      * @param date Datum
      * @param dauer Dauer
      */
-    public Termin(Ort ort, GregorianCalendar datum, String dauer) {
+    public Termin(Ort ort, GregorianCalendar datum, String dauer, HashSet<Mitglied> teilnehmer) {
         this.ort = ort;
         this.datum = datum;
         this.dauer = dauer;
         this.stack = new Stack<Termin>();
+        this.teilnehmer = new HashSet<Mitglied>(teilnehmer);
+        
+        for(Mitglied m : teilnehmer) {
+            m.addTermin(this);
+        }
     }
     
     /**
@@ -43,6 +50,7 @@ public abstract class Termin implements Comparable<Termin> {
         this.datum = t.getDatum();
         this.dauer = t.getDauer();
         this.stack = new Stack<Termin>();
+        this.teilnehmer = new HashSet<Mitglied>(t.getTeilnehmer());
     }
 
     /**
@@ -56,7 +64,36 @@ public abstract class Termin implements Comparable<Termin> {
         this.ort = t.getOrt();
         this.datum = t.getDatum();
         this.dauer = t.getDauer();
+        this.teilnehmer = t.getTeilnehmer();
         return this;
+    }
+    
+    /**
+     * Teilnehmer (Mitglied) zu Termin hinzufuegen
+     * 
+     * @param m Mitglied
+     * @return "true" wenn erfolgreich hinzugefuegt, "false" wenn schon vorhanden
+     */
+    protected boolean teilnehmerHinzufuegen(Mitglied m) {
+        boolean ok = teilnehmer.add(m);
+        if (ok) {
+            m.addTermin(this);
+        }
+        return ok;
+    }
+    
+    /**
+     * Mitglied von Termin entfernen
+     * 
+     * @param m
+     * @return "true" wenn erfolgreich entfernt, "false" wenn nicht vorhanden
+     */
+    protected boolean teilnehmerEntfernen(Mitglied m) {
+        boolean ok = teilnehmer.remove(m);
+        if (ok) {
+            m.removeTermin(this);
+        }
+        return ok;
     }
 
     /**
@@ -84,6 +121,15 @@ public abstract class Termin implements Comparable<Termin> {
      */
     protected Ort getOrt() {
         return ort;
+    }
+    
+    /**
+     * Getter fuer die Teilnehmer
+     * 
+     * @return 
+     */
+    protected HashSet<Mitglied> getTeilnehmer() {
+        return teilnehmer;
     }
     
     /**
