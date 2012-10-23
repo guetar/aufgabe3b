@@ -4,6 +4,7 @@
  */
 package com;
 
+import java.text.SimpleDateFormat;
 import java.util.GregorianCalendar;
 import java.util.Stack;
 
@@ -114,6 +115,16 @@ public class Posten implements Comparable<Posten> {
             return stack.pop();
         }
         return null;
+    }
+    
+    @Override
+    /**
+     * Liefert die Daten des Postens als String getrennt durch Leerzeichen in
+     * der Reihenfolge: Ort, Datum und Dauer
+     */
+    public String toString() {
+        SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy hh:mm");
+        return beschreibung + " " + sdf.format(datum.getTime()) + " " + wert + " Euro";
     }
     
     @Override

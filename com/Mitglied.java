@@ -63,15 +63,22 @@ public class Mitglied {
      * @param s hinzuzufuegender Song
      * @return Erfolg
      */
-    public Boolean addSong(Song s) {
+    public Boolean songHinzufuegen(Song s) {
         return repertoire.add(s);
     }
     
     /**
      * Gibt das Repertoire des Mitglieds zurück
      */
-    public ArrayList<Song> getRepertoire() {
-        return repertoire;
+    public ArrayList<Song> getRepertoire(GregorianCalendar datum) {
+        ArrayList<Song> repertoireListe = new ArrayList<Song>();
+        
+        for(Song s : repertoire) {
+            if(s.getVon().before(datum)) {
+                repertoireListe.add(s);
+            }
+        }
+        return repertoireListe;
     }
     
     /**
