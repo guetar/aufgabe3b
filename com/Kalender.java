@@ -14,33 +14,67 @@ import java.util.TreeSet;
  * @author guetar
  */
 public class Kalender {
-    
+
     private TreeSet<Termin> termine;
+    private TreeSet<Ort> orte;
     private LinkedList<Termin> trash;
-    
+
     /**
      * Konstruktor
      */
     public Kalender() {
         this.termine = new TreeSet<Termin>();
         this.trash = new LinkedList<Termin>();
+        this.orte = new TreeSet<Ort>();
     }
-    
+
+    //Orte
+    /**
+     * Fügt einen Ort hinzu
+     *
+     * @param o hinzuzufuegender Ort
+     * @return Erfolg
+     */
+    public boolean ortHinzufuegen(Ort o) {
+        return orte.add(o);
+    }
+
+    /**
+     * liefert Liste mit Orten, die eine bestimmte Infrastruktur haben.
+     *
+     * @param plaetze Gesuchte Anzahl an Zuschauerplaetzen(oder 0, wenn egal)
+     *
+     * @return die Orte, die die bestimmte Infrastruktur haben. Leere Liste,
+     * wenn kein Ort die Voraussetzungen erfuellt.
+     */
+    public ArrayList<Ort> findeOrt(int plaetze) {
+        ArrayList<Ort> gefOrte = new ArrayList<Ort>();
+
+        for (Ort o : orte) {
+
+            if (o.getPlaetze() >= plaetze) {
+                gefOrte.add(o);
+            }
+        }
+
+        return gefOrte;
+    }
+
     // Termine
-    
     /**
      * Fügt einen Termin hinzu.
-     * 
+     *
      * @param t hinzuzufuegender Termin
      * @return Erfolg
      */
     public boolean terminHinzufuegen(Termin t) {
         return termine.add(t);
     }
-    
+
     /**
-     * Aendert einen bereits vorhandenen Termin und speichert dessen alte Version.
-     * 
+     * Aendert einen bereits vorhandenen Termin und speichert dessen alte
+     * Version.
+     *
      * @param alt zu aendernder Termin
      * @param neu neuer Termin
      * @return Erfolg
@@ -67,7 +101,7 @@ public class Kalender {
         }
         return null;
     }
-    
+
     /**
      * Loescht einen Termin
      *
@@ -75,17 +109,17 @@ public class Kalender {
      * @return Erfolg
      */
     public boolean terminLoeschen(Termin t) {
-        if(termine.contains(t)) {
+        if (termine.contains(t)) {
             trash.add(t);
             termine.remove(t);
             return true;
         }
         return false;
     }
-    
+
     /**
      * Stellt einen Termin wieder her
-     * 
+     *
      * @param t der wiederherzustellende Termin
      * @return Erfolg
      */
@@ -131,14 +165,14 @@ public class Kalender {
         
         return null;
     }
-    
+
     public TreeSet<? extends Termin> termineAuflisten() {
         return termine;
     }
 
     /**
      * Listet alle Termine innerhalb eines gesuchten Zeitraumes
-     * 
+     *
      * @param von Beginn des gesuchten Zeitraumes
      * @param bis Ende des gesuchten Zeitraumes
      * @return Termine innerhalb des gesuchten Zeitraumes
@@ -148,7 +182,7 @@ public class Kalender {
 
         for (Termin t : termine) {
             if (von.before(t.getDatum()) && bis.after(t.getDatum())) {
-                termine_liste.add( t);
+                termine_liste.add(t);
             } else if (bis.before(t.getDatum())) {
                 break;
             }
@@ -159,7 +193,7 @@ public class Kalender {
 
     /**
      * Listet alle Proben innerhalb eines gesuchten Zeitraumes
-     * 
+     *
      * @param von Beginn des gesuchten Zeitraumes
      * @param bis Ende des gesuchten Zeitraumes
      * @return Proben innerhalb des gesuchten Zeitraumes
@@ -180,7 +214,7 @@ public class Kalender {
 
     /**
      * Listet alle Auftritte innerhalb eines gesuchten Zeitraumes
-     * 
+     *
      * @param von Beginn des gesuchten Zeitraumes
      * @param bis Ende des gesuchten Zeitraumes
      * @return Auftritte innerhalb des gesuchten Zeitraumes
@@ -198,10 +232,10 @@ public class Kalender {
 
         return auftritteListe;
     }
-    
+
     /**
      * Listet alle geloeschten und geaenderten Termine
-     * 
+     *
      * @return trash geloeschte und geaenderte Termine
      */
     public LinkedList<Termin> trashAuflisten() {

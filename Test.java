@@ -69,68 +69,73 @@ public class Test {
         b.mitgliedHinzufuegen(andreas, new GregorianCalendar(2000, 2, 24));
         b.mitgliedHinzufuegen(michael, new GregorianCalendar(2000, 2, 24));
         b.mitgliedHinzufuegen(lukas, new GregorianCalendar(2000, 2, 24));
-        b.mitgliedHinzufuegen(dominik, new GregorianCalendar(2000, 4, 6));  
+        b.mitgliedHinzufuegen(dominik, new GregorianCalendar(2000, 4, 6));
         b.mitgliedEntfernen(lukas, new GregorianCalendar(2001, 3, 2));
         b.mitgliedEntfernen(dominik, new GregorianCalendar(2002, 5, 2));
         b.mitgliedHinzufuegen(lukas, new GregorianCalendar(2003, 5, 6));
-        
+
         /**
          * Ausgabe der Mitglieder zu bestimmten Zeitpunkten
          */
         System.out.println("\nAusgabe Mitglieder----------------------------------");
         System.out.println("Erwarteter Output:\n\n2000, 3, 12: 3 Mitglieder\n2001, 2, 2 : 4 Mitglieder\n2002, 3, 2 : 3 Mitglieder\n2003, 3, 2 :  2 Mitglieder\n\nAktuell: 3 Mitglieder");
         System.out.println("----------------------------------------------------\n");
-        
+
         System.out.println("Auflistung der Gruppenmitglieder zum Datum 2000, 3, 12:");
         HashSet<Mitglied> mitglieder = b.mitgliederAuflisten(new GregorianCalendar(2000, 3, 3));
         if (mitglieder != null) {
             for (Mitglied m : mitglieder) {
                 System.out.println(m.toString());
             }
+        } else {
+            System.out.println("Ungültiges Datum");
         }
-        else { System.out.println("Ungueltiges Datum"); }
-        
-        System.out.println("\nAuflistung der Gruppenmitglieder zum Datum 2001, 2, 2 :");
+
+        System.out.println("\nAuflistung der Gruppenmitglieder zum Datum 2001, 2, 2:");
         mitglieder = b.mitgliederAuflisten(new GregorianCalendar(2001, 2, 2));
         if (mitglieder != null) {
             for (Mitglied m : mitglieder) {
                 System.out.println(m.toString());
             }
+        } else {
+            System.out.println("Ungültiges Datum");
         }
-        else { System.out.println("Ungültiges Datum"); }
-        
-        System.out.println("\nAuflistung der Gruppenmitglieder zum Datum 2002, 3, 2 :");
+
+        System.out.println("\nAuflistung der Gruppenmitglieder zum Datum 2002, 3, 2:");
         mitglieder = b.mitgliederAuflisten(new GregorianCalendar(2002, 3, 2));
         if (mitglieder != null) {
             for (Mitglied m : mitglieder) {
                 System.out.println(m.toString());
             }
+        } else {
+            System.out.println("Ungültiges Datum");
         }
-        else { System.out.println("Ungültiges Datum"); }
-        
-        System.out.println("\nAuflistung der Gruppenmitglieder zum Datum 2003, 3, 2 :");
+
+        System.out.println("\nAuflistung der Gruppenmitglieder zum Datum 2003, 3, 2:");
         mitglieder = b.mitgliederAuflisten(new GregorianCalendar(2003, 3, 2));
         if (mitglieder != null) {
             for (Mitglied m : mitglieder) {
                 System.out.println(m.toString());
             }
-        } 
-        else { System.out.println("Ungültiges Datum"); }
-        
+        } else {
+            System.out.println("Ungültiges Datum");
+        }
+
         System.out.println("\nAuflistung der aktuellen Gruppenmitglieder:");
         mitglieder = b.mitgliederAuflisten();
         if (mitglieder != null) {
             for (Mitglied m : mitglieder) {
                 System.out.println(m.toString());
             }
+        } else {
+            System.out.println("Ungültiges Datum");
         }
-        else { System.out.println("Ungültiges Datum"); }
         System.out.println("");
+
 
         /**
          * Dem Repertoire der Band einige Songs hinzufuegen und und auflisten
          */
-        
         System.out.println("\nAusgabe Songs---------------------------------------");
         System.out.println("Erwarteter Output:\n\n4 Lieder: Love, Version von Love, Herz, Beileid\n6 Lieder: Love, Version von Love, No Love, Version von No Love, Herz, Beileid, Herzilein, Kraut");
         System.out.println("----------------------------------------------------\n");
@@ -154,7 +159,6 @@ public class Test {
         /**
          * Einige Termine hinzufuegen und auflisten
          */
-        
         System.out.println("\nAusgabe Termine-------------------------------------");
         System.out.println("Erwarteter Output:\n\n4 Proben, 2 Auftritte\nNach dem Löschen und Ändern: P2, P5, A1, P6, A2\nNach dem Wiederherstellen: P2, P3, A1, P4, A2");
         System.out.println("----------------------------------------------------\n");
@@ -171,6 +175,7 @@ public class Test {
         b.terminHinzufuegen(p3);
         b.terminHinzufuegen(p4);
         b.terminHinzufuegen(a1);
+        b.terminHinzufuegen(a3);
         b.terminHinzufuegen(a2);
 
         ArrayList<? extends Termin> termine = b.termineAuflisten(von, bis);
@@ -196,7 +201,7 @@ public class Test {
             System.out.println(a.toString());
         }
         System.out.println("");
-        
+
         /**
          * Termin loeschen und anschliessend wiederherstellen
          */
@@ -212,11 +217,11 @@ public class Test {
             System.out.println(t.toString());
         }
         System.out.println("");
-        
+
         b.terminWiederherstellen(p1);
         b.terminWiederherstellen(p3);
         b.terminWiederherstellen(p4);
-        
+
         System.out.println("Dominiks Nachrichten:");
         
         ArrayList<String> messages = lukas.getMessages();
@@ -225,7 +230,7 @@ public class Test {
             System.out.println(s);
         }
         System.out.println("");
-        
+
         termine = b.termineAuflisten(von, bis);
 
         System.out.println("Auflistung der Termine nach der Wiederherstellung:");
@@ -233,43 +238,51 @@ public class Test {
             System.out.println(t.toString());
         }
         System.out.println("");
-        
+
         /**
          * Abstimmen ueber einen Auftritt
-         */        
-        
+         */
         System.out.println("\nAusgabe Abstimmung----------------------------------");
-        System.out.println("Erwarteter Output: \nDer Termin, die Abstimmungsergebnisse inklusive Begruendungen der Mitglider,\nLukas ist dagegen und daher findet der Termin nicht statt");        
+        System.out.println("Erwarteter Output: \nDer Termin, die Abstimmungsergebnisse inklusive Begruendungen der Mitglider,\nLukas ist dagegen und daher findet der Termin nicht statt");
         System.out.println("----------------------------------------------------\n");
-        
+
         Auftritt moeglAuftritt1 = new Auftritt(new Ort("a2 Gasometer", "Gasstr.666", 3000), new GregorianCalendar(1995, 9, 3, 18, 0), "2:00", mitglieder, 800);
         Abstimmung abstimmungProbe1 = b.abstimmenTermin(moeglAuftritt1);
         abstimmungProbe1.abstimmen(andreas, true, "passt");
         abstimmungProbe1.abstimmen(michael, true, "Leiwand!");
         abstimmungProbe1.abstimmen(lukas, false, "do kau i ned!!");
         abstimmungProbe1.abstimmen(dominik, true, "haut hi");
-               
+
         /**
          * Ausgabe des Ergebnis der Abstimmung
          */
         String[] ergebnisAbstimmung = abstimmungProbe1.getResult();
         System.out.println(ergebnisAbstimmung[1]);
-        
-        if(ergebnisAbstimmung[0].equals("1")) {
+
+        if (ergebnisAbstimmung[0].equals("1")) {
             b.terminHinzufuegen(moeglAuftritt1);
             System.out.println(">> Termin findet statt");
-        }
-        else if(ergebnisAbstimmung[0].equals("0")) {
+        } else if (ergebnisAbstimmung[0].equals("0")) {
             System.out.println(">> Termin findet nicht statt");
         }
         System.out.println("");
-   
+
+        b.postenHinzufuegen(new Posten(200,"Anonyme Spende",new GregorianCalendar(2012,8,24)));
+        b.postenHinzufuegen(new Posten(-800,"Neue Gitarre",new GregorianCalendar(2012,1,2)));       
+        b.postenHinzufuegen(new Posten(300,"Autogrammstunde",new GregorianCalendar(2012,3,24)));
+        b.postenHinzufuegen(new Posten(-300,"Bus Miete",new GregorianCalendar(2006,1,2)));  
 
         /**
          * Eine Bilanz ueber den gesuchten Zeitraum erstellen
          */
         System.out.println("\nAusgabe Bilanz------------------------------------");
-        System.out.println("Erwarteter Output: \nEINZUFUEGEN");       
+        System.out.println("Erwarteter Output: \nKosten durch Proben in diesem Zeitraum: 330 Euro"
+                +"\nKosten durch Sonstiges in diesem Zeitraum: 1100 Euro"
+                +"\nGesamtkosten in diesem Zeitraum: 1430 Euro"
+                + "\nUmsatz durch Auftritte in diesem Zeitraum: 1600 Euro"
+                +"\nUmsatz durch Sonstiges in diesem Zeitraum: 500 Euro"
+                +"\nGesamtumsatz in diesem Zeitraum: 2100 Euro"
+                + "\nMacht einen Gesamtgewinn von: 670 Euro");
         System.out.println("----------------------------------------------------\n");
         
         TreeSet<Posten> bilanz = b.bilanzAuflisten(von, bis);
@@ -309,34 +322,37 @@ public class Test {
         System.out.println("\nAusgabe Orte----------------------------------------");
         System.out.println("Erwarteter Output:\nErste Abfrage gibt Orte mit mehr als 200 Plaetze aus,\nzweite mit mehr als 20 Plaetze\ndritte mit mehr als 100.000");
         System.out.println("----------------------------------------------------\n");
-        
-        System.out.println("\nOrte mit mehr als 200 Plaetzen:");
+
+        System.out.println("\nOrte mit mehr als 200 Plätzen:");
         ArrayList<Ort> orte = b.findeOrt(200);
-        if(!orte.isEmpty()) {
+        if (!orte.isEmpty()) {
             for (Ort o : orte) {
-                    System.out.println(o);
+                System.out.println(o);
             }
+        } else {
+            System.out.println("Keinen Ort gefunden!");
         }
-        else  {System.out.println("Keinen Ort gefunden!");}
-        
-        System.out.println("\nOrte mit mehr als 20 Plaetzen:");
+
+        System.out.println("\nOrte mit mehr als 20 Plätzen:");
         orte = b.findeOrt(20);
-        if(!orte.isEmpty()) {
+        if (!orte.isEmpty()) {
             for (Ort o : orte) {
-                    System.out.println(o);
+                System.out.println(o);
             }
+        } else {
+            System.out.println("Keinen Ort gefunden!");
         }
-        else  {System.out.println("Keinen Ort gefunden!");}
-        
-        System.out.println("\nOrte mit mehr als 100.000 Plaetzen:");
+
+        System.out.println("\nOrte mit mehr als 100.000 Plätzen:");
         orte = b.findeOrt(100000);
-        if(!orte.isEmpty()) {
+        if (!orte.isEmpty()) {
             for (Ort o : orte) {
-                    System.out.println(o);
+                System.out.println(o);
             }
+        } else {
+            System.out.println("Keinen Ort gefunden!");
         }
-        else  {System.out.println("Keinen Ort gefunden!");}
-        
-        System.out.println(""); 
+
+        System.out.println("");
     }
 }

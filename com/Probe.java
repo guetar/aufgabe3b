@@ -25,7 +25,7 @@ public class Probe extends Termin {
      */
     public Probe(Ort ort, GregorianCalendar datum, String dauer, HashSet<Mitglied> teilnehmer, int miete) {
         super(ort, datum, dauer, teilnehmer);
-        this.miete = miete;
+        this.miete = (miete>0)?-miete:miete;
     }
     
     /**
