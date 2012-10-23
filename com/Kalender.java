@@ -45,20 +45,24 @@ public class Kalender {
      * @param neu neuer Termin
      * @return Erfolg
      */
-    public Termin terminAendern(Termin alt, Termin neu) {
-        if(termine.contains(alt)) {
-            
-            if(alt instanceof Probe) {
+    public Termin terminAendern(GregorianCalendar alt, Termin neu) {
+        
+        for(Termin t: termine) {
+            if(t.getDatum().equals(alt)) {
+                if(t instanceof Probe) {
                 
-                Probe p = (Probe) alt;
-                p.setProbe((Probe) neu);
-                return p;
-                
-            } else if (alt instanceof Auftritt) {
-                
-                Auftritt a = (Auftritt) alt;
-                a.setAuftritt((Auftritt) neu);
-                return a;
+                    termine.remove(t);
+                    Probe p = (Probe) t;
+                    Probe p_neu = p.setProbe((Probe) neu);
+                    termine.add(p_neu);
+                    return p_neu;
+
+                } else if (t instanceof Auftritt) {
+
+                    Auftritt a = (Auftritt) t;
+                    a.setAuftritt((Auftritt) neu);
+                    return a;
+                }
             }
         }
         return null;
@@ -85,33 +89,46 @@ public class Kalender {
      * @param t der wiederherzustellende Termin
      * @return Erfolg
      */
-    public Termin terminWiederherstellen(Termin t) {
-        Termin alt = t.popFromStack();
+    public Termin terminWiederherstellen(GregorianCalendar datum) {
+        for(Termin t : termine) {
+            if(t.getDatum().equals(datum)) {
+                Termin alt = t.popFromStack();
         
-        if(alt != null) {
-            // Eine alte Version des Termins lag am Stack => wird wiederhergestellt
-            if(alt instanceof Auftritt) {
-                
-                Auftritt a_alt = (Auftritt) alt;
-                Auftritt t_alt = (Auftritt) t;
-                return t_alt.setAuftritt(a_alt);
-                
-            } else if(alt instanceof Probe) {
-                
-                Probe p_alt = (Probe) alt;
-                Probe t_alt = (Probe) t;
-                return t_alt.setProbe(p_alt);
-            }
-            
-        } else {
-            
-            // keine alte Version vorhanden => Termin muss geloescht worden sein
-            if(trash.contains(t)) {
-                trash.remove(t);
-                termine.add(t);
-                return t;
+                if(alt != null) {
+                    // Eine alte Version des Termins lag am Stack => wird wiederhergestellt
+                    if(alt instanceof Probe) {
+
+                        termine.remove(t);
+                        Probe p_alt = (Probe) alt;
+                        Probe t_alt = (Probe) t;
+                        t_alt.setProbe(p_alt);
+                        termine.add(t_alt);
+                        return t_alt;
+
+                    } else if(alt instanceof Auftritt) {
+
+                        termine.remove(t);
+                        Auftritt a_alt = (Auftritt) alt;
+                        Auftritt t_alt = (Auftritt) t;
+                        t_alt.setAuftritt(a_alt);
+                        termine.add(t_alt);
+                        return t_alt;
+                    }
+                }
             }
         }
+        
+        for(Termin t : trash) {
+            if(t.getDatum().equals(datum)) {
+                // keine alte Version vorhanden => Termin muss geloescht worden sein
+                if(trash.contains(t)) {
+                    trash.remove(t);
+                    termine.add(t);
+                    return t;
+                }
+            }
+        }
+        
         return null;
     }
     

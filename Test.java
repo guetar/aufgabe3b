@@ -160,11 +160,9 @@ public class Test {
         System.out.println("----------------------------------------------------\n");
         
         Probe p1 = new Probe(new Ort("P1 Studio", "Musterstr. 23", 8), new GregorianCalendar(2001, 6, 5, 18, 0), "3:00", mitglieder, 30);
-        Probe p2 = new Probe(new Ort("P2 Garage", "Maxerstr. 32", 4), new GregorianCalendar(2001, 7, 2, 18, 0), "3:00", mitglieder, 100);
-        Probe p3 = new Probe(new Ort("P3 Keller", "Maxerstr. 32", 4), new GregorianCalendar(2001, 7, 4, 18, 0), "3:00", mitglieder, 100);
-        Probe p4 = new Probe(new Ort("P4 Standort", "Maxerstr. 32", 4), new GregorianCalendar(2002, 7, 6, 18, 0), "3:00", mitglieder, 100);
-        Probe p5 = new Probe(new Ort("P5 Keller", "Maxerstr. 32", 4), new GregorianCalendar(2002, 7, 8, 18, 0), "3:00", mitglieder, 100);
-        Probe p6 = new Probe(new Ort("P6 Standort", "Maxerstr. 32", 4), new GregorianCalendar(2003, 7, 10, 18, 0), "3:00", mitglieder, 100);
+        Probe p2 = new Probe(new Ort("P2 Garage", "Maxerstr. 32", 4), new GregorianCalendar(2001, 7, 2, 18, 0), "3:00", mitglieder, 90);
+        Probe p3 = new Probe(new Ort("P3 Keller", "Maxerstr. 32", 4), new GregorianCalendar(2001, 7, 4, 18, 0), "3:00", mitglieder, 50);
+        Probe p4 = new Probe(new Ort("P4 Standort", "Maxerstr. 32", 4), new GregorianCalendar(2002, 7, 6, 18, 0), "3:00", mitglieder, 60);
         Auftritt a1 = new Auftritt(new Ort("A1 Rauschhaus", "Alkgasse 13", 50), new GregorianCalendar(2001, 9, 2, 18, 0), "2:00", mitglieder, 800);
         Auftritt a2 = new Auftritt(new Ort("A2 Gasometer", "Gasstr.666", 3000), new GregorianCalendar(2002, 9, 3, 18, 0), "2:00", mitglieder, 800);
         
@@ -203,8 +201,8 @@ public class Test {
          * Termin loeschen und anschließend wiederherstellen
          */
         b.terminLoeschen(p1);
-        b.terminAendern(p3, p5);
-        b.terminAendern(p4, p6);
+        b.terminAendern(p3, new Probe(new Ort("P5 Keller", "Maxerstr. 32", 4), new GregorianCalendar(2002, 7, 8, 18, 0), "3:00", mitglieder, 70));
+        b.terminAendern(p4, new Probe(new Ort("P6 Standort", "Maxerstr. 32", 4), new GregorianCalendar(2003, 7, 10, 18, 0), "3:00", mitglieder, 80));
         
         termine = b.termineAuflisten(von, bis);
 
@@ -275,6 +273,25 @@ public class Test {
         System.out.println("----------------------------------------------------\n");
         
         TreeSet<Posten> bilanz = b.bilanzAuflisten(von, bis);
+        
+        for(Posten p : bilanz) {
+            System.out.println(p.toString());
+        }
+        System.out.println("");
+        
+        b.terminLoeschen(a1);
+        b.terminLoeschen(a2);
+        
+        bilanz = b.bilanzAuflisten(von, bis);
+        
+        for(Posten p : bilanz) {
+            System.out.println(p.toString());
+        }
+        System.out.println("");
+        
+        b.terminAendern(p2, new Probe(new Ort("Do wo ma spuen", "Adresse", 40), new GregorianCalendar(2004, 5, 5), "04:00", mitglieder, 45));
+        
+        bilanz = b.bilanzAuflisten(von, bis);
         
         for(Posten p : bilanz) {
             System.out.println(p.toString());

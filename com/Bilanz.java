@@ -60,7 +60,15 @@ public class Bilanz {
     }
     
     public Posten postenAendern(Posten alt, Posten neu) {
-        return alt.setPosten(neu);
+        for(Posten p : posten) {
+            if(p == alt) {
+                posten.remove(p);
+                p.setPosten(neu);
+                posten.add(p);
+                return p;
+            }
+        }
+        return null;
     }
     
     /**

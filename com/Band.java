@@ -161,12 +161,11 @@ public class Band {
     public boolean terminAendern(Termin alt, Termin neu) {
         HashSet<Mitglied> mitglieder = mitgliedsVerwaltung.mitgliederAuflisten();
         
-        Termin t = kalender.terminAendern(alt, neu);
+        Termin t = kalender.terminAendern(alt.getDatum(), neu);
         
         if(t != null) {
-            Posten a = new Posten(alt);
-            Posten n = new Posten(neu);
-            if(bilanz.postenExistiert(a)) bilanz.postenAendern(a, n);
+            Posten p = new Posten(alt);
+            if(bilanz.postenExistiert(p)) bilanz.postenAendern(p, new Posten(neu));
             for(Mitglied m : mitglieder) {
                 m.message("Folgender Termin wurde geändert: " + t.toString());
                 m.terminAendern(alt, neu);
@@ -206,7 +205,7 @@ public class Band {
     public Termin terminWiederherstellen(Termin t) {
         Posten p = new Posten(t);
         if(bilanz.postenExistiert(p)) bilanz.postenWiederherstellen(p);
-        return kalender.terminWiederherstellen(t);
+        return kalender.terminWiederherstellen(t.getDatum());
     }
     
     /**
