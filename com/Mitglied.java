@@ -90,8 +90,14 @@ public class Mitglied {
      * @param t zu entfernender Termin
      * @return "true" wenn erfolgreich, "false", wenn nicht vorhanden
      */
-    public boolean removeTermin(Termin t) {
-        return termine.remove(t);
+    public boolean terminLoeschen(Termin t) {
+        for (Termin tList : termine) {
+            if (tList.getDatum().equals(t.getDatum()) && tList.getOrt().getName().equals(t.getOrt().getName())) {
+                termine.remove(tList);
+                return true;
+            }
+        }
+        return false;
     }
 
     /**
@@ -110,5 +116,29 @@ public class Mitglied {
      */
     public String toString() {
         return name + " " + tel + " " + instrument;
+    }
+
+    /**
+     * getter fuer Termine 
+     * 
+     * @return 
+     */
+    public ArrayList<Termin> getTermine() {
+        return termine;
+    }
+
+    /**
+     * Ersetzt einen alten Termin durch einen neuen
+     * 
+     * @param alt alter Termin
+     * @param neu neuer Termin
+     * @return "true" wenn alt vorhanden war, "false" wenn nicht
+     */
+    public boolean terminAendern(Termin alt, Termin neu) {
+        boolean ok = termine.remove(alt);
+        if (ok) {
+            termine.add(neu);
+        }
+        return ok;
     }
 }

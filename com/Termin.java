@@ -33,7 +33,7 @@ public abstract class Termin implements Comparable<Termin> {
         this.datum = datum;
         this.dauer = dauer;
         this.stack = new Stack<Termin>();
-        this.teilnehmer = new HashSet<Mitglied>(teilnehmer);
+        this.teilnehmer = teilnehmer;
         
         for(Mitglied m : teilnehmer) {
             m.addTermin(this);
@@ -91,7 +91,7 @@ public abstract class Termin implements Comparable<Termin> {
     protected boolean teilnehmerEntfernen(Mitglied m) {
         boolean ok = teilnehmer.remove(m);
         if (ok) {
-            m.removeTermin(this);
+            m.terminLoeschen(this);
         }
         return ok;
     }

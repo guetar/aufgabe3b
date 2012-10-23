@@ -57,7 +57,7 @@ public class Band {
      * @return Mitglieder
      */
     public HashSet<Mitglied> mitgliederAuflisten() {
-        return mitgliedsVerwaltung.mitgliederAuflisten();
+        return new HashSet<Mitglied>(mitgliedsVerwaltung.mitgliederAuflisten());
     }
 
     /**
@@ -68,7 +68,7 @@ public class Band {
      * @return Mitglieder innerhalb des gesuchten Zeitraumes
      */
     public HashSet<Mitglied> mitgliederAuflisten(GregorianCalendar date) {
-        return mitgliedsVerwaltung.mitgliederAuflisten(date);
+        return new HashSet<Mitglied>(mitgliedsVerwaltung.mitgliederAuflisten(date));
     }
 
     // Repertoire
@@ -159,7 +159,7 @@ public class Band {
     }
     
     public Boolean terminAendern(Termin alt, Termin neu) {
-        HashSet<Mitglied> mitglieder = mitgliedsVerwaltung.mitgliederAuflisten();
+        HashSet<Mitglied> mitglieder = alt.getTeilnehmer();
         
         Termin t = kalender.terminAendern(alt, neu);
         
@@ -167,6 +167,7 @@ public class Band {
             bilanz.postenAendern(new Posten(alt), new Posten(neu));
             for(Mitglied m : mitglieder) {
                 m.message("Folgender Termin wurde geändert: " + t.toString());
+                m.terminAendern(alt, neu);
             }
             return true;
         }
@@ -174,12 +175,13 @@ public class Band {
     }
     
     public Boolean terminLoeschen(Termin t) {
-        HashSet<Mitglied> mitglieder = mitgliedsVerwaltung.mitgliederAuflisten();
+        HashSet<Mitglied> mitglieder = t.getTeilnehmer();
         
         if(kalender.terminLoeschen(t)) {
             bilanz.postenLoeschen(new Posten(t));
             for(Mitglied m : mitglieder) {
                 m.message("Folgender Termin wurde abgesagt: " + t.toString());
+                m.terminLoeschen(t);
             }
             return true;
         }

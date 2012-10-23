@@ -48,6 +48,15 @@ public class Ort {
     public int getPlaetze() {
         return plaetze;
     }
+    
+    /**
+     * getter für Name
+     * 
+     * @return Name
+     */
+    public String getName() {
+        return name;
+    }
 
     @Override
     /**

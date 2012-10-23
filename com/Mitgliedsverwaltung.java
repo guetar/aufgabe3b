@@ -104,7 +104,7 @@ public class Mitgliedsverwaltung {
      * @return Zustand aktuelles Mitglieds-Set
      */
     public HashSet<Mitglied> mitgliederAuflisten() {
-        return new HashSet<Mitglied>(mitglieder);
+        return mitglieder;
     }
     
     /**
@@ -129,7 +129,7 @@ public class Mitgliedsverwaltung {
            // Liegt das zu suchende Datum innerhalb zweier Daten 
            // wird das Set zum Datum der letzten Änderung ausgegeben
            if(tmpSnapDate.before(date) && snapDate.after(date)) {
-               return new HashSet<Mitglied>(snapShots.get(tmpSnapDate));
+               return snapShots.get(tmpSnapDate);
            }
            tmpSnapDate = snapDate;
        }
@@ -137,7 +137,7 @@ public class Mitgliedsverwaltung {
        // Letzte Kontrolle ob das zu suchende Datum jünger ist als letzte
        // Änderung, dann nämlich aktuellen Zustand ausgeben.
        if (tmpSnapDate.before(date)) {
-           return new HashSet<Mitglied>(mitglieder);
+           return mitglieder;
        }
        
        return null;
