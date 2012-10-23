@@ -30,10 +30,9 @@ public class Band {
     }
 
     // Mitglieder
-    
     /**
      * Fuegt der Band ein Mitglied hinzu.
-     * 
+     *
      * @param m hinzuzufuegendes Mitglied
      * @return Erfolg
      */
@@ -43,7 +42,7 @@ public class Band {
 
     /**
      * Entfernt ein Mitglied aus der Band.
-     * 
+     *
      * @param m zu entferndenes Mitglied
      * @return Erfolg
      */
@@ -53,7 +52,7 @@ public class Band {
 
     /**
      * Listet alle Mitglieder der Band.
-     * 
+     *
      * @return Mitglieder
      */
     public HashSet<Mitglied> mitgliederAuflisten() {
@@ -61,8 +60,9 @@ public class Band {
     }
 
     /**
-     * Listet alle Personen, die innerhalb eines gesuchten Zeitraums Mitglieder der Band waren.
-     * 
+     * Listet alle Personen, die innerhalb eines gesuchten Zeitraums Mitglieder
+     * der Band waren.
+     *
      * @param von Beginn des gesuchten Zeitraumes
      * @param bis Ende des gesuchten Zeitraumes
      * @return Mitglieder innerhalb des gesuchten Zeitraumes
@@ -72,10 +72,9 @@ public class Band {
     }
 
     // Repertoire
-    
     /**
      * Fuegt dem Repertoire der Band einen Song hinzu.
-     * 
+     *
      * @param s hinzuzufuegender Song
      * @return Erfolg
      */
@@ -85,7 +84,7 @@ public class Band {
 
     /**
      * Entfernt einen Song aus dem Repertoire der Band.
-     * 
+     *
      * @param s zu entfernender Song
      * @return Erfolg
      */
@@ -98,7 +97,7 @@ public class Band {
 
     /**
      * Listet das Repertoire der Band
-     * 
+     *
      * @return Repertoire
      */
     public ArrayList<Song> songsAuflisten() {
@@ -107,7 +106,7 @@ public class Band {
 
     /**
      * Listet das Repertoire der Band zu einem gewissen Zeitpunkt.
-     * 
+     *
      * @param datum gesuchter Zeitpunkt
      * @return Repertoire zu dem gesuchten Zeitpunkt
      */
@@ -115,11 +114,11 @@ public class Band {
         ArrayList<Song> repertoire_liste = new ArrayList<Song>();
         HashSet<Mitglied> mitglieder = mitgliedsVerwaltung.mitgliederAuflisten(datum);
 
-        for(Mitglied m : mitglieder) {
-            if(!versionen) {
+        for (Mitglied m : mitglieder) {
+            if (!versionen) {
                 repertoire_liste.addAll(m.getRepertoire());
             } else {
-                for(Song s : m.getRepertoire()) {
+                for (Song s : m.getRepertoire()) {
                     repertoire_liste.addAll(s.getVersionen());
                 }
             }
@@ -127,65 +126,65 @@ public class Band {
 
         return repertoire_liste;
     }
-    
+
     /**
      * Kalender und Bilanz
-     * 
+     *
      * @param t Termin
      * @param von Beginn des gesuchten Zeitraums
      * @param bis Ende des gesuchten Zeitraums
      * @param alt alter Termin
      * @param neu neuer Termin
-     * @return 
+     * @return
      */
     public Boolean terminHinzufuegen(Termin t) {
-        return  kalender.terminHinzufuegen(t) && bilanz.postenHinzufuegen(new Posten(t));
+        return kalender.terminHinzufuegen(t) && bilanz.postenHinzufuegen(new Posten(t));
     }
-    
+
     public ArrayList<? extends Termin> termineAuflisten(GregorianCalendar von, GregorianCalendar bis) {
         return kalender.termineAuflisten(von, bis);
     }
-    
+
     public ArrayList<Probe> probenAuflisten(GregorianCalendar von, GregorianCalendar bis) {
         return kalender.probenAuflisten(von, bis);
     }
-    
+
     public ArrayList<Auftritt> auftritteAuflisten(GregorianCalendar von, GregorianCalendar bis) {
         return kalender.auftritteAuflisten(von, bis);
     }
-    
+
     public Abstimmung abstimmenTermin(Termin _t) {
         return new Abstimmung(mitgliedsVerwaltung.mitgliederAuflisten(), _t);
     }
-    
+
     public Boolean terminAendern(Termin alt, Termin neu) {
         HashSet<Mitglied> mitglieder = mitgliedsVerwaltung.mitgliederAuflisten();
-        
+
         Termin t = kalender.terminAendern(alt, neu);
-        
-        if(t != null) {
+
+        if (t != null) {
             bilanz.postenAendern(new Posten(alt), new Posten(neu));
-            for(Mitglied m : mitglieder) {
+            for (Mitglied m : mitglieder) {
                 m.message("Folgender Termin wurde geändert: " + t.toString());
             }
             return true;
         }
         return false;
     }
-    
+
     public Boolean terminLoeschen(Termin t) {
         HashSet<Mitglied> mitglieder = mitgliedsVerwaltung.mitgliederAuflisten();
-        
-        if(kalender.terminLoeschen(t)) {
+
+        if (kalender.terminLoeschen(t)) {
             bilanz.postenLoeschen(new Posten(t));
-            for(Mitglied m : mitglieder) {
+            for (Mitglied m : mitglieder) {
                 m.message("Folgender Termin wurde abgesagt: " + t.toString());
             }
             return true;
         }
         return false;
     }
-    
+
     public Boolean terminWiederherstellen(Termin t) {
         return (kalender.terminWiederherstellen(t) != null) ? true : false;
     }
@@ -199,10 +198,20 @@ public class Band {
     public Boolean postenHinzufuegen(Posten p) {
         return bilanz.postenHinzufuegen(p);
     }
-    
+
     /**
-     * Summiert die Kosten, die innerhalb eines gesuchten Zeitraumes durch das Mieten der Proberaume entstehen
-     * 
+     * Getter für die Bilanz
+     *
+     * @return Bilanz
+     */
+    public Bilanz getBilanz() {
+        return bilanz;
+    }
+
+    /**
+     * Summiert die Kosten, die innerhalb eines gesuchten Zeitraumes durch das
+     * Mieten der Proberaume entstehen
+     *
      * @param von Beginn des gesuchten Zeitraumes
      * @param bis Ende des gesuchten Zeitraumes
      * @return Kosten, die innerhalb des gesuchten Zeitraumes entstanden sind
@@ -219,11 +228,13 @@ public class Band {
     }
 
     /**
-     * Summiert den Umsatz, der innerhalb eines gesuchten Zeitraumes durch Gagen bei den Auftritten verdient wurde
-     * 
+     * Summiert den Umsatz, der innerhalb eines gesuchten Zeitraumes durch Gagen
+     * bei den Auftritten verdient wurde
+     *
      * @param von Beginn des gesuchten Zeitraumes
      * @param bis Ende des gesuchten Zeitraumes
-     * @return Umsatz, der innerhalb des gesuchten Zeitraumes erwirtschaftet werden konnte
+     * @return Umsatz, der innerhalb des gesuchten Zeitraumes erwirtschaftet
+     * werden konnte
      */
     public int umsatzSummieren(GregorianCalendar von, GregorianCalendar bis) {
         int umsatz = 0;
@@ -237,11 +248,13 @@ public class Band {
     }
 
     /**
-     * Summiert den Gewinn, der innerhalb eines gesuchten Zeitraumes erwirtschaftet werden konnte
-     * 
+     * Summiert den Gewinn, der innerhalb eines gesuchten Zeitraumes
+     * erwirtschaftet werden konnte
+     *
      * @param von Beginn des gesuchten Zeitraumes
      * @param bis Ende des gesuchten Zeitraumes
-     * @return Gewinn, der innerhalb des gesuchten Zeitraumes erwirtschaftet werden konnte
+     * @return Gewinn, der innerhalb des gesuchten Zeitraumes erwirtschaftet
+     * werden konnte
      */
     public int gewinnSummieren(GregorianCalendar von, GregorianCalendar bis) {
         return umsatzSummieren(von, bis) - kostenSummieren(von, bis);
@@ -251,18 +264,18 @@ public class Band {
      * liefert Liste mit Orten, die eine bestimmte Infrastruktur haben.
      *
      * @param plaetze Gesuchte Anzahl an Zuschauerplaetzen(oder 0, wenn egal)
-     * 
+     *
      * @return die Orte, die die bestimmte Infrastruktur haben. null, wenn kein
      * Ort die Voraussetzungen erfuellt.
      */
     public ArrayList<Ort> findeOrt(int plaetze) {
         ArrayList<Ort> gefOrte = new ArrayList<Ort>();
-        
+
         for (Termin t : kalender.termineAuflisten()) {
             Ort o = t.getOrt();
 
             if (o.getPlaetze() >= plaetze) {
-                    gefOrte.add(o);
+                gefOrte.add(o);
             }
         }
 
