@@ -40,6 +40,14 @@ public class Band {
     public boolean mitgliedHinzufuegen(Mitglied m, GregorianCalendar eintrittsDatum) {
         return mitgliedsVerwaltung.mitgliedHinzufuegen(m, eintrittsDatum);
     }
+    
+    public boolean ersatzMitgliedHinzufuegen(Mitglied m) {
+        return mitgliedsVerwaltung.ersatzMitgliedHinzufuegen(m);
+    }
+    
+    public void swapMitglied(Mitglied mAusErsatz, Mitglied mAusFix, GregorianCalendar aenderungsDatum) {
+        mitgliedsVerwaltung.swapMitglied(mAusErsatz, mAusFix, aenderungsDatum);
+    }
 
     /**
      * Entfernt ein Mitglied aus der Band.
@@ -281,8 +289,8 @@ public class Band {
         return bilanz.postenWiederherstellen(p);
     }
     
-    public TreeSet<Posten> bilanzAuflisten(GregorianCalendar von, GregorianCalendar bis) {
-        return bilanz.bilanzAuflisten(true, true, true, von, bis);
+    public TreeSet<Posten> postenAuflisten(boolean showAuftr, boolean showProben, boolean showSonstige, GregorianCalendar von, GregorianCalendar bis) {
+        return bilanz.postenAuflisten(showAuftr, showProben, showSonstige, von, bis);
     }
     
     /**
@@ -292,9 +300,9 @@ public class Band {
      * @param bis Ende des gesuchten Zeitraumes
      * @return Kosten, die innerhalb des gesuchten Zeitraumes entstanden sind
      */
-    public int kostenSummieren(boolean showProben, boolean showSonstige, GregorianCalendar von, GregorianCalendar bis) {
-        return bilanz.kosten(showProben, showSonstige, von, bis);
-    }
+//    public int kostenSummieren(boolean showProben, boolean showSonstige, GregorianCalendar von, GregorianCalendar bis) {
+//        return bilanz.kosten(showProben, showSonstige, von, bis);
+//    }
 
     /**
      * Summiert den Umsatz, der innerhalb eines gesuchten Zeitraumes durch Gagen
@@ -305,9 +313,9 @@ public class Band {
      * @return Umsatz, der innerhalb des gesuchten Zeitraumes erwirtschaftet
      * werden konnte
      */
-    public int umsatzSummieren(boolean showAuftr, boolean showSonstige, GregorianCalendar von, GregorianCalendar bis) {
-        return bilanz.umsatz(showAuftr, showSonstige, von, bis);
-    }
+//    public int umsatzSummieren(boolean showAuftr, boolean showSonstige, GregorianCalendar von, GregorianCalendar bis) {
+//        return bilanz.umsatz(showAuftr, showSonstige, von, bis);
+//    }
 
     /**
      * Summiert den Gewinn, der innerhalb eines gesuchten Zeitraumes
@@ -318,8 +326,8 @@ public class Band {
      * @return Gewinn, der innerhalb des gesuchten Zeitraumes erwirtschaftet
      * werden konnte
      */
-    public int gewinnSummieren(boolean showAuftr, boolean showProben, boolean showSonstige, GregorianCalendar von, GregorianCalendar bis) {
-        return bilanz.gewinn(showAuftr, showProben, showSonstige, von, bis);
+    public int postenSummieren(boolean showAuftr, boolean showProben, boolean showSonstige, GregorianCalendar von, GregorianCalendar bis) {
+        return bilanz.postenSummieren(showAuftr, showProben, showSonstige, von, bis);
     }
 
     /**
@@ -342,5 +350,14 @@ public class Band {
      */
     public ArrayList<Ort> findeOrt(int plaetze) {
         return kalender.findeOrt(plaetze);
+    }
+    
+    public String printMitglieder() {
+        String s = "";
+        HashSet<Mitglied> mitglieder = mitgliedsVerwaltung.mitgliederAuflisten();
+        for (Mitglied m : mitglieder) {
+            s += m + "\n";
+        }
+        return s;
     }
 }

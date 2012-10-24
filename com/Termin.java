@@ -128,7 +128,7 @@ public abstract class Termin implements Comparable<Termin> {
      * 
      * @return 
      */
-    protected HashSet<Mitglied> getTeilnehmer() {
+    public HashSet<Mitglied> getTeilnehmer() {
         return teilnehmer;
     }
     

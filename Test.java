@@ -6,6 +6,7 @@
 import com.*;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.TreeSet;
 
@@ -33,7 +34,7 @@ public class Test {
         Mitglied andreas = new Mitglied("Andreas Kodolsky", "0676/7787986", "Gitarre");
         Mitglied michael = new Mitglied("Michael Preis", "0664/8798653", "Bass");
         Mitglied lukas = new Mitglied("Lukas Permanschlager", "0676/4382904839", "Schlagzeug");
-        Mitglied dominik = new Mitglied("Dominik Haltauf", "0664/473892347", "Bass");
+        Mitglied dominik = new Mitglied("Dominik Haltauf", "0664/473892347", "Bass");         
         
         Song love = new Song("Love: I love you", "04:33", new GregorianCalendar(2002, 2, 2));
         Song nolove = new Song("No Love: I loved you but now I love another woman", "03:22", new GregorianCalendar(2003, 2, 4));
@@ -238,25 +239,59 @@ public class Test {
             System.out.println(t.toString());
         }
         System.out.println("");
-
+        
+        
+        /**
+         * Ausgabe bestimmter Termine + Mitglieder, Ausgabe Termine eines Mitglieds, 
+         * Ersatzmitglied erstellen und mit aktivem Mitglied austauschen
+         */
+        System.out.println("\nAusgabe Teilnehmer--------------------------------");
+        System.out.println("Erwarteter Output: \nTeilnehmer des gesuchten Termins, (3) fuer A1\nAusgabe Termine von Andreas\nAusgabe Band vor und nach Wechsel von Mitglider und Ersatz");        
+        System.out.println("----------------------------------------------------\n");
+        termine = b.termineAuflisten(new GregorianCalendar(2001, 8, 3), new GregorianCalendar(2002, 1, 1));
+        
+        for (Termin t : termine) {
+            System.out.println(t + "\nDaran nehmen teil:");
+            HashSet<Mitglied> teilnehmer = t.getTeilnehmer();
+            for (Mitglied m : teilnehmer) {
+                System.out.println(m);
+            }
+        }
+        
+        System.out.println("\nTermine von Andreas:");
+        termine = andreas.getTermine();
+        for (Termin t : termine) {
+            System.out.println(t);
+        }
+        
+        // Ersatzmitglied erstellen und mit fixem austauschen
+        Mitglied jonas = new Mitglied("Jonas Katamay", "0999/9966699", "Gitarre");
+        b.ersatzMitgliedHinzufuegen(jonas);
+        System.out.println("\nBand derzeit:\n" + b.printMitglieder());
+        b.swapMitglied(jonas, andreas, new GregorianCalendar(2004, 3, 9));
+        System.out.println("Band nach Tausch von Ersatzmitglied und fixem Mitglied:\n" + b.printMitglieder());
+        
+       
+        
+        
+        
         /**
          * Abstimmen ueber einen Auftritt
-         */
+         */                
         System.out.println("\nAusgabe Abstimmung----------------------------------");
-        System.out.println("Erwarteter Output: \nDer Termin, die Abstimmungsergebnisse inklusive Begruendungen der Mitglider,\nLukas ist dagegen und daher findet der Termin nicht statt");
+        System.out.println("Erwarteter Output: \nAbstimmung ueber zwei Termine, Entscheidungen der Mitglieder + Begruendungen,\nein Termin findet nicht statt, der andere schon und wird angelegt");        
         System.out.println("----------------------------------------------------\n");
-
-        Auftritt moeglAuftritt1 = new Auftritt(new Ort("a2 Gasometer", "Gasstr.666", 3000), new GregorianCalendar(1995, 9, 3, 18, 0), "2:00", mitglieder, 800);
-        Abstimmung abstimmungProbe1 = b.abstimmenTermin(moeglAuftritt1);
-        abstimmungProbe1.abstimmen(andreas, true, "passt");
-        abstimmungProbe1.abstimmen(michael, true, "Leiwand!");
-        abstimmungProbe1.abstimmen(lukas, false, "do kau i ned!!");
-        abstimmungProbe1.abstimmen(dominik, true, "haut hi");
-
+        
+        Auftritt moeglAuftritt1 = new Auftritt(new Ort("a2 Gasometer", "Gasstr.666", 3000), new GregorianCalendar(2004, 9, 3, 18, 0), "2:00", mitglieder, 800);
+        Abstimmung abstimmungAuftritt1 = b.abstimmenTermin(moeglAuftritt1);
+        abstimmungAuftritt1.abstimmen(jonas, true, "passt");
+        abstimmungAuftritt1.abstimmen(michael, true, "Leiwand!");
+        abstimmungAuftritt1.abstimmen(lukas, false, "do kau i ned!!");
+               
         /**
          * Ausgabe des Ergebnis der Abstimmung
          */
-        String[] ergebnisAbstimmung = abstimmungProbe1.getResult();
+        String[] ergebnisAbstimmung = abstimmungAuftritt1.getResult();
         System.out.println(ergebnisAbstimmung[1]);
 
         if (ergebnisAbstimmung[0].equals("1")) {
@@ -266,11 +301,31 @@ public class Test {
             System.out.println(">> Termin findet nicht statt");
         }
         System.out.println("");
-
-        b.postenHinzufuegen(new Posten(200,"Anonyme Spende",new GregorianCalendar(2012,8,24)));
-        b.postenHinzufuegen(new Posten(-800,"Neue Gitarre",new GregorianCalendar(2012,1,2)));       
-        b.postenHinzufuegen(new Posten(300,"Autogrammstunde",new GregorianCalendar(2012,3,24)));
-        b.postenHinzufuegen(new Posten(-300,"Bus Miete",new GregorianCalendar(2006,1,2)));  
+        
+        
+        Probe moeglProbe1 = new Probe(new Ort("p Unter Bruecke", "Sandlerhaus 3", 30), new GregorianCalendar(2004, 10, 3, 18, 0), "2:00", mitglieder, -200);
+        Abstimmung abstimmungProbe1 = b.abstimmenTermin(moeglProbe1);
+        abstimmungProbe1.abstimmen(jonas, true, "passt");
+        abstimmungProbe1.abstimmen(michael, true, "Leiwand!");
+        abstimmungProbe1.abstimmen(lukas, true, "yeah, Mann!");
+               
+        /**
+         * Ausgabe des Ergebnis der Abstimmung
+         */
+        ergebnisAbstimmung = abstimmungProbe1.getResult();
+        System.out.println(ergebnisAbstimmung[1]);
+        
+        if(ergebnisAbstimmung[0].equals("1")) {
+            b.terminHinzufuegen(moeglProbe1);
+            System.out.println(">> Termin findet statt");
+        }
+        else if(ergebnisAbstimmung[0].equals("0")) {
+            System.out.println(">> Termin findet nicht statt");
+        }
+        System.out.println("Termin aus Verwaltung: " + b.probenAuflisten(new GregorianCalendar(2004, 10, 3), new GregorianCalendar(2004, 10, 4))+"\n");
+        
+        
+   
 
         /**
          * Eine Bilanz ueber den gesuchten Zeitraum erstellen
@@ -306,14 +361,34 @@ public class Test {
         
         bilanz = b.bilanzAuflisten(von, bis);
         
+        // Auflistung aller Posten
+        TreeSet<Posten> bilanz = b.postenAuflisten(true, true, true, von, bis);
+        System.out.println("Alle Posten:");
         for(Posten p : bilanz) {
             System.out.println(p.toString());
         }
         System.out.println("");
         
-        System.out.println("Gesamtkosten in diesem Zeitraum:" + b.kostenSummieren(true, true, von, bis) + " Euro");
-        System.out.println("Gesamtumsatz in diesem Zeitraum:" + b.umsatzSummieren(true, true, von, bis) + " Euro");
-        System.out.println("Macht einen Gesamtgewinn von:" + b.gewinnSummieren(true, true, true, von, bis) + " Euro");
+        // Auflistung der Proben und sonstigen Posten
+        bilanz = b.postenAuflisten(false, true, true, von, bis);
+        System.out.println("Proben und sonstige Posten:");
+        for(Posten p : bilanz) {
+            System.out.println(p.toString());
+        }
+        System.out.println("");
+        
+        // Auflistung der Auftritte
+        bilanz = b.postenAuflisten(true, false, false, von, bis);
+        System.out.println("Auftritte:");
+        for(Posten p : bilanz) {
+            System.out.println(p.toString());
+        }
+        System.out.println("");
+        
+        
+        System.out.println("Gesamtkosten in diesem Zeitraum: " + b.postenSummieren(false, true, true, von, bis) + " Euro");
+        System.out.println("Gesamtumsatz in diesem Zeitraum: " + b.postenSummieren(true, false, true, von, bis) + " Euro");
+        System.out.println("Macht einen Gesamtgewinn von: " + b.postenSummieren(true, true, true, von, bis) + " Euro");
         System.out.println("");
         
         /**
