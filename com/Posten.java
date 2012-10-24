@@ -15,6 +15,7 @@ import java.util.Stack;
 public class Posten implements Comparable<Posten> {
 
     private int wert;
+    private int kategorie; //1=Auftritt, 2=Probe, 3=sonstige Einnahme, 4=sonstige Ausgabe
     private String beschreibung;
     private GregorianCalendar datum;
     private Stack<Posten> stack;
@@ -28,8 +29,9 @@ public class Posten implements Comparable<Posten> {
      * @param datum Datum
      * @param termin Termin, auf den sich der Posten bezieht, sonst null
      */
-    public Posten(int wert, String beschreibung, GregorianCalendar datum) {
+    public Posten(int wert, int kategorie, String beschreibung, GregorianCalendar datum) {
         this.beschreibung = beschreibung;
+        this.kategorie = kategorie;
         this.wert = wert;
         this.datum = datum;
         this.stack = new Stack<Posten>();
@@ -46,12 +48,14 @@ public class Posten implements Comparable<Posten> {
             Auftritt a = (Auftritt) t;
             this.beschreibung = "Auftritt";
             this.wert = a.getGage();
+            this.kategorie = 1;
             
         } else if(t instanceof Probe) {
             
             Probe p = (Probe) t;
             this.beschreibung = "Probe";
             this.wert = p.getMiete();
+            this.kategorie = 2;
             
         }
         this.datum = t.getDatum();
@@ -69,6 +73,7 @@ public class Posten implements Comparable<Posten> {
         this.beschreibung = p.getBeschr();
         this.wert = p.getWert();
         this.datum = p.getDatum();
+        this.kategorie = p.getKategorie();
         return this;
     }
     
@@ -86,6 +91,14 @@ public class Posten implements Comparable<Posten> {
      */
     public int getWert(){
         return wert;
+    }
+    
+    /**
+     * Getter fuer Kategorie
+     * @return kategorie
+     */
+    public int getKategorie() {
+        return kategorie;
     }
     
     /**

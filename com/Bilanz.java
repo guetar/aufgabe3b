@@ -4,6 +4,7 @@
  */
 package com;
 
+import java.util.ArrayList;
 import java.util.GregorianCalendar;
 import java.util.LinkedList;
 import java.util.TreeSet;
@@ -120,15 +121,20 @@ public class Bilanz {
      * @param bis Ende des Intervalls
      * @return Summe der Posten
      */
-    public int postenSummieren(boolean showAuftr, boolean showProben, boolean showSonstige, GregorianCalendar von, GregorianCalendar bis) {
+    public int postenSummieren(boolean showAuftr, boolean showProben, boolean showEinnahmen, boolean showAusgaben, GregorianCalendar von, GregorianCalendar bis) {
         int sum = 0;
-
+        ArrayList<Integer> filter = new ArrayList<Integer>();
+        if (showAuftr)       { filter.add(1); }
+        if (showProben)      { filter.add(2); }
+        if (showEinnahmen)   { filter.add(3); }
+        if (showAusgaben)    { filter.add(4); }        
+        
         for (Posten p : posten) {
             //Ueberpruefung des Datums
             if (von.before(p.getDatum())&&bis.after(p.getDatum())) {
 
                     //Ueberpruefung des Filters
-                    if ((showAuftr&&p.getBeschr().equals("Auftritt"))||(showProben&&p.getBeschr().equals("Probe"))||(showSonstige&&!p.getBeschr().equals("Auftritt")&&!p.getBeschr().equals("Probe"))) {
+                    if (filter.contains(p.getKategorie())) {
                         sum += p.getWert();
                     }
                  
@@ -150,15 +156,20 @@ public class Bilanz {
      * @param bis
      * @return 
      */
-    public TreeSet<Posten> postenAuflisten(boolean showAuftr, boolean showProben, boolean showSonstige, GregorianCalendar von, GregorianCalendar bis) {
+    public TreeSet<Posten> postenAuflisten(boolean showAuftr, boolean showProben, boolean showEinnahmen, boolean showAusgaben, GregorianCalendar von, GregorianCalendar bis) {
        TreeSet<Posten> ergebnis = new TreeSet<Posten>();
+       ArrayList<Integer> filter = new ArrayList<Integer>();
+       if (showAuftr)       { filter.add(1); }
+       if (showProben)      { filter.add(2); }
+       if (showEinnahmen)   { filter.add(3); }
+       if (showAusgaben)    { filter.add(4); }
        
        for (Posten p : posten) {
             //Ueberpruefung des Datums
             if (von.before(p.getDatum())&&bis.after(p.getDatum())) {
 
                     //Ueberpruefung des Filters
-                    if ((showAuftr&&p.getBeschr().equals("Auftritt"))||(showProben&&p.getBeschr().equals("Probe"))||(showSonstige&&!p.getBeschr().equals("Auftritt")&&!p.getBeschr().equals("Probe"))) {
+                    if (filter.contains(p.getKategorie())) {
                         ergebnis.add(p);
                     }
                  

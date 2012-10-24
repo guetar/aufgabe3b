@@ -36,7 +36,23 @@ public class Kalender {
      * @return Erfolg
      */
     public boolean ortHinzufuegen(Ort o) {
-        return orte.add(o);
+        if(!orte.contains(o)) {
+            return orte.add(o);
+        }
+        return false;
+    }
+    
+    /**
+     * Loescht einen Ort
+     * 
+     * @param o zu loeschender Ort
+     * @return Erfolg
+     */
+    public boolean ortLoeschen(Ort o) {
+        if(orte.contains(o)) {
+            return orte.remove(o);
+        }
+        return false;
     }
 
     /**
@@ -68,7 +84,10 @@ public class Kalender {
      * @return Erfolg
      */
     public boolean terminHinzufuegen(Termin t) {
-        return termine.add(t);
+        if(!termine.contains(t)) {
+            return termine.add(t);
+        }
+        return false;
     }
 
     /**
@@ -93,8 +112,10 @@ public class Kalender {
 
                 } else if (t instanceof Auftritt) {
 
+                    termine.remove(t);
                     Auftritt a = (Auftritt) t;
-                    a.setAuftritt((Auftritt) neu);
+                    Auftritt a_neu = a.setAuftritt((Auftritt) neu);
+                    termine.add(a_neu);
                     return a;
                 }
             }
@@ -109,9 +130,13 @@ public class Kalender {
      * @return Erfolg
      */
     public boolean terminLoeschen(Termin t) {
-        if (termine.contains(t)) {
+        if (termine.contains(t) && !trash.contains(t)) {
             trash.add(t);
             termine.remove(t);
+            
+            for(Mitglied m : t.getTeilnehmer()) {
+                m.terminLoeschen(t);
+            }
             return true;
         }
         return false;

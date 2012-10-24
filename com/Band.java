@@ -41,10 +41,23 @@ public class Band {
         return mitglieder.mitgliedHinzufuegen(m, eintrittsDatum);
     }
     
+    /**
+     * Fuegt der Band ein Ersatzmitglied hinzu
+     * 
+     * @param m hinzuzufuegendes Mitglied
+     * @return Erfolg
+     */
     public boolean ersatzMitgliedHinzufuegen(Mitglied m) {
         return mitglieder.ersatzMitgliedHinzufuegen(m);
     }
     
+    /**
+     * Mitgliedsstatus vom fixen Mitglied in Ersatzmitglied aendern
+     * 
+     * @param mAusErsatz
+     * @param mAusFix 
+     * @param aenderungsDatum 
+     */
     public void swapMitglied(Mitglied mAusErsatz, Mitglied mAusFix, GregorianCalendar aenderungsDatum) {
         mitglieder.swapMitglied(mAusErsatz, mAusFix, aenderungsDatum);
     }
@@ -171,8 +184,12 @@ public class Band {
         Termin t = kalender.terminAendern(alt.getDatum(), neu);
         
         if(t != null) {
+            
             Posten p = new Posten(alt);
+            kalender.ortLoeschen(alt.getOrt());
+            kalender.ortHinzufuegen(neu.getOrt());
             if(bilanz.postenExistiert(p)) bilanz.postenAendern(p, new Posten(neu));
+            
             for(Mitglied m : mitgliederListe) {
                 m.message("Folgender Termin wurde geaendert: " + t.toString());
                 m.terminAendern(alt, neu);
@@ -192,8 +209,11 @@ public class Band {
         HashSet<Mitglied> mitgliederListe = this.mitglieder.mitgliederAuflisten();
         
         if(kalender.terminLoeschen(t)) {
+            
             Posten p = new Posten(t);
+            kalender.ortLoeschen(t.getOrt());
             if (bilanz.postenExistiert(p)) bilanz.postenLoeschen(p);
+            
             for(Mitglied m : mitgliederListe) {
                 m.message("Folgender Termin wurde abgesagt: " + t.toString());
                 m.terminLoeschen(t);
@@ -289,8 +309,8 @@ public class Band {
         return bilanz.postenWiederherstellen(p);
     }
     
-    public TreeSet<Posten> bilanzAuflisten(boolean showAuftr, boolean showProben, boolean showSonstige, GregorianCalendar von, GregorianCalendar bis) {
-        return bilanz.postenAuflisten(showAuftr, showProben, showSonstige, von, bis);
+    public TreeSet<Posten> postenAuflisten(boolean showAuftr, boolean showProben, boolean showEinnahmen, boolean showAusgaben, GregorianCalendar von, GregorianCalendar bis) {
+        return bilanz.postenAuflisten(showAuftr, showProben, showEinnahmen, showAusgaben, von, bis);
     }
     
     /**
@@ -326,8 +346,8 @@ public class Band {
      * @return Gewinn, der innerhalb des gesuchten Zeitraumes erwirtschaftet
      * werden konnte
      */
-    public int postenSummieren(boolean showAuftr, boolean showProben, boolean showSonstige, GregorianCalendar von, GregorianCalendar bis) {
-        return bilanz.postenSummieren(showAuftr, showProben, showSonstige, von, bis);
+    public int postenSummieren(boolean showAuftr, boolean showProben, boolean showSonstigeEinnahmen, boolean showSonstigeAusgaben, GregorianCalendar von, GregorianCalendar bis) {
+        return bilanz.postenSummieren(showAuftr, showProben, showSonstigeEinnahmen, showSonstigeAusgaben, von, bis);
     }
 
     /**

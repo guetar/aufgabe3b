@@ -320,62 +320,51 @@ public class Test {
          * Eine Bilanz ueber den gesuchten Zeitraum erstellen
          */
         System.out.println("\nAusgabe Bilanz------------------------------------");
-        System.out.println("Erwarteter Output: \nKosten durch Proben in diesem Zeitraum: 330 Euro"
-                +"\nKosten durch Sonstiges in diesem Zeitraum: 1100 Euro"
-                +"\nGesamtkosten in diesem Zeitraum: 1430 Euro"
-                + "\nUmsatz durch Auftritte in diesem Zeitraum: 1600 Euro"
-                +"\nUmsatz durch Sonstiges in diesem Zeitraum: 500 Euro"
-                +"\nGesamtumsatz in diesem Zeitraum: 2100 Euro"
-                + "\nMacht einen Gesamtgewinn von: 670 Euro");
+        System.out.println("Erwarteter Output:\n\nAuflistung der Posten unter verschiedener Kategorien"
+                + "\nAuflisten der Posten durch Auftritte, Loeschen eines Auftritts, erneutes Auflisten");
         System.out.println("----------------------------------------------------\n");
         
-        TreeSet<Posten> bilanz = b.bilanzAuflisten(true, true, true, von, bis);
+        b.postenHinzufuegen(new Posten(-150, 4, "Gras", new GregorianCalendar(2002, 4, 8, 1, 00)));
+        b.postenHinzufuegen(new Posten(-400, 4, "Koks", new GregorianCalendar(2002, 4, 8, 1, 00)));
+        b.postenHinzufuegen(new Posten(-900, 4, "Nutten", new GregorianCalendar(2002, 4, 8, 3, 00)));       
+        b.postenHinzufuegen(new Posten(-15, 4, "Pille danach", new GregorianCalendar(2002, 4, 9, 11, 00)));
+        b.postenHinzufuegen(new Posten(30, 3, "Plasmaspende", new GregorianCalendar(2002, 4, 10)));
+        b.postenHinzufuegen(new Posten(500, 3, "Nierenverkauf", new GregorianCalendar(2002, 5, 26, 11, 00)));
+        b.postenHinzufuegen(new Posten(-500, 4, "Alk", new GregorianCalendar(2002, 5, 26, 11, 05)));
+        b.postenHinzufuegen(new Posten( -1000, 4, "Miete eingezogen durch Inkasso", new GregorianCalendar(2003, 5, 26, 11, 05)));
         
-        for(Posten p : bilanz) {
-            System.out.println(p.toString());
-        }
-        System.out.println("");
-        
-        b.terminLoeschen(a1);
-        b.terminLoeschen(a2);
-        
-        bilanz = b.bilanzAuflisten(true, true, true, von, bis);
-        
-        for(Posten p : bilanz) {
-            System.out.println(p.toString());
-        }
-        System.out.println("");
-        
-        b.terminAendern(p2, new Probe(new Ort("Do wo ma spuen", "Adresse", 40), new GregorianCalendar(2004, 5, 5), "04:00", mitglieder, 45));
-        
-        // Auflistung aller Posten
-        bilanz = b.bilanzAuflisten(true, true, true, von, bis);
         System.out.println("Alle Posten:");
+        TreeSet<Posten> bilanz = b.postenAuflisten(true, true, true, true, von, bis);
         for(Posten p : bilanz) {
             System.out.println(p.toString());
         }
         System.out.println("");
         
-        // Auflistung der Proben und sonstigen Posten
-        bilanz = b.bilanzAuflisten(false, true, true, von, bis);
-        System.out.println("Proben und sonstige Posten:");
+        System.out.println("Proben und sonstige Ausgaben:");
+         bilanz = b.postenAuflisten(false, true, false, true, von, bis);
         for(Posten p : bilanz) {
             System.out.println(p.toString());
         }
         System.out.println("");
-        
-        // Auflistung der Auftritte
-        bilanz = b.bilanzAuflisten(true, false, false, von, bis);
+               
         System.out.println("Auftritte:");
+        bilanz = b.postenAuflisten(true, false, false, false, von, bis);
         for(Posten p : bilanz) {
             System.out.println(p.toString());
         }
         System.out.println("");
         
+        System.out.println("Posten nach Loeschen eines Auftritts:");
+        b.terminLoeschen(a2);
+        bilanz = b.postenAuflisten(true, false, false, false, von, bis);      
+        for(Posten p : bilanz) {
+            System.out.println(p.toString());
+        }
+        System.out.println("");
         
-        System.out.println("Gesamtkosten in diesem Zeitraum: " + b.postenSummieren(false, true, true, von, bis) + " Euro");
-        System.out.println("Gesamtumsatz in diesem Zeitraum: " + b.postenSummieren(true, false, true, von, bis) + " Euro");
-        System.out.println("Macht einen Gesamtgewinn von: " + b.postenSummieren(true, true, true, von, bis) + " Euro");
+        System.out.println("Gesamtkosten in diesem Zeitraum: " + b.postenSummieren(false, true, false, true, von, bis) + " Euro");
+        System.out.println("Gesamtumsatz in diesem Zeitraum: " + b.postenSummieren(true, false, true, false, von, bis) + " Euro");
+        System.out.println("Macht einen Gesamtgewinn von: " + b.postenSummieren(true, true, true, true, von, bis) + " Euro");
         System.out.println("");
         
         /**
