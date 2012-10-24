@@ -238,7 +238,6 @@ public class Test {
         }
         System.out.println("");
         
-        
         /**
          * Ausgabe bestimmter Termine + Mitglieder, Ausgabe Termine eines Mitglieds, 
          * Ersatzmitglied erstellen und mit aktivem Mitglied austauschen
@@ -296,7 +295,6 @@ public class Test {
         }
         System.out.println("");
         
-        
         Probe moeglProbe1 = new Probe(new Ort("p Unter Bruecke", "Sandlerhaus 3", 30), new GregorianCalendar(2004, 10, 3, 18, 0), "2:00", mitglieder, -200);
         Abstimmung abstimmungProbe1 = b.abstimmenTermin(moeglProbe1);
         abstimmungProbe1.abstimmen(jonas, true, "passt");
@@ -318,9 +316,6 @@ public class Test {
         }
         System.out.println("Termin aus Verwaltung: " + b.probenAuflisten(new GregorianCalendar(2004, 10, 3), new GregorianCalendar(2004, 10, 4))+"\n");
         
-        
-   
-
         /**
          * Eine Bilanz ueber den gesuchten Zeitraum erstellen
          */
@@ -387,7 +382,7 @@ public class Test {
          * Einige Orte hinzufuegen und auflisten
          */
         System.out.println("\nAusgabe Orte----------------------------------------");
-        System.out.println("Erwarteter Output:\nErste Abfrage gibt Orte mit mehr als 200 Plaetze aus,\nzweite mit mehr als 20 Plaetze\ndritte mit mehr als 100.000");
+        System.out.println("Erwarteter Output:\nErste Abfrage gibt Orte mit mehr als 200 Plaetze aus -> 1 Ort\nZweite Abfrage mit mehr als 20 Plaetzen -> 3 Orte\nDritte Abfrage mit mehr als 100.000 -> keinen");
         System.out.println("----------------------------------------------------\n");
 
         System.out.println("\nOrte mit mehr als 200 Plaetzen:");

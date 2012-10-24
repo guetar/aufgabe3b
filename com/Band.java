@@ -15,7 +15,7 @@ import java.util.TreeSet;
  */
 public class Band {
 
-    private Mitgliedsverwaltung mitgliedsVerwaltung;
+    private Mitglieder mitglieder;
     private ArrayList<Song> repertoire;
     private Kalender kalender;
     private Bilanz bilanz;
@@ -24,7 +24,7 @@ public class Band {
      * Konstruktor
      */
     public Band() {
-        this.mitgliedsVerwaltung = new Mitgliedsverwaltung();
+        this.mitglieder = new Mitglieder();
         this.repertoire = new ArrayList<Song>();
         this.kalender = new Kalender();
         this.bilanz = new Bilanz();
@@ -38,15 +38,15 @@ public class Band {
      * @return Erfolg
      */
     public boolean mitgliedHinzufuegen(Mitglied m, GregorianCalendar eintrittsDatum) {
-        return mitgliedsVerwaltung.mitgliedHinzufuegen(m, eintrittsDatum);
+        return mitglieder.mitgliedHinzufuegen(m, eintrittsDatum);
     }
     
     public boolean ersatzMitgliedHinzufuegen(Mitglied m) {
-        return mitgliedsVerwaltung.ersatzMitgliedHinzufuegen(m);
+        return mitglieder.ersatzMitgliedHinzufuegen(m);
     }
     
     public void swapMitglied(Mitglied mAusErsatz, Mitglied mAusFix, GregorianCalendar aenderungsDatum) {
-        mitgliedsVerwaltung.swapMitglied(mAusErsatz, mAusFix, aenderungsDatum);
+        mitglieder.swapMitglied(mAusErsatz, mAusFix, aenderungsDatum);
     }
 
     /**
@@ -56,7 +56,7 @@ public class Band {
      * @return Erfolg
      */
     public boolean mitgliedEntfernen(Mitglied m, GregorianCalendar austrittsdatum) {
-        return mitgliedsVerwaltung.mitgliedEntfernen(m, austrittsdatum);
+        return mitglieder.mitgliedEntfernen(m, austrittsdatum);
     }
 
     /**
@@ -65,7 +65,7 @@ public class Band {
      * @return Mitglieder
      */
     public HashSet<Mitglied> mitgliederAuflisten() {
-        return new HashSet<Mitglied>(mitgliedsVerwaltung.mitgliederAuflisten());
+        return new HashSet<Mitglied>(mitglieder.mitgliederAuflisten());
     }
 
     /**
@@ -77,7 +77,7 @@ public class Band {
      * @return Mitglieder innerhalb des gesuchten Zeitraumes
      */
     public HashSet<Mitglied> mitgliederAuflisten(GregorianCalendar date) {
-        return new HashSet<Mitglied>(mitgliedsVerwaltung.mitgliederAuflisten(date));
+        return new HashSet<Mitglied>(mitglieder.mitgliederAuflisten(date));
     }
 
     // Repertoire
@@ -121,7 +121,7 @@ public class Band {
      */
     public ArrayList<Song> songsAuflisten(GregorianCalendar datum, boolean versionen) {
         ArrayList<Song> repertoireListe = new ArrayList<Song>();
-        HashSet<Mitglied> mitglieder = mitgliedsVerwaltung.mitgliederAuflisten(datum);
+        HashSet<Mitglied> mitglieder = this.mitglieder.mitgliederAuflisten(datum);
 
         for(Mitglied m : mitglieder) {
             if(!versionen) {
@@ -145,7 +145,7 @@ public class Band {
      * @return Erfolg
      */
     public boolean terminHinzufuegen(Termin t) {
-        return  kalender.terminHinzufuegen(t) && bilanz.postenHinzufuegen(new Posten(t));
+        return  kalender.terminHinzufuegen(t) && kalender.ortHinzufuegen(t.getOrt()) && bilanz.postenHinzufuegen(new Posten(t));
     }
     
     /**
@@ -155,7 +155,7 @@ public class Band {
      * @return Abstimmung
      */
     public Abstimmung abstimmenTermin(Termin t) {
-        return new Abstimmung(mitgliedsVerwaltung.mitgliederAuflisten(), t);
+        return new Abstimmung(mitglieder.mitgliederAuflisten(), t);
     }
     
     /**
@@ -166,14 +166,14 @@ public class Band {
      * @return Erfolg
      */
     public boolean terminAendern(Termin alt, Termin neu) {
-        HashSet<Mitglied> mitglieder = mitgliedsVerwaltung.mitgliederAuflisten();
+        HashSet<Mitglied> mitgliederListe = this.mitglieder.mitgliederAuflisten();
         
         Termin t = kalender.terminAendern(alt.getDatum(), neu);
         
         if(t != null) {
             Posten p = new Posten(alt);
             if(bilanz.postenExistiert(p)) bilanz.postenAendern(p, new Posten(neu));
-            for(Mitglied m : mitglieder) {
+            for(Mitglied m : mitgliederListe) {
                 m.message("Folgender Termin wurde geaendert: " + t.toString());
                 m.terminAendern(alt, neu);
             }
@@ -189,12 +189,12 @@ public class Band {
      * @return Erfolg
      */
     public boolean terminLoeschen(Termin t) {
-        HashSet<Mitglied> mitglieder = mitgliedsVerwaltung.mitgliederAuflisten();
+        HashSet<Mitglied> mitgliederListe = this.mitglieder.mitgliederAuflisten();
         
         if(kalender.terminLoeschen(t)) {
             Posten p = new Posten(t);
             if (bilanz.postenExistiert(p)) bilanz.postenLoeschen(p);
-            for(Mitglied m : mitglieder) {
+            for(Mitglied m : mitgliederListe) {
                 m.message("Folgender Termin wurde abgesagt: " + t.toString());
                 m.terminLoeschen(t);
             }
@@ -331,16 +331,6 @@ public class Band {
     }
 
     /**
-     * Fuegt einen Ort hinzu
-     *
-     * @param o hinzuzufuegender Ort
-     * @return Erfolg
-     */
-    public boolean ortHinzufuegen(Ort o) {
-        return kalender.ortHinzufuegen(o);
-    }
-
-    /**
      * liefert Liste mit Orten, die eine bestimmte Infrastruktur haben.
      *
      * @param plaetze Gesuchte Anzahl an Zuschauerplaetzen(oder 0, wenn egal)
@@ -354,7 +344,7 @@ public class Band {
     
     public String printMitglieder() {
         String s = "";
-        HashSet<Mitglied> mitglieder = mitgliedsVerwaltung.mitgliederAuflisten();
+        HashSet<Mitglied> mitglieder = this.mitglieder.mitgliederAuflisten();
         for (Mitglied m : mitglieder) {
             s += m + "\n";
         }

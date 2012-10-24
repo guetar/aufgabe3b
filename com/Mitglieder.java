@@ -13,7 +13,7 @@ import java.util.HashSet;
  *
  * @author steff
  */
-public class Mitgliedsverwaltung {
+public class Mitglieder {
     
     // HashSets der aktiven und inaktiven mitglieder
     private HashSet<Mitglied> mitglieder;
@@ -26,7 +26,7 @@ public class Mitgliedsverwaltung {
     private ArrayList<GregorianCalendar> snapDates;
     
     
-    public Mitgliedsverwaltung() {
+    public Mitglieder() {
         mitglieder = new HashSet<Mitglied>();
         ersatzMitglieder = new HashSet<Mitglied>();
         snapShots = new HashMap<GregorianCalendar, HashSet<Mitglied>>();
