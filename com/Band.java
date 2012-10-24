@@ -289,7 +289,7 @@ public class Band {
         return bilanz.postenWiederherstellen(p);
     }
     
-    public TreeSet<Posten> postenAuflisten(boolean showAuftr, boolean showProben, boolean showSonstige, GregorianCalendar von, GregorianCalendar bis) {
+    public TreeSet<Posten> bilanzAuflisten(boolean showAuftr, boolean showProben, boolean showSonstige, GregorianCalendar von, GregorianCalendar bis) {
         return bilanz.postenAuflisten(showAuftr, showProben, showSonstige, von, bis);
     }
     

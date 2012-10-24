@@ -6,7 +6,6 @@
 import com.*;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.TreeSet;
 
@@ -176,7 +175,6 @@ public class Test {
         b.terminHinzufuegen(p3);
         b.terminHinzufuegen(p4);
         b.terminHinzufuegen(a1);
-        b.terminHinzufuegen(a3);
         b.terminHinzufuegen(a2);
 
         ArrayList<? extends Termin> termine = b.termineAuflisten(von, bis);
@@ -271,10 +269,6 @@ public class Test {
         b.swapMitglied(jonas, andreas, new GregorianCalendar(2004, 3, 9));
         System.out.println("Band nach Tausch von Ersatzmitglied und fixem Mitglied:\n" + b.printMitglieder());
         
-       
-        
-        
-        
         /**
          * Abstimmen ueber einen Auftritt
          */                
@@ -340,7 +334,7 @@ public class Test {
                 + "\nMacht einen Gesamtgewinn von: 670 Euro");
         System.out.println("----------------------------------------------------\n");
         
-        TreeSet<Posten> bilanz = b.bilanzAuflisten(von, bis);
+        TreeSet<Posten> bilanz = b.bilanzAuflisten(true, true, true, von, bis);
         
         for(Posten p : bilanz) {
             System.out.println(p.toString());
@@ -350,7 +344,7 @@ public class Test {
         b.terminLoeschen(a1);
         b.terminLoeschen(a2);
         
-        bilanz = b.bilanzAuflisten(von, bis);
+        bilanz = b.bilanzAuflisten(true, true, true, von, bis);
         
         for(Posten p : bilanz) {
             System.out.println(p.toString());
@@ -359,10 +353,8 @@ public class Test {
         
         b.terminAendern(p2, new Probe(new Ort("Do wo ma spuen", "Adresse", 40), new GregorianCalendar(2004, 5, 5), "04:00", mitglieder, 45));
         
-        bilanz = b.bilanzAuflisten(von, bis);
-        
         // Auflistung aller Posten
-        TreeSet<Posten> bilanz = b.postenAuflisten(true, true, true, von, bis);
+        bilanz = b.bilanzAuflisten(true, true, true, von, bis);
         System.out.println("Alle Posten:");
         for(Posten p : bilanz) {
             System.out.println(p.toString());
@@ -370,7 +362,7 @@ public class Test {
         System.out.println("");
         
         // Auflistung der Proben und sonstigen Posten
-        bilanz = b.postenAuflisten(false, true, true, von, bis);
+        bilanz = b.bilanzAuflisten(false, true, true, von, bis);
         System.out.println("Proben und sonstige Posten:");
         for(Posten p : bilanz) {
             System.out.println(p.toString());
@@ -378,7 +370,7 @@ public class Test {
         System.out.println("");
         
         // Auflistung der Auftritte
-        bilanz = b.postenAuflisten(true, false, false, von, bis);
+        bilanz = b.bilanzAuflisten(true, false, false, von, bis);
         System.out.println("Auftritte:");
         for(Posten p : bilanz) {
             System.out.println(p.toString());
