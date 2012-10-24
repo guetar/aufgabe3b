@@ -52,7 +52,7 @@ public class Auftritt extends Termin {
     }
 
     /**
-     * Getter für Gage
+     * Getter fuer Gage
      * 
      * @return Gage
      */

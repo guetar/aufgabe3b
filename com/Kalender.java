@@ -30,7 +30,7 @@ public class Kalender {
 
     //Orte
     /**
-     * Fügt einen Ort hinzu
+     * Fuegt einen Ort hinzu
      *
      * @param o hinzuzufuegender Ort
      * @return Erfolg
@@ -62,7 +62,7 @@ public class Kalender {
 
     // Termine
     /**
-     * Fügt einen Termin hinzu.
+     * Fuegt einen Termin hinzu.
      *
      * @param t hinzuzufuegender Termin
      * @return Erfolg

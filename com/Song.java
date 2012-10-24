@@ -34,7 +34,7 @@ public class Song
     }
     
     /**
-     * Konstruktor für Versionen
+     * Konstruktor fuer Versionen
      * 
      * @param name Name
      * @param laenge Laenge

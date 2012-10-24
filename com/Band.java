@@ -166,7 +166,7 @@ public class Band {
             Posten p = new Posten(alt);
             if(bilanz.postenExistiert(p)) bilanz.postenAendern(p, new Posten(neu));
             for(Mitglied m : mitglieder) {
-                m.message("Folgender Termin wurde geändert: " + t.toString());
+                m.message("Folgender Termin wurde geaendert: " + t.toString());
                 m.terminAendern(alt, neu);
             }
             return true;
@@ -323,7 +323,7 @@ public class Band {
     }
 
     /**
-     * Fügt einen Ort hinzu
+     * Fuegt einen Ort hinzu
      *
      * @param o hinzuzufuegender Ort
      * @return Erfolg

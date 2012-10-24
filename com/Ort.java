@@ -19,7 +19,7 @@ public class Ort implements Comparable<Ort> {
      *
      * @param name Name des Ortes
      * @param adresse Adresse des Ortes
-     * @param zplaetze Anzahl der Zuschauerplätze
+     * @param zplaetze Anzahl der Zuschauerplaetze
      */
     public Ort(String name, String adresse, int plaetze) {
         this.name = name;
@@ -41,14 +41,14 @@ public class Ort implements Comparable<Ort> {
     /**
      * Liefert Anzahl der vorhandenen Zuschauerplaetze
      *
-     * @return die Anzahl der vorhandenen Zuschauerplätze
+     * @return die Anzahl der vorhandenen Zuschauerplaetze
      */
     public int getPlaetze() {
         return plaetze;
     }
     
     /**
-     * getter für Name
+     * getter fuer Name
      * 
      * @return Name
      */

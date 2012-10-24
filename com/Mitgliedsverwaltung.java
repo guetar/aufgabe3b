@@ -19,10 +19,10 @@ public class Mitgliedsverwaltung {
     private HashSet<Mitglied> mitglieder;
     private HashSet<Mitglied> ersatzMitglieder;
     
-    // HashMap die ein HashSet von Mitgliedern zu einem bestimmten Zeitpunkt zurückgibt
+    // HashMap die ein HashSet von Mitgliedern zu einem bestimmten Zeitpunkt zurueckgibt
     private HashMap<GregorianCalendar, HashSet<Mitglied>> snapShots;
     
-    // Daten an denen Änderungen an der HashSet der Mitglieder vorgenommen worden sind.
+    // Daten an denen aenderungen an der HashSet der Mitglieder vorgenommen worden sind.
     private ArrayList<GregorianCalendar> snapDates;
     
     
@@ -33,11 +33,11 @@ public class Mitgliedsverwaltung {
     }
     
     /**
-     * Fügt ein Mitglied dem aktiven HashSet mitglieder zu
+     * Fuegt ein Mitglied dem aktiven HashSet mitglieder zu
      * 
-     * @param _m hinzuzufügendes Mitglied
-     * @param _date Datum des hinzufügens
-     * @return "true" wenn Mitglied eingefügt wurde, "false" wenn schon vorhanden
+     * @param _m hinzuzufuegendes Mitglied
+     * @param _date Datum des hinzufuegens
+     * @return "true" wenn Mitglied eingefuegt wurde, "false" wenn schon vorhanden
      */
     public boolean mitgliedHinzufuegen(Mitglied m, GregorianCalendar date) {
         boolean ok = mitglieder.add(m);
@@ -87,16 +87,16 @@ public class Mitgliedsverwaltung {
     }
     
     /**
-     * Kopiert den momentanen Zustand des Sets und verknüpft ihn mit einem Datum
+     * Kopiert den momentanen Zustand des Sets und verknuepft ihn mit einem Datum
      * 
      * @param date Das entsprechende Datum
      */
     public void makeSnapShot(GregorianCalendar date) {
         // Kopie des Mitglied-Sets nach entfernen des bestimmten Mitglieds
         HashSet<Mitglied> momentMitglieder = new HashSet<Mitglied>(mitglieder);
-        // Momentaner Set-Zustand mit Datum verknüpfen
+        // Momentaner Set-Zustand mit Datum verknuepfen
         snapShots.put(date, momentMitglieder);
-        // Datum der Änderung in chronologisch geordnete Liste geben
+        // Datum der aenderung in chronologisch geordnete Liste geben
         snapDates.add(date);
     }
     
@@ -108,9 +108,9 @@ public class Mitgliedsverwaltung {
     }
     
     /**
-     * Liefert das Mitglieds-Set zu einem bestimmten Datum zurück
+     * Liefert das Mitglieds-Set zu einem bestimmten Datum zurueck
      * 
-     * @param _date Das Datum des zurückzugebenden Zustands
+     * @param _date Das Datum des zurueckzugebenden Zustands
      * @return Ein Mitglieds-Set zu dem bestimmten Datum
      */
     public HashSet<Mitglied> mitgliederAuflisten(GregorianCalendar date) {
@@ -118,24 +118,24 @@ public class Mitgliedsverwaltung {
        // Laufvariable
        GregorianCalendar tmpSnapDate = snapDates.get(0);
        
-       // Falls erste Änderung nach dem gesuchten Datum liegt
-       // null zurückliefern, weil da die Band noch nicht existierte.
+       // Falls erste aenderung nach dem gesuchten Datum liegt
+       // null zurueckliefern, weil da die Band noch nicht existierte.
        if (tmpSnapDate.after(date)) {
            return null;
        }
        
-       // Chronologisches Durchlaufen der Daten an denen Änderungen am Set vorgenommen worden sind
+       // Chronologisches Durchlaufen der Daten an denen aenderungen am Set vorgenommen worden sind
        for (GregorianCalendar snapDate : snapDates) {
            // Liegt das zu suchende Datum innerhalb zweier Daten 
-           // wird das Set zum Datum der letzten Änderung ausgegeben
+           // wird das Set zum Datum der letzten aenderung ausgegeben
            if(tmpSnapDate.before(date) && snapDate.after(date)) {
                return snapShots.get(tmpSnapDate);
            }
            tmpSnapDate = snapDate;
        }
        
-       // Letzte Kontrolle ob das zu suchende Datum jünger ist als letzte
-       // Änderung, dann nämlich aktuellen Zustand ausgeben.
+       // Letzte Kontrolle ob das zu suchende Datum juenger ist als letzte
+       // aenderung, dann naemlich aktuellen Zustand ausgeben.
        if (tmpSnapDate.before(date)) {
            return mitglieder;
        }

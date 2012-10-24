@@ -52,7 +52,7 @@ public class Probe extends Termin {
     }
 
     /**
-     * Getter für Miete
+     * Getter fuer Miete
      * 
      * @return Miete
      */

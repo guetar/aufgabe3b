@@ -89,7 +89,7 @@ public class Posten implements Comparable<Posten> {
     }
     
     /**
-     * Getter Methode für die Beschreibung
+     * Getter Methode fuer die Beschreibung
      * @return Beschreibung des Postens
      */
     public String getBeschr(){

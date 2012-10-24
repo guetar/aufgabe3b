@@ -68,7 +68,7 @@ public class Mitglied {
     }
     
     /**
-     * Gibt das Repertoire des Mitglieds zurück
+     * Gibt das Repertoire des Mitglieds zurueck
      */
     public ArrayList<Song> getRepertoire(GregorianCalendar datum) {
         ArrayList<Song> repertoireListe = new ArrayList<Song>();
@@ -82,9 +82,9 @@ public class Mitglied {
     }
     
     /**
-     * Fügt Termin hinzu
+     * Fuegt Termin hinzu
      * 
-     * @param t hinzuzufügender Song
+     * @param t hinzuzufuegender Song
      * @return "true" wenn erfolgreich, "false", wenn schon vorhanden
      */
     public boolean addTermin(Termin t) {
@@ -108,7 +108,7 @@ public class Mitglied {
     }
 
     /**
-     * Getter für Name
+     * Getter fuer Name
      * 
      * @return Name
      */

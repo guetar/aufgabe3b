@@ -29,7 +29,7 @@ public class Abstimmung {
     }
     
     /**
-     * Methode abstimmen lässt ein einzelnes Mitglied abstimmen und
+     * Methode abstimmen laesst ein einzelnes Mitglied abstimmen und
      * speichert seine Entscheidung wie auch Begruendung
      */
     public boolean abstimmen(Mitglied _m, boolean _dafuer, String _begruendung) {
@@ -53,23 +53,23 @@ public class Abstimmung {
         
         String result[] = new String[2];   
         /** result ist der Ergebnis-String, der speichert an 
-        * [0]: "1" wenn alle dafür sind, "0" wenn mindestens einer dagegegen, "-1" wenn noch nicht alle abgestimmt haben
+        * [0]: "1" wenn alle dafuer sind, "0" wenn mindestens einer dagegegen, "-1" wenn noch nicht alle abgestimmt haben
         * [1]: Textausgabe des Ergebnis mit einzelnen votes und Begruendungen
         **/  
         
-        // Wenn die Größen der HashMap über Abstimmungen die der Anzahl der Mitglieder entsprechen
+        // Wenn die Groessen der HashMap ueber Abstimmungen die der Anzahl der Mitglieder entsprechen
         // haben alle abgestimmt, ansonsten wird "-1" an result[0] des Ergebnis-String gespeichert.
         if (dafuers.size() == mitglieder.size()) {
-            // Standardmäßig wird erwartet, dass alle dafür sind,
+            // Standardmaessig wird erwartet, dass alle dafuer sind,
             // ist nur einer dagegen wird result[0] = "0"
             result[0] = "1";
-            result[1] = "Ergebnis für Abstimmung zu: " + vorgeschlTermin;
+            result[1] = "Ergebnis fuer Abstimmung zu: " + vorgeschlTermin;
             
             // Durchlaufen aller Mitglieder
             for (Mitglied m : mitglieder) {
                 result[1] += "\n" + m.getName();
                 if (dafuers.get(m)) {
-                    result[1] += " ist dafür; '";
+                    result[1] += " ist dafuer; '";
                 }
                 else {
                     // eine Gegenstimme reicht und der Termin findet nicht statt
