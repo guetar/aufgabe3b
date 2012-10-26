@@ -189,6 +189,9 @@ public class Band {
      * true, falls Termin, zugehoeriger Ort und Posten geaendert werden konnten
      * false andernfalls.
      * ERROR: return nicht richtig gesetzt.
+     * 
+     * GOOD: Durch dynamisches Binden muessen nur Termine geaendert werden.
+     * BAD: Bei jeder Aenderungsaktion muessen saemtliche verknuepften Objekte einzeln geaendert werden.
      */
     public boolean terminAendern(Termin alt, Termin neu) {
         HashSet<Mitglied> mitgliederListe = this.mitglieder.mitgliederAuflisten();
@@ -223,6 +226,9 @@ public class Band {
      * true, falls Termin, zugehoeriger Ort und Posten geloescht werden konnten
      * false andernfalls.
      * ERROR: return nicht richtig gesetzt.
+     * 
+     * GOOD: Durch dynamisches Binden muessen nur Termine geloescht werden.
+     * BAD: Bei jeder Loeschaktion muessen saemtliche verknuepften Objekte einzeln geloescht werden.
      */
     public boolean terminLoeschen(Termin t) {
         HashSet<Mitglied> mitgliederListe = this.mitglieder.mitgliederAuflisten();
@@ -255,6 +261,9 @@ public class Band {
      * false andernfalls.
      * ERROR: Ort wird nicht wiederhergestellt.
      * ERROR: return nicht richtig gesetzt.
+     * 
+     * GOOD: Durch dynamisches Binden muessen nur Termine wiederhergestellt werden.
+     * BAD: Bei jeder Wiederherstellungsaktion muessen saemtliche verknuepften Objekte einzeln wiederhergestellt werden.
      */
     public Termin terminWiederherstellen(Termin t) {
         Posten p = new Posten(t);
