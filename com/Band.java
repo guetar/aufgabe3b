@@ -266,6 +266,10 @@ public class Band {
     }
     
     /**
+     * Vorbedingung
+     * 
+     * von chronologisch vor bis
+     * 
      * Nachbedingung
      * 
      * return
@@ -276,6 +280,10 @@ public class Band {
     }
     
     /**
+     * Vorbedingung
+     * 
+     * von chronologisch vor bis
+     * 
      * Nachbedingung
      * 
      * return
@@ -286,6 +294,10 @@ public class Band {
     }
     
     /**
+     * Vorbedingung
+     * 
+     * von chronologisch vor bis
+     * 
      * Nachbedingung
      * 
      * return

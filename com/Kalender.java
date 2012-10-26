@@ -216,6 +216,10 @@ public class Kalender {
     }
 
     /**
+     * Vorbedingung
+     * 
+     * von chronologisch vor bis
+     * 
      * Nachbedingung
      * 
      * Retournierte Termine immer
@@ -239,6 +243,10 @@ public class Kalender {
     }
 
     /**
+     * Vorbedingung
+     * 
+     * von chronologisch vor bis
+     * 
      * Nachbedingung
      * 
      * Retournierte Proben immer
@@ -263,6 +271,10 @@ public class Kalender {
     }
 
     /**
+     * Vorbedingung
+     * 
+     * von chronologisch vor bis
+     * 
      * Nachbedingung
      * 
      * Retournierte Auftritte immer
