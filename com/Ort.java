@@ -12,55 +12,32 @@ public class Ort implements Comparable<Ort> {
 
     private String name;
     private String adresse;
+    //Invariante: plaetze>=0
     private int plaetze;
 
-    /**
-     * Konstruktor
-     *
-     * @param name Name des Ortes
-     * @param adresse Adresse des Ortes
-     * @param zplaetze Anzahl der Zuschauerplaetze
-     */
+    //Vorbedingung: plaetze>=0, name!=null, adresse!=null
+    //Nachbedingung: plaetze>=0, name!=null, adresse!=null
     public Ort(String name, String adresse, int plaetze) {
         this.name = name;
         this.adresse = adresse;
         this.plaetze = plaetze;
     }
 
-    /**
-     * Kopierkonstruktor
-     *
-     * @param o zu kopierender Ort
-     */
     public Ort(Ort o) {
         name = o.name;
         adresse = o.adresse;
         plaetze = o.plaetze;
     }
 
-    /**
-     * Liefert Anzahl der vorhandenen Zuschauerplaetze
-     *
-     * @return die Anzahl der vorhandenen Zuschauerplaetze
-     */
     public int getPlaetze() {
         return plaetze;
     }
     
-    /**
-     * getter fuer Name
-     * 
-     * @return Name
-     */
     public String getName() {
         return name;
     }
 
     @Override
-    /**
-     * Liefert die Variablen des Ortes als String getrennt durch Leerzeichen in
-     * der Reihenfolge: Name, Adresse und die Anzahl der Zuschauerplaetze
-     */
     public String toString() {
         return name + " " + adresse + " " + plaetze;
     }
