@@ -114,6 +114,9 @@ public abstract class Termin implements Comparable<Termin> {
      * 
      * Uebergebener Termin sollte nicht null sein.
      * ERROR: Das wird hier nicht ueberprueft.
+     * 
+     * GOOD: Durch dynamisches Binden kann der Stack in Termin
+     * sowohl Proben als auch Auftritte enthalten.
      */
     protected void pushToStack(Termin t) {
         stack.push(t);
