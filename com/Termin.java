@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package com;
 
 import java.text.SimpleDateFormat;
@@ -22,11 +18,9 @@ public abstract class Termin implements Comparable<Termin> {
     private HashSet<Mitglied> teilnehmer;
 
     /**
-     * Konstruktor
+     * Vorbedingung
      * 
-     * @param ort Ort
-     * @param date Datum
-     * @param dauer Dauer
+     * ort, datum, dauer und teilnehmer sollten nicht null sein.
      */
     public Termin(Ort ort, GregorianCalendar datum, String dauer, HashSet<Mitglied> teilnehmer) {
         this.ort = ort;
@@ -39,11 +33,11 @@ public abstract class Termin implements Comparable<Termin> {
             m.addTermin(this);
         }
     }
-    
+
     /**
-     * Kopierkonstruktor
+     * Vorbedingung
      * 
-     * @param t zu kopierender Termin
+     * Uebergebener Termin darf nicht null sein, da sonst eine NullpointerException entsteht.
      */
     public Termin(Termin t) {
         this.ort = t.getOrt();
@@ -54,11 +48,13 @@ public abstract class Termin implements Comparable<Termin> {
     }
 
     /**
-     * Aendert den derzeitigen Termin
+     * Vorbedingung
      * 
-     * @param ort Ort
-     * @param date Datum
-     * @param dauer Dauer
+     * Uebergebener Termin darf nicht null sein, da sonst eine NullpointerException entsteht.
+     * 
+     * Nachbedingung
+     * 
+     * Retournierter Termin hat die Daten des uebergebenen Termins uebernommen.
      */
     protected Termin setTermin(Termin t) {
         this.ort = t.getOrt();
@@ -69,10 +65,11 @@ public abstract class Termin implements Comparable<Termin> {
     }
     
     /**
-     * Teilnehmer (Mitglied) zu Termin hinzufuegen
+     * Nachbedingung
      * 
-     * @param m Mitglied
-     * @return "true" wenn erfolgreich hinzugefuegt, "false" wenn schon vorhanden
+     * Retournierter Wert immer
+     * true, falls der Teilnehmer hinzugefuegt werden und ihm der Termin uebergeben werden konnte
+     * false andernfalls.
      */
     protected boolean teilnehmerHinzufuegen(Mitglied m) {
         boolean ok = teilnehmer.add(m);
@@ -83,10 +80,11 @@ public abstract class Termin implements Comparable<Termin> {
     }
     
     /**
-     * Mitglied von Termin entfernen
+     * Nachbedingung
      * 
-     * @param m
-     * @return "true" wenn erfolgreich entfernt, "false" wenn nicht vorhanden
+     * Retournierter Wert immer
+     * true, falls der Teilnehmer entfernt und ihm der Termin entzogen werden konnte,
+     * false andernfalls.
      */
     protected boolean teilnehmerEntfernen(Mitglied m) {
         boolean ok = teilnehmer.remove(m);
@@ -96,55 +94,40 @@ public abstract class Termin implements Comparable<Termin> {
         return ok;
     }
 
-    /**
-     * Getter fuers Datum
-     * 
-     * @return 
-     */
     protected GregorianCalendar getDatum() {
         return datum;
     }
 
-    /**
-     * Getter fuer die Dauer
-     * 
-     * @return 
-     */
     protected String getDauer() {
         return dauer;
     }
     
-    /**
-     * Getter fuer den Ort
-     * 
-     * @return 
-     */
     protected Ort getOrt() {
         return ort;
     }
     
-    /**
-     * Getter fuer die Teilnehmer
-     * 
-     * @return 
-     */
     public HashSet<Mitglied> getTeilnehmer() {
         return teilnehmer;
     }
     
     /**
-     * Wirft das uebergebene Element auf den Stack
+     * Vorbedingung
      * 
-     * @param t 
+     * Uebergebener Termin sollte nicht null sein.
+     * 
+     * GOOD: Durch dynamisches Binden kann der Stack in Termin
+     * sowohl Proben als auch Auftritte enthalten.
      */
     protected void pushToStack(Termin t) {
         stack.push(t);
     }
     
     /**
-     * Holt das letzte Element vom Stack
+     * Nachbedingung
      * 
-     * @return 
+     * Retournierter Termin
+     * der Termin vor der letzten Aenderung,
+     * null im Falle eines Misserfolgs.
      */
     protected Termin popFromStack() {
         if(!stack.empty()) {
@@ -154,10 +137,6 @@ public abstract class Termin implements Comparable<Termin> {
     }
 
     @Override
-    /**
-     * Liefert die Daten des Termins als String getrennt durch Leerzeichen in
-     * der Reihenfolge: Ort, Datum und Dauer
-     */
     public String toString() {
         SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy hh:mm");
         return ort + " " + sdf.format(datum.getTime()) + " - " + dauer;
@@ -165,10 +144,12 @@ public abstract class Termin implements Comparable<Termin> {
     
     @Override
     /**
-     * Eigene CompareTo Methode um zwei Termine zu vergleichen
+     * Nachbedingung
      * 
-     * @param t Vergleichstermin
-     * @return 
+     * Retournierter Wert immer
+     * -1, falls der Termin vor dem Vergleichstermin stattfindet,
+     * 1, falls der Termin nach dem Vergleichstermin stattfindet,
+     * 0, falls beide Termine zur gleichen Zeit stattfinden.
      */
     public int compareTo(Termin t) {
         if(this.getDatum().before(t.getDatum())) {

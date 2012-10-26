@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package com;
 
 import java.util.ArrayList;
@@ -9,10 +5,6 @@ import java.util.GregorianCalendar;
 import java.util.HashSet;
 import java.util.TreeSet;
 
-/**
- *
- * @author guetar
- */
 public class Band {
 
     private Mitglieder mitglieder;
@@ -20,9 +12,6 @@ public class Band {
     private Kalender kalender;
     private Bilanz bilanz;
 
-    /**
-     * Konstruktor
-     */
     public Band() {
         this.mitglieder = new Mitglieder();
         this.repertoire = new ArrayList<Song>();
@@ -30,22 +19,31 @@ public class Band {
         this.bilanz = new Bilanz();
     }
 
-    // Mitglieder
     /**
-     * Fuegt der Band ein Mitglied hinzu.
-     *
-     * @param m hinzuzufuegendes Mitglied
-     * @return Erfolg
+     * Vorbedingung
+     * 
+     * Mitglied sollte nicht null sein.
+     * 
+     * Nachbedingung
+     * 
+     * return
+     * true, falls das Mitglied hinzugefuegt werden und der Zustand der Band gespeichert werden konnte,
+     * false andernfalls.
      */
     public boolean mitgliedHinzufuegen(Mitglied m, GregorianCalendar eintrittsDatum) {
         return mitglieder.mitgliedHinzufuegen(m, eintrittsDatum);
     }
-    
+
     /**
-     * Fuegt der Band ein Ersatzmitglied hinzu
+     * Vorbedingung
      * 
-     * @param m hinzuzufuegendes Mitglied
-     * @return Erfolg
+     * Mitglied sollte nicht null sein.
+     * 
+     * Nachbedingung
+     * 
+     * return
+     * true, falls das Mitglied hinzugefuegt werden konnte,
+     * false andernfalls.
      */
     public boolean ersatzMitgliedHinzufuegen(Mitglied m) {
         return mitglieder.ersatzMitgliedHinzufuegen(m);
@@ -93,22 +91,23 @@ public class Band {
         return new HashSet<Mitglied>(mitglieder.mitgliederAuflisten(date));
     }
 
-    // Repertoire
     /**
-     * Fuegt dem Repertoire der Band einen Song hinzu.
-     *
-     * @param s hinzuzufuegender Song
-     * @return Erfolg
+     * Nachbedingung
+     * 
+     * return
+     * true, falls der Song hinzugefuegt werden konnte,
+     * false andernfalls.
      */
     public boolean songHinzufuegen(Song s) {
         return repertoire.add(s);
     }
 
     /**
-     * Entfernt einen Song aus dem Repertoire der Band.
-     *
-     * @param s zu entfernender Song
-     * @return Erfolg
+     * Nachbedingung
+     * 
+     * return
+     * true, falls der Song vorhanden war und geloescht werden konnte,
+     * false andernfalls.
      */
     public boolean songEntfernen(Song s) {
         if (repertoire.contains(s)) {
@@ -118,19 +117,19 @@ public class Band {
     }
 
     /**
-     * Listet das Repertoire der Band
-     *
-     * @return Repertoire
+     * 
      */
     public ArrayList<Song> songsAuflisten() {
         return repertoire;
     }
 
     /**
-     * Listet das Repertoire der Band zu einem gewissen Zeitpunkt.
-     *
-     * @param datum gesuchter Zeitpunkt
-     * @return Repertoire zu dem gesuchten Zeitpunkt
+     * Nachbedingung
+     * 
+     * return
+     * Liste beinhaltet Versionen wie spezifiziert.
+     * Songs sind alle nach dem spezifizierten Datum entstanden.
+     * s.getVon() > datum
      */
     public ArrayList<Song> songsAuflisten(GregorianCalendar datum, boolean versionen) {
         ArrayList<Song> repertoireListe = new ArrayList<Song>();
@@ -149,13 +148,17 @@ public class Band {
         return repertoireListe;
     }
     
-    // Kalender und Bilanz
-    
     /**
-     * Fuegt dem Kalender der Band einen Termin hinzu
+     * Vorbedingung
      * 
-     * @param t hinzuzufuegender Termin
-     * @return Erfolg
+     * Uebergebener Termin sollte nicht null sein.
+     * 
+     * Nachbedingung
+     * 
+     * return
+     * true, falls der Termin und dessen Ort dem Kalender
+     * und der Bilanz der zugehoerige Posten hinzugefuegt werden konnt,
+     * false, andernfalls.
      */
     public boolean terminHinzufuegen(Termin t) {
         return  kalender.terminHinzufuegen(t) && kalender.ortHinzufuegen(t.getOrt()) && bilanz.postenHinzufuegen(new Posten(t));
@@ -172,11 +175,19 @@ public class Band {
     }
     
     /**
-     * Aendert einen Termin
+     * Vorbedingung
      * 
-     * @param alt zu aendernder Termin
-     * @param neu neuer Termin
-     * @return Erfolg
+     * Uebergebene Termine sollten nicht null sein.
+     * 
+     * Nachbedingung
+     * 
+     * return
+     * true, falls Termin, zugehoeriger Ort und Posten geaendert werden konnten
+     * false andernfalls.
+     * ERROR: return nicht richtig gesetzt.
+     * 
+     * GOOD: Durch dynamisches Binden muessen nur Termine geaendert werden.
+     * BAD: Bei jeder Aenderungsaktion muessen saemtliche verknuepften Objekte einzeln geaendert werden.
      */
     public boolean terminAendern(Termin alt, Termin neu) {
         HashSet<Mitglied> mitgliederListe = this.mitglieder.mitgliederAuflisten();
@@ -200,10 +211,19 @@ public class Band {
     }
     
     /**
-     * loescht einen Termin
+     * Vorbedingung
      * 
-     * @param t zu loeschender Termin
-     * @return Erfolg
+     * Uebergebener Termin sollte nicht null sein.
+     * 
+     * Nachbedingung
+     * 
+     * return
+     * true, falls Termin, zugehoeriger Ort und Posten geloescht werden konnten
+     * false andernfalls.
+     * ERROR: return nicht richtig gesetzt.
+     * 
+     * GOOD: Durch dynamisches Binden muessen nur Termine geloescht werden.
+     * BAD: Bei jeder Loeschaktion muessen saemtliche verknuepften Objekte einzeln geloescht werden.
      */
     public boolean terminLoeschen(Termin t) {
         HashSet<Mitglied> mitgliederListe = this.mitglieder.mitgliederAuflisten();
@@ -224,10 +244,20 @@ public class Band {
     }
     
     /**
-     * Stellt einen zuvor geaenderten Termin wieder her
+     * Vorbedingung
      * 
-     * @param t wiederherzustellender Termin
-     * @return Erfolg
+     * Termin sollte nicht null sein.
+     * 
+     * Nachbedingung
+     * 
+     * return
+     * true, falls Termin, zugehoeriger Ort und Posten wiederhergestellt werden konnten
+     * false andernfalls.
+     * ERROR: Ort wird nicht wiederhergestellt.
+     * ERROR: return nicht richtig gesetzt.
+     * 
+     * GOOD: Durch dynamisches Binden muessen nur Termine wiederhergestellt werden.
+     * BAD: Bei jeder Wiederherstellungsaktion muessen saemtliche verknuepften Objekte einzeln wiederhergestellt werden.
      */
     public Termin terminWiederherstellen(Termin t) {
         Posten p = new Posten(t);
@@ -236,74 +266,86 @@ public class Band {
     }
     
     /**
-     * Listet alle Termine innerhalb des gesuchten Zeitraums
+     * Vorbedingung
      * 
-     * @param von Beginn des gesuchten Zeitraums
-     * @param bis Ende des gesuchten Zeitraum
-     * @return Liste der gesuchten Termine
+     * von chronologisch vor bis
+     * 
+     * Nachbedingung
+     * 
+     * return
+     * Termine liegen innerhalb des gegebenen Intervalls.
      */
     public ArrayList<? extends Termin> termineAuflisten(GregorianCalendar von, GregorianCalendar bis) {
         return kalender.termineAuflisten(von, bis);
     }
     
     /**
-     * Listet alle Proben innerhalb des gesuchten Zeitraums
+     * Vorbedingung
      * 
-     * @param von Beginn des gesuchten Zeitraums
-     * @param bis Ende des gesuchten Zeitraum
-     * @return Liste der gesuchten Proben
+     * von chronologisch vor bis
+     * 
+     * Nachbedingung
+     * 
+     * return
+     * Proben liegen innerhalb des gegebenen Intervalls.
      */
     public ArrayList<Probe> probenAuflisten(GregorianCalendar von, GregorianCalendar bis) {
         return kalender.probenAuflisten(von, bis);
     }
     
     /**
-     * Listet alle Auftritte innerhalb des gesuchten Zeitraums
+     * Vorbedingung
      * 
-     * @param von Beginn des gesuchten Zeitraums
-     * @param bis Ende des gesuchten Zeitraum
-     * @return Liste der gesuchten Auftritte
+     * von chronologisch vor bis
+     * 
+     * Nachbedingung
+     * 
+     * return
+     * Auftritte liegen innerhalb des gegebenen Intervalls.
      */
     public ArrayList<Auftritt> auftritteAuflisten(GregorianCalendar von, GregorianCalendar bis) {
         return kalender.auftritteAuflisten(von, bis);
     }
     
     /**
-     * Fuegt der Bilanz einen Posten hinzu
+     * Nachbedingung
      * 
-     * @param p hinzuzufuegender Posten
-     * @return Erfolg
+     * return
+     * true, falls der Posten erfolgreich hinzugefuegt werden konnte,
+     * false andernfalls.
      */
     public boolean postenHinzufuegen(Posten p) {
         return bilanz.postenHinzufuegen(p);
     }
-
+    
     /**
-     * Aendert einen Posten
+     * Nachbedingung
      * 
-     * @param alt zu aendernder Posten
-     * @param neu neuer Posten
-     * @return neuer Posten
+     * return
+     * true, falls der Posten erfolgreich geaendert werden konnte,
+     * false andernfalls.
      */
     public Posten postenAendern(Posten alt, Posten neu) {
         return bilanz.postenAendern(alt, neu);
     }
     
     /**
-     * Loescht einen Posten
+     * Nachbedingung
      * 
-     * @param p zu loeschender Posten
-     * @return Erfolg
+     * return
+     * true, falls der Posten erfolgreich geloescht werden konnte,
+     * false andernfalls.
      */
     public boolean postenLoeschen(Posten p) {
         return bilanz.postenLoeschen(p);
     }
     
     /**
-     * Stellt einen zuvor geaenderten Posten wieder her
+     * Nachbedingung
      * 
-     * @param p wiederherzustellender POsten
-     * @return wiederhergestellter Posten
+     * return
+     * true, falls der Posten erfolgreich wiederhergestellt werden konnte,
+     * false andernfalls.
      */
     public Posten postenWiederherstellen(Posten p) {
         return bilanz.postenWiederherstellen(p);
@@ -351,12 +393,11 @@ public class Band {
     }
 
     /**
-     * liefert Liste mit Orten, die eine bestimmte Infrastruktur haben.
-     *
-     * @param plaetze Gesuchte Anzahl an Zuschauerplaetzen(oder 0, wenn egal)
-     *
-     * @return die Orte, die die bestimmte Infrastruktur haben. Leere Liste,
-     * wenn kein Ort die Voraussetzungen erfuellt.
+     * Nachbedingung
+     * 
+     * return
+     * Orte mit gleich vielen oder mehr Plaetzen als gesucht.
+     * o.getPlaetze() >= plaetze
      */
     public ArrayList<Ort> findeOrt(int plaetze) {
         return kalender.findeOrt(plaetze);

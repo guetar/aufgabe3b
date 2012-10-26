@@ -269,7 +269,9 @@ public class Test {
             System.out.println(t);
         }
         
-        // Ersatzmitglied erstellen und mit fixem austauschen
+        /**
+         * Ersatzmitglied erstellen und mit fixem austauschen
+         */
         Mitglied jonas = new Mitglied("Jonas Katamay", "0999/9966699", "Gitarre");
         b.ersatzMitgliedHinzufuegen(jonas);
         System.out.println("\nBand derzeit:\n" + b.printMitglieder());

@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package com;
 
 import java.util.GregorianCalendar;
@@ -16,12 +12,9 @@ public class Probe extends Termin {
     private int miete;
 
     /**
-     * Konstruktor
+     * Vorbedingung
      * 
-     * @param ort Ort
-     * @param datum Datum
-     * @param dauer Dauer
-     * @param miete Miete
+     * ort, datum, dauer, teilnehmer und miete sollten nicht null sein.
      */
     public Probe(Ort ort, GregorianCalendar datum, String dauer, HashSet<Mitglied> teilnehmer, int miete) {
         super(ort, datum, dauer, teilnehmer);
@@ -29,20 +22,23 @@ public class Probe extends Termin {
     }
     
     /**
-     * Aendert die derzeitige Probe und wirft die alte auf den Stack
+     * Vorbedingung
      * 
-     * @param a neue Probe
+     * Uebergebene Probe sollte nicht null sein.
      */
     public Probe(Probe p) {
         super(p);
         this.miete = p.getMiete();
     }
-
+    
     /**
-     * Aendert die derzeitige Probe und wirft die alte auf den Stack
+     * Vorbedingung
      * 
-     * @param p neue Probe
-     * @return geaenderte Probe
+     * Uebergebene Probe sollte nicht null sein.
+     * 
+     * Nachbedingung
+     * 
+     * Retournierte Probe hat die Daten der uebergebenen Probe uebernommen.
      */
     public Probe setProbe(Probe p) {
         super.pushToStack(new Probe(this));
@@ -50,21 +46,12 @@ public class Probe extends Termin {
         this.miete = p.getMiete();
         return this;
     }
-
-    /**
-     * Getter fuer Miete
-     * 
-     * @return Miete
-     */
+    
     public int getMiete() {
         return miete;
     }
 
     @Override
-    /**
-     * Liefert die Daten der Probe als String getrennt durch Leerzeichen in
-     * der Reihenfolge: Ort, Datum, Dauer und Miete
-     */
     public String toString() {
         return super.toString() + " " + miete + " Euro Miete";
     }

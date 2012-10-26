@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package com;
 
 import java.text.SimpleDateFormat;
@@ -14,21 +10,19 @@ import java.util.Stack;
  */
 public class Posten implements Comparable<Posten> {
 
+    //Invariante: wert!=0
     private int wert;
-    private int kategorie; //1=Auftritt, 2=Probe, 3=sonstige Einnahme, 4=sonstige Ausgabe
+    //Invariante: kategorie ist entweder 1=Auftritt, 2=Probe, 3=sonstige Einnahme 
+    //oder 4=sonstige Ausgabe;andere Werte sind nicht möglich
+    //Schlecht: byte haette als Typ gereicht, int verbraucht unnoetig Speicher
+    private int kategorie; 
     private String beschreibung;
     private GregorianCalendar datum;
     private Stack<Posten> stack;
 
-    /**
-     * Erstellt eine neue Instanz von Posten
-     *
-     * @param wert positiv oder negativ, je nach dem, ob Umsatz oder Kosten
-     * @param beschreibung textuelle beschreibung des Postens(null bei einem
-     * Termin)
-     * @param datum Datum
-     * @param termin Termin, auf den sich der Posten bezieht, sonst null
-     */
+    //Vorbedingung: wert!=0, kategorie ist entweder 1,2,3 oder 4, beschreibung!=null.
+    //datum!=null, datum enthaelt Informationen ueber Jahr,Monat,Tag,Stunde und Minute
+    //Nachbedingung: beschreibung!=null, datum!=null, stack!=null
     public Posten(int wert, int kategorie, String beschreibung, GregorianCalendar datum) {
         this.beschreibung = beschreibung;
         this.kategorie = kategorie;
@@ -37,11 +31,8 @@ public class Posten implements Comparable<Posten> {
         this.stack = new Stack<Posten>();
     }
     
-    /**
-     * Erstellt einen Posten aus einem Termin
-     * 
-     * @param t Termin
-     */
+    //Vorbedingung: t!=null
+    //Nachbedingung: beschreibung!=null, datum!=null, stack!=null
     public Posten(Termin t) {
         if(t instanceof Auftritt) {
             
@@ -62,12 +53,9 @@ public class Posten implements Comparable<Posten> {
         this.stack = new Stack<Posten>();
     }
     
-    /**
-     * Aendert den derzeitigen Posten und wirft den alten auf den Stack
-     * 
-     * @param p neuer Posten
-     * @return geqenderter Posten
-     */
+    //Vorbedingung: p!=null
+    //Nachbedingung: this wird auf stack gelegt, beschreibung, wert, datum und 
+    //kategorie werden von p uebernommen
     public Posten setPosten(Posten p) {
         stack.push(this);
         this.beschreibung = p.getBeschr();
@@ -77,52 +65,28 @@ public class Posten implements Comparable<Posten> {
         return this;
     }
     
-    /**
-     * Getter Methode des Datums
-     * @return Datum des Postens
-     */
     public GregorianCalendar getDatum(){
         return datum;
     }
     
-    /**
-     * Getter Methode des Wert
-     * @return Wert des Postens
-     */
     public int getWert(){
         return wert;
     }
     
-    /**
-     * Getter fuer Kategorie
-     * @return kategorie
-     */
     public int getKategorie() {
         return kategorie;
     }
     
-    /**
-     * Getter Methode fuer die Beschreibung
-     * @return Beschreibung des Postens
-     */
     public String getBeschr(){
         return beschreibung;
     }
     
-    /**
-     * Wirft das uebergebene Element auf den Stack
-     * 
-     * @param p 
-     */
+    //Nachbedingung: p wird auf stack gelegt
     protected void pushToStack(Posten p) {
         stack.push(p);
     }
     
-    /**
-     * Holt das letzte Element vom Stack
-     * 
-     * @return 
-     */
+    //Nachbedingung: stack verliert oberstes Element(falls vorhanden)
     protected Posten popFromStack() {
         if(!stack.empty()) {
             return stack.pop();
@@ -131,22 +95,13 @@ public class Posten implements Comparable<Posten> {
     }
     
     @Override
-    /**
-     * Liefert die Daten des Postens als String getrennt durch Leerzeichen in
-     * der Reihenfolge: Ort, Datum und Dauer
-     */
     public String toString() {
         SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy hh:mm");
         return sdf.format(datum.getTime()) + ",\t " + wert + " Euro\t" +  beschreibung;
     }
     
     @Override
-    /**
-     * Eigene CompareTo Methode um zwei Posten zu vergleichen
-     * 
-     * @param t Vergleichsposten
-     * @return 
-     */
+    //Vorbedingung: p!=null
     public int compareTo(Posten p) {
         if(this.getDatum().before(p.getDatum())) {
             return -1;

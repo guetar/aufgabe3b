@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package com;
 
 import java.util.GregorianCalendar;
@@ -16,22 +12,19 @@ public class Auftritt extends Termin {
     private int gage;
 
     /**
-     * Konstruktor
+     * Vorbedingung
      * 
-     * @param ort Ort
-     * @param datum Datum
-     * @param dauer Dauer
-     * @param gage Gage
+     * ort, datum, dauer, teilnehmer und gage sollten nicht null sein.
      */
     public Auftritt(Ort ort, GregorianCalendar datum, String dauer, HashSet<Mitglied> teilnehmer, int gage) {
         super(ort, datum, dauer, teilnehmer);
         this.gage = gage;
     }
-
+    
     /**
-     * Aendert den derzeitigen Auftritt und wirft den alten auf den Stack
+     * Vorbedingung
      * 
-     * @param a neuer Auftritt
+     * Uebergebener Auftritt sollte nicht null sein.
      */
     public Auftritt(Auftritt a) {
         super(a);
@@ -39,10 +32,13 @@ public class Auftritt extends Termin {
     }
     
     /**
-     * Aendert die Daten des aktuellen Auftritts
+     * Vorbedingung
      * 
-     * @param a neue Daten
-     * @return 
+     * Uebergebener Auftritt sollte nicht null sein.
+     * 
+     * Nachbedingung
+     * 
+     * Retournierter Auftritt hat die Daten des uebergebenen Auftritts uebernommen.
      */
     public Auftritt setAuftritt(Auftritt a) {
         super.pushToStack(new Auftritt(this));
@@ -50,21 +46,12 @@ public class Auftritt extends Termin {
         this.gage = a.getGage();
         return this;
     }
-
-    /**
-     * Getter fuer Gage
-     * 
-     * @return Gage
-     */
+    
     public int getGage() {
         return gage;
     }
 
     @Override
-    /**
-     * Liefert die Daten des Auftritts als String getrennt durch Leerzeichen in
-     * der Reihenfolge: Ort, Datum, Dauer und Gage
-     */
     public String toString() {
         return super.toString() + " " + gage + " Euro Gage";
     }
