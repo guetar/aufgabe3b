@@ -43,6 +43,7 @@ public class Ort implements Comparable<Ort> {
     }
 
     @Override
+    //Vorbedingung: o!=null
     public int compareTo(Ort o) {
         if (this.name.compareTo(o.name) < 0) {
             return -1;
