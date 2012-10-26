@@ -6,6 +6,7 @@
 import com.*;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.TreeSet;
 
@@ -20,6 +21,13 @@ public class Test {
      */
     public static void main(String[] args) {
 
+        HashMap<Mitglied, Boolean> test = new HashMap<Mitglied, Boolean>();
+        test.put(null, true);
+        System.out.println(test);
+        test.put(null, false);
+        System.out.println(test);
+        
+        
         /**
          * Erstellen der Band und eines Zeitraums zur Suche
          */

@@ -1,25 +1,59 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package com;
 
 import java.util.HashMap;
 import java.util.HashSet;
 
-/**
- *
- * @author steff
- */
 public class Abstimmung {
-    private HashMap<Mitglied, Boolean> dafuers; //beinhaltet die Entscheidungen der Mitglieder
-    private HashMap<Mitglied, String> begruendungen; // Begruendung der Mitglieder
-    private HashSet<Mitglied> mitglieder; //Alle zur Abstimmung teilnehmenden Mitglieder
-    private Termin vorgeschlTermin; //Der vorgeschlagene Termin
-    
+
+    /**
+     * GUT:
+     * Ich glaube, dass der Einsatz von HashMaps und -Sets fuer das Erfassen der 
+     * Stimmabgaben ein sehr guter Weg ist. Es gibt kaum Bedingungen die fuer
+     * die Funktionalitaet erfuellt sein muessen, das meiste uebernimmt 
+     * die HashMap selber, zB fuer folgende Faelle:
+     * - Doppelte Abgabe einer Stimme > alte wird einfach ersetzt
+     * - null Werte erzeugen keinen Fehler
+     * 
+     * Auch ist die Syntax und Pragmatik eng verbunden mit der Semantik:
+     * - Das Mitglied ist mit der Stimmabgabe und der Begruendung gekoppelt.
+     * - EIN Mitglied gibt EINE Stimme ab
+     */
+    private HashMap<Mitglied, Boolean> dafuers;
+    private HashMap<Mitglied, String> begruendungen;
+    private HashSet<Mitglied> mitglieder;
     
     /**
-     * Initialisierung 
+     * SCHLECHT:
+     * Variable Termin "vorgeschlTermin".
+     * Urspruengliche Idee war, dass die Klasse Abstimmung im Falle einer positiven
+     * Abstimmung gleich den Termin selber erzeugt und der Band uebergibt.
+     * Ich hatte dann einen Denkfehler und dachte mir dass es nicht moeglich ist auf
+     * die Variablen einer Klasse ueberhalb zuzugreifen.
+     * Deswegen habe Ich die Instanzierung des Termins in test.java gemacht
+     * und hier aber vergessen die Variable "vorgeschlTermin" wieder zu entfernen.
+     * Sie wird ueberhaupt nicht verwendet.
+     * Jetzt bin Ich aber draufgekommen, dass Ich ja in der Klasse Abstimmung sehr wohl
+     * einen Termin der Klasse Band uebergeben kann und zwar ueber deren Methode 
+     * "terminHinzufuegen".
+     * 
+     * Verbesserungsvorschlag bei der Methode "getResult".
+     */
+    private Termin vorgeschlTermin;
+
+    /**
+     * Konstruktor.
+     * 
+     * VORBEDINGUNG:
+     * _mitglieder:
+     * Das uebergebene HashSet soll auch tatsaechlich die Mitglieder
+     * der Band beinhalten.
+     * _vorgeschlTermin:
+     * ist jetzt noch irrelevant, weil es gar nicht verwendet wird.
+     * 
+     * INVARIANTE:
+     * 
+     * 
+     * 
      */
     public Abstimmung(HashSet<Mitglied> _mitglieder, Termin _vorgeschlTermin) {
         dafuers = new HashMap<Mitglied, Boolean>();
@@ -27,63 +61,40 @@ public class Abstimmung {
         mitglieder = _mitglieder;
         vorgeschlTermin = _vorgeschlTermin;
     }
-    
-    /**
-     * Methode abstimmen laesst ein einzelnes Mitglied abstimmen und
-     * speichert seine Entscheidung wie auch Begruendung
-     */
+
     public boolean abstimmen(Mitglied _m, boolean _dafuer, String _begruendung) {
-        
+
         if (mitglieder.contains(_m)) {
             dafuers.put(_m, _dafuer);
             begruendungen.put(_m, _begruendung);
-        }
-        else {
+        } else {
             return false;
         }
-        
         return true;
     }
-    
-    
-    /**
-     * Liefert das Ergebnis der Abstimmung
-     */
+
     public String[] getResult() {
-        
-        String result[] = new String[2];   
-        /** result ist der Ergebnis-String, der speichert an 
-        * [0]: "1" wenn alle dafuer sind, "0" wenn mindestens einer dagegegen, "-1" wenn noch nicht alle abgestimmt haben
-        * [1]: Textausgabe des Ergebnis mit einzelnen votes und Begruendungen
-        **/  
-        
-        // Wenn die Groessen der HashMap ueber Abstimmungen die der Anzahl der Mitglieder entsprechen
-        // haben alle abgestimmt, ansonsten wird "-1" an result[0] des Ergebnis-String gespeichert.
+
+        String result[] = new String[2];
+
         if (dafuers.size() == mitglieder.size()) {
-            // Standardmaessig wird erwartet, dass alle dafuer sind,
-            // ist nur einer dagegen wird result[0] = "0"
             result[0] = "1";
             result[1] = "Ergebnis fuer Abstimmung zu: " + vorgeschlTermin;
             
-            // Durchlaufen aller Mitglieder
             for (Mitglied m : mitglieder) {
                 result[1] += "\n" + m.getName();
                 if (dafuers.get(m)) {
                     result[1] += " ist dafuer; '";
-                }
-                else {
-                    // eine Gegenstimme reicht und der Termin findet nicht statt
+                } else {
                     result[1] += " ist dagegen; '";
                     result[0] = "0";
                 }
                 result[1] += begruendungen.get(m) + "'";
             }
-        }
-        else {
+        } else {
             result[0] = "-1";
             result[1] = "Es haben noch nicht alle abgestimmt!";
         }
-        
         return result;
     }
 }
