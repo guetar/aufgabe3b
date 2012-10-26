@@ -5,6 +5,10 @@ import java.util.GregorianCalendar;
 import java.util.HashSet;
 import java.util.Stack;
 
+/**
+ *
+ * @author Matthias
+ */
 public abstract class Termin implements Comparable<Termin> {
 
     private Ort ort;

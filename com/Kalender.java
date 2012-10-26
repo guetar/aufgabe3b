@@ -5,6 +5,10 @@ import java.util.GregorianCalendar;
 import java.util.LinkedList;
 import java.util.TreeSet;
 
+/**
+ *
+ * @author guetar
+ */
 public class Kalender {
 
     // Invariante: Termine immer aufsteigend sortiert.

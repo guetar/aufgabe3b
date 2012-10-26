@@ -3,6 +3,10 @@ package com;
 import java.util.GregorianCalendar;
 import java.util.HashSet;
 
+/**
+ *
+ * @author Matthias
+ */
 public class Probe extends Termin {
 
     private int miete;
