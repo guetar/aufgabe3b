@@ -15,7 +15,6 @@ public class Probe extends Termin {
      * Vorbedingung
      * 
      * ort, datum, dauer, teilnehmer und miete sollten nicht null sein.
-     * ERROR: Das wird hier nicht ueberprueft.
      */
     public Probe(Ort ort, GregorianCalendar datum, String dauer, HashSet<Mitglied> teilnehmer, int miete) {
         super(ort, datum, dauer, teilnehmer);
@@ -26,7 +25,6 @@ public class Probe extends Termin {
      * Vorbedingung
      * 
      * Uebergebene Probe sollte nicht null sein.
-     * ERROR: Das wird hier nicht ueberprueft.
      */
     public Probe(Probe p) {
         super(p);
@@ -37,7 +35,6 @@ public class Probe extends Termin {
      * Vorbedingung
      * 
      * Uebergebene Probe sollte nicht null sein.
-     * ERROR: Das wird hier nicht ueberprueft.
      * 
      * Nachbedingung
      * 

@@ -90,7 +90,6 @@ public class Kalender {
      * Vorbedingung
      * 
      * Neuer Termin darf nicht null sein, das sonst eine NullpointerException entsteht.
-     * ERROR: Das wird hier nicht ueberprueft.
      * 
      * Nachbedingung
      * 

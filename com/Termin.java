@@ -21,7 +21,6 @@ public abstract class Termin implements Comparable<Termin> {
      * Vorbedingung
      * 
      * ort, datum, dauer und teilnehmer sollten nicht null sein.
-     * ERROR: Das wird hier nicht ueberprueft.
      */
     public Termin(Ort ort, GregorianCalendar datum, String dauer, HashSet<Mitglied> teilnehmer) {
         this.ort = ort;
@@ -39,7 +38,6 @@ public abstract class Termin implements Comparable<Termin> {
      * Vorbedingung
      * 
      * Uebergebener Termin darf nicht null sein, da sonst eine NullpointerException entsteht.
-     * ERROR: Das wird hier nicht ueberprueft.
      */
     public Termin(Termin t) {
         this.ort = t.getOrt();
@@ -53,7 +51,6 @@ public abstract class Termin implements Comparable<Termin> {
      * Vorbedingung
      * 
      * Uebergebener Termin darf nicht null sein, da sonst eine NullpointerException entsteht.
-     * ERROR: Das wird hier nicht ueberprueft.
      * 
      * Nachbedingung
      * 
@@ -117,7 +114,6 @@ public abstract class Termin implements Comparable<Termin> {
      * Vorbedingung
      * 
      * Uebergebener Termin sollte nicht null sein.
-     * ERROR: Das wird hier nicht ueberprueft.
      * 
      * GOOD: Durch dynamisches Binden kann der Stack in Termin
      * sowohl Proben als auch Auftritte enthalten.

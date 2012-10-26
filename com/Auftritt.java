@@ -15,7 +15,6 @@ public class Auftritt extends Termin {
      * Vorbedingung
      * 
      * ort, datum, dauer, teilnehmer und gage sollten nicht null sein.
-     * ERROR: Das wird hier nicht ueberprueft.
      */
     public Auftritt(Ort ort, GregorianCalendar datum, String dauer, HashSet<Mitglied> teilnehmer, int gage) {
         super(ort, datum, dauer, teilnehmer);
@@ -26,7 +25,6 @@ public class Auftritt extends Termin {
      * Vorbedingung
      * 
      * Uebergebener Auftritt sollte nicht null sein.
-     * ERROR: Das wird hier nicht ueberprueft.
      */
     public Auftritt(Auftritt a) {
         super(a);
@@ -37,7 +35,6 @@ public class Auftritt extends Termin {
      * Vorbedingung
      * 
      * Uebergebener Auftritt sollte nicht null sein.
-     * ERROR: Das wird hier nicht ueberprueft.
      * 
      * Nachbedingung
      * 

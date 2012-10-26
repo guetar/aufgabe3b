@@ -23,7 +23,6 @@ public class Band {
      * Vorbedingung
      * 
      * Mitglied sollte nicht null sein.
-     * ERROR: Das wird hier nicht ueberprueft.
      * 
      * Nachbedingung
      * 
@@ -39,7 +38,6 @@ public class Band {
      * Vorbedingung
      * 
      * Mitglied sollte nicht null sein.
-     * ERROR: Das wird hier nicht ueberprueft.
      * 
      * Nachbedingung
      * 
@@ -154,7 +152,6 @@ public class Band {
      * Vorbedingung
      * 
      * Uebergebener Termin sollte nicht null sein.
-     * ERROR: Das wird hier nicht ueberprueft.
      * 
      * Nachbedingung
      * 
@@ -181,7 +178,6 @@ public class Band {
      * Vorbedingung
      * 
      * Uebergebene Termine sollten nicht null sein.
-     * ERROR: Das wird hier nicht ueberprueft.
      * 
      * Nachbedingung
      * 
@@ -218,7 +214,6 @@ public class Band {
      * Vorbedingung
      * 
      * Uebergebener Termin sollte nicht null sein.
-     * ERROR: Das wird hier nicht ueberprueft.
      * 
      * Nachbedingung
      * 
@@ -252,7 +247,6 @@ public class Band {
      * Vorbedingung
      * 
      * Termin sollte nicht null sein.
-     * ERROR: Das wird hier nicht ueberprueft.
      * 
      * Nachbedingung
      * 
