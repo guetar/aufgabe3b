@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package com;
 
 import java.util.ArrayList;
@@ -15,23 +11,17 @@ import java.util.TreeSet;
  */
 public class Bilanz {
 
+    //Invariante: posten ist chronologisch nach Datum sortiert
     private TreeSet<Posten> posten;
     private LinkedList<Posten> trash;
 
-    /**
-     * Konstruktor
-     */
+    //Nachbedingung: posten!=null, trash!=null
     public Bilanz() {
         this.posten = new TreeSet<Posten>();
         this.trash = new LinkedList<Posten>();
     }
     
-    /**
-     * Gibt den Posten fuer den betreffenden Termin zurueck
-     * 
-     * @param t Termin
-     * @return Posten
-     */
+    //Vorbedingung: t!=null
     public Posten getPosten(Termin t) {
         Posten p = new Posten(t);
         if(posten.contains(p)) {
@@ -40,26 +30,16 @@ public class Bilanz {
         return null;
     }
     
-    /**
-     * Ueberprueft, ob der uebergebene Posten existiert
-     * 
-     * @param p zu ueberpruefender Posten
-     * @return dessen Existenz
-     */
     public boolean postenExistiert(Posten p) {
         return posten.contains(p);
     }
 
-    /**
-     * Fuegt der Bilanz einen neuen Posten hinzu
-     *
-     * @param p Bilanzposten
-     * @return Erfolg
-     */
+    //Nachbedingung: wenn true zurückgegeben wird, wird p zu posten hinzugefuegt
     public boolean postenHinzufuegen(Posten p) {
         return posten.add(p);
     }
     
+    //Nachbedingung: alt in posten wird durch neu ersetzt
     public Posten postenAendern(Posten alt, Posten neu) {
         for(Posten p : posten) {
             if(p == alt) {
@@ -72,12 +52,8 @@ public class Bilanz {
         return null;
     }
     
-    /**
-     * Loescht einen Posten
-     *
-     * @param p der zu loeschende Posten
-     * @return Erfolg
-     */
+    //Nachbedingung: wenn true zurückgegeben wird, wird p aus posten entfernt
+    // und zu trash hinzugefuegt
     public boolean postenLoeschen(Posten p) {
         if(posten.contains(p)) {
             trash.add(p);
@@ -87,12 +63,7 @@ public class Bilanz {
         return false;
     }
     
-    /**
-     * Stellt einen Posten wieder her
-     * 
-     * @param p wiederherzustellender Posten
-     * @return 
-     */
+    //Vorbedingung: p!=null
     public Posten postenWiederherstellen(Posten p) {
         Posten alt = p.popFromStack();
         
@@ -100,8 +71,7 @@ public class Bilanz {
             return alt.setPosten(p);
             
         } else {
-            
-            // keine alte Version vorhanden => Termin muss geloescht worden sein
+                      
             if(trash.contains(p)) {
                 trash.remove(p);
                 posten.add(p);
@@ -111,16 +81,8 @@ public class Bilanz {
         return null;
     }
    
-    /**
-     * Summiert alle Posten in dem angegebenen Zeitraum nach den Kriterien
-     * 
-     * @param showAuftr true, wenn Auftritte aufgelistet werden sollen
-     * @param showProben true, wenn Proben aufgelistet werden sollen
-     * @param showSonstige true, wenn "sonstige"  Posten aufgelistet werden sollen
-     * @param von Start des Intervalls
-     * @param bis Ende des Intervalls
-     * @return Summe der Posten
-     */
+    //Vorbedingung: von!=null,bis!=null. "von" muss chronologisch vor "bis" sein
+    //Schlecht: Haette postenAuflisten() benutzen koennen
     public int postenSummieren(boolean showAuftr, boolean showProben, boolean showEinnahmen, boolean showAusgaben, GregorianCalendar von, GregorianCalendar bis) {
         int sum = 0;
         ArrayList<Integer> filter = new ArrayList<Integer>();
@@ -146,16 +108,7 @@ public class Bilanz {
         return sum;
     }    
     
-    /**
-     * Gibt eine Liste aller Posten in dem angegebenen Zeitraum nach den Kriterien aus
-     * 
-     * @param showAuftr
-     * @param showProben
-     * @param showSonstige
-     * @param von
-     * @param bis
-     * @return 
-     */
+    //Vorbedingung: von!=null,bis!=null. "von" muss chronologisch vor "bis" sein
     public TreeSet<Posten> postenAuflisten(boolean showAuftr, boolean showProben, boolean showEinnahmen, boolean showAusgaben, GregorianCalendar von, GregorianCalendar bis) {
        TreeSet<Posten> ergebnis = new TreeSet<Posten>();
        ArrayList<Integer> filter = new ArrayList<Integer>();
