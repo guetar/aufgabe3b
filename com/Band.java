@@ -389,7 +389,17 @@ public class Band {
     public Posten postenWiederherstellen(Posten p) {
         return bilanz.postenWiederherstellen(p);
     }
-    
+
+    /**
+     * Vorbedingung
+     * 
+     * von!=null, bis!=null
+     * 
+     * Nachbedingung
+     * 
+     * return
+     * Nach Datum sortierte  Liste an Posten
+     */
     public TreeSet<Posten> postenAuflisten(boolean showAuftr, boolean showProben, boolean showEinnahmen, boolean showAusgaben, GregorianCalendar von, GregorianCalendar bis) {
         return bilanz.postenAuflisten(showAuftr, showProben, showEinnahmen, showAusgaben, von, bis);
     }
@@ -419,13 +429,14 @@ public class Band {
 //    }
 
     /**
-     * Summiert den Gewinn, der innerhalb eines gesuchten Zeitraumes
-     * erwirtschaftet werden konnte
-     *
-     * @param von Beginn des gesuchten Zeitraumes
-     * @param bis Ende des gesuchten Zeitraumes
-     * @return Gewinn, der innerhalb des gesuchten Zeitraumes erwirtschaftet
-     * werden konnte
+     * Vorbedingung
+     * 
+     * von!=null, bis!=null
+     * 
+     * Nachbedingung
+     * 
+     * return
+     * Summe der gewuenschten Posten im gewuenschten Zeitraum 
      */
     public int postenSummieren(boolean showAuftr, boolean showProben, boolean showSonstigeEinnahmen, boolean showSonstigeAusgaben, GregorianCalendar von, GregorianCalendar bis) {
         return bilanz.postenSummieren(showAuftr, showProben, showSonstigeEinnahmen, showSonstigeAusgaben, von, bis);
