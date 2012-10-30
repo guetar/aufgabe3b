@@ -20,13 +20,6 @@ public class Test {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-
-        HashMap<Mitglied, Boolean> test = new HashMap<Mitglied, Boolean>();
-        test.put(null, true);
-        System.out.println(test);
-        test.put(null, false);
-        System.out.println(test);
-        
         
         /**
          * Erstellen der Band und eines Zeitraums zur Suche
