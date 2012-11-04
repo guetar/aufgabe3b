@@ -44,43 +44,82 @@ public class Band {
         return mitglieder.ersatzMitgliedHinzufuegen(m);
     }
     
+
+    
+    
+    
     /**
-     * Mitgliedsstatus vom fixen Mitglied in Ersatzmitglied aendern
+     * Vorbedingung.
      * 
-     * @param mAusErsatz
-     * @param mAusFix 
-     * @param aenderungsDatum 
+     * Mitglieder sollten nicht NULL sein.
+     * Mitglieder sollten nicht vertauscht sein!
+     * 
+     * Nachbedingung
+     * 
+     * keine
+     * 
+     * GUT:
+     * Alles ausgelagert an Klasse Mitglieder
      */
     public void swapMitglied(Mitglied mAusErsatz, Mitglied mAusFix, GregorianCalendar aenderungsDatum) {
         mitglieder.swapMitglied(mAusErsatz, mAusFix, aenderungsDatum);
     }
 
+    
+    
+    
+    
     /**
-     * Entfernt ein Mitglied aus der Band.
-     *
-     * @param m zu entferndenes Mitglied
-     * @return Erfolg
+     * Vorbedingung.
+     * 
+     * Mitglied sollten nicht NULL sein,
+     * Mitglied sollte in Band sein.
+     * 
+     * Nachbedingung
+     * 
+     * erfolgreich entfernt
+     * 
+     * GUT:
+     * ausgelagert an Klasse Mitglieder, Weitergabe des return-Werts der Methode
      */
     public boolean mitgliedEntfernen(Mitglied m, GregorianCalendar austrittsdatum) {
         return mitglieder.mitgliedEntfernen(m, austrittsdatum);
     }
 
+
+    
+    
+    
+    
+    
     /**
-     * Listet alle Mitglieder der Band.
-     *
-     * @return Mitglieder
+     * Vorbedingung, Nachbedingung.
+     * 
+     * Keine
+     * 
+     * GUT:
+     * >Es wird eine Kopie des Mitglied-Sets zurueckgegeben.
      */
     public HashSet<Mitglied> mitgliederAuflisten() {
         return new HashSet<Mitglied>(mitglieder.mitgliederAuflisten());
     }
 
+
+    
+    
+    
+    
     /**
-     * Listet alle Personen, die innerhalb eines gesuchten Zeitraums Mitglieder
-     * der Band waren.
-     *
-     * @param von Beginn des gesuchten Zeitraumes
-     * @param bis Ende des gesuchten Zeitraumes
-     * @return Mitglieder innerhalb des gesuchten Zeitraumes
+     * Vorbedingung.
+     * 
+     * Datum soll in den Zeitraum der Band fallen.
+     * 
+     * Nachbdingung.
+     * 
+     * zurueckgegebene Kopie des Sets.
+     * 
+     * GUT:
+     * >Es wird eine Kopie des Sets zurueckgegeben.
      */
     public HashSet<Mitglied> mitgliederAuflisten(GregorianCalendar date) {
         return new HashSet<Mitglied>(mitglieder.mitgliederAuflisten(date));
@@ -313,19 +352,30 @@ public class Band {
     public Posten postenWiederherstellen(Posten p) {
         return bilanz.postenWiederherstellen(p);
     }
-    
+
+    /**
+     * Vorbedingung
+     * 
+     * von!=null, bis!=null
+     * 
+     * Nachbedingung
+     * 
+     * return
+     * Nach Datum sortierte  Liste an Posten
+     */
     public TreeSet<Posten> postenAuflisten(boolean showAuftr, boolean showProben, boolean showEinnahmen, boolean showAusgaben, GregorianCalendar von, GregorianCalendar bis) {
         return bilanz.postenAuflisten(showAuftr, showProben, showEinnahmen, showAusgaben, von, bis);
     }
 
     /**
-     * Summiert den Gewinn, der innerhalb eines gesuchten Zeitraumes
-     * erwirtschaftet werden konnte
-     *
-     * @param von Beginn des gesuchten Zeitraumes
-     * @param bis Ende des gesuchten Zeitraumes
-     * @return Gewinn, der innerhalb des gesuchten Zeitraumes erwirtschaftet
-     * werden konnte
+     * Vorbedingung
+     * 
+     * von!=null, bis!=null
+     * 
+     * Nachbedingung
+     * 
+     * return
+     * Summe der gewuenschten Posten im gewuenschten Zeitraum 
      */
     public int postenSummieren(boolean showAuftr, boolean showProben, boolean showSonstigeEinnahmen, boolean showSonstigeAusgaben, GregorianCalendar von, GregorianCalendar bis) {
         return bilanz.postenSummieren(showAuftr, showProben, showSonstigeEinnahmen, showSonstigeAusgaben, von, bis);

@@ -6,6 +6,7 @@
 import com.*;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.TreeSet;
 
@@ -19,7 +20,7 @@ public class Test {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-
+        
         /**
          * Erstellen der Band und eines Zeitraums zur Suche
          */

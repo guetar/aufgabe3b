@@ -1,7 +1,4 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package com;
 
 import java.util.ArrayList;
@@ -9,23 +6,57 @@ import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.HashSet;
 
-/**
- *
- * @author steff
- */
+
 public class Mitglieder {
     
-    // HashSets der aktiven und inaktiven mitglieder
+    /**
+     * KLASSE Mitglieder.
+     * 
+     * 
+     * INVARIANTE:
+     * >Alle Variablen duerfen nicht NULL sein.
+     * >Aus snapShots und snapDates duerfen niemals Werte entfernt werden.
+     * Diese Objekte entsprechen einem Protokoll.
+     * 
+     * GUT:
+     * >Die Idee hinter den snapShots. 
+     * Wenn eine Aenderung an der Mitgliedszusammensetzung stattfindet 
+     * (Hinzufuegen, entfernen, austauschen eines Mitglieds) wird eine Kopie
+     * der Zusammensetzung zu diesem Zeitpunkt gemacht. Diese wird dann in die
+     * HashMap snapShots gelegt wo sie eindeutig mit dem Datum verknuepft ist.
+     * Das Datum wird zum chronologischen durchgehen auch in eine ArrayList gelegt.
+     * Wenn nach der Mitgliedszusammensetzung zu einem bestimmten Zeitpunkt gesucht
+     * wird, gibt es diejenige aus in deren Intervall sie faellt.
+     * Ich finde, dass dies eine elegante und minimale Loesung ist.
+     * 
+     * 
+     * SCHLECHT:
+     * >Wenn ein snapShot erstellt wird, wird nicht die chronologische Reihenfolge
+     * ueberprueft. 
+     */
     private HashSet<Mitglied> mitglieder;
     private HashSet<Mitglied> ersatzMitglieder;
-    
-    // HashMap die ein HashSet von Mitgliedern zu einem bestimmten Zeitpunkt zurueckgibt
     private HashMap<GregorianCalendar, HashSet<Mitglied>> snapShots;
-    
-    // Daten an denen aenderungen an der HashSet der Mitglieder vorgenommen worden sind.
     private ArrayList<GregorianCalendar> snapDates;
     
     
+    
+    
+    
+    
+    /**
+     * KONSTRUKTOR.
+     * 
+     * 
+     * VORBEDINGUNG:
+     * Keine. wird leer instanziert.
+     * 
+     * INVARIANTE:
+     * Keine
+     * 
+     * NACHBEDINGUNG:
+     * Die Variablen muessen instanziert worden sein.
+     */
     public Mitglieder() {
         mitglieder = new HashSet<Mitglied>();
         ersatzMitglieder = new HashSet<Mitglied>();
@@ -33,12 +64,24 @@ public class Mitglieder {
         snapDates = new ArrayList<GregorianCalendar>();
     }
     
+    
+    
+    
+    
     /**
-     * Fuegt ein Mitglied dem aktiven HashSet mitglieder zu
+     * METHODE mitgliedHinzufuegen.
      * 
-     * @param _m hinzuzufuegendes Mitglied
-     * @param _date Datum des hinzufuegens
-     * @return "true" wenn Mitglied eingefuegt wurde, "false" wenn schon vorhanden
+     * 
+     * VORBEDINGUNG:
+     * >Parameter Mitglied "m" und "date" duerfen nicht NULL sein
+     * >Datum muss hoeher als das letzte sein!
+     * 
+     * INVARIANTE:
+     * >Parameter "m" und "date" duerfen nicht NULL werden.
+     * 
+     * NACHBEDINGUNG:
+     * >Das Mitglied "m" muss in dem HashSet mitglieder eingefuegt worden sein.
+     * >Die Methode makeSnapShot muss die Veraenderung erfassen.
      */
     public boolean mitgliedHinzufuegen(Mitglied m, GregorianCalendar date) {
         boolean ok = mitglieder.add(m);
@@ -50,18 +93,54 @@ public class Mitglieder {
     
     
     
+    
+    
+    /**
+     * METHODE ersatzMitgliedHinzufuegen.
+     * 
+     * 
+     * VORBEDINGUNG:
+     * >Mitglied "m" darf nicht NULL sein.
+     * 
+     * NACHBEDINGUNG:
+     * >"m" muss in ersatzMitglieder eingefuegt worden sein.
+     * 
+     * SCHLECHT:
+     * >Keine Ueberpruefung ob NULL
+     */
     public boolean ersatzMitgliedHinzufuegen(Mitglied m) {
         return ersatzMitglieder.add(m);
     }
   
+    
+    
+    
+    
+  
      
     /**
-     * Entfernt ein Mitglied aus dem aktiven Set
+     * METHODE mitgliedEntfernen
      * 
-     * @param _m das zu entferndende Mitglied
-     * @param _date Datem des entfernens
-     * @return "true" wenn Mitglied entfernt wurde, "false" wenn Mitglied nicht in Set gewesen
-     */
+     * 
+     * VORBEDINGUNG:
+     * >Mitglied "m" darf nicht NULL sein, wuerde kein Problem erzeugen wenn mitglieder
+     * keinen NULL-Wert enthalten, wenn aber doch dann wird erfolgreich NULL aus mitglieder
+     * >Datum muss hoeher als das letzte sein!
+     * 
+     * INVARIANTE:
+     * >Keine nennenswerte
+     * 
+     * NACHBEDINGUNG:
+     * >Mitglied muss aus mitglieder entfernt worden sein.
+     * 
+     * GUT:
+     * >Die Auslagerung des kreieren eines Snapshots an eine eigene Methode, da die mehrmals 
+     * aufgerufen wird.
+     * 
+     * SCHLECHT:
+     * >Keine Kontrolle ob der eingehende Paramter NULL ist. in Verbesserung implementieren.
+     * >Keine Kontrolle ob das eingehende Datum in chronologischer Reihenfolge ist.
+    **/
     public boolean mitgliedEntfernen(Mitglied m, GregorianCalendar date) {
         boolean ok = mitglieder.remove(m);
         if (ok) {
@@ -70,13 +149,28 @@ public class Mitglieder {
         return ok;
     }
     
+
+
+
     
     /**
-     * Wechselt den Status eines Mitglieds
+     * METHODE swapMitglied.
      * 
-     * @param m das betroffene Mitglied
-     * @return "true" wenn Mitglied in Sets vorhanden ist, "false" wenn nicht
-     */
+     * 
+     * VORBEDINGUNG:
+     * >Zwei Mitglieder werden als Parameter uebergeben, das Ersatzmitglied
+     * und das Mitglied mit dem es getauscht werden soll. Diese zwei sollen
+     * richtig uebergeben werden und nicht vertauscht.
+     * >Nix soll NULL sein.
+     * >Datum muss hoeher als das letzte sein!
+     * 
+     * INVARIANTE:
+     * Keinen nennenswerten
+     * 
+     * NACHBEDINGUNG:
+     * >Die Mitglieder sollen erfolgreich vertauscht worden sein.
+     * 
+    **/
     public boolean swapMitglied(Mitglied mAusErsatz, Mitglied mAusFix, GregorianCalendar date) {
         if (mitglieder.contains(mAusFix)) {
             mitglieder.remove(mAusFix);
@@ -89,61 +183,95 @@ public class Mitglieder {
         }
     }
     
+    
+    
+    
+    
+    
     /**
-     * Kopiert den momentanen Zustand des Sets und verknuepft ihn mit einem Datum
+     * METHODE makeSnapShot.
      * 
-     * @param date Das entsprechende Datum
+     * 
+     * VORBEDINGUNG:
+     * >einehender Parameter Datum muss in chronologischer Reihenfolge sein
+     * 
+     * INVARIANTE:
+     * >keine nennenswerte
+     * 
+     * NACHBEDINUNG:
+     * >Das Datum muss mit dem momentanen Bandzustand verknuepft werden
+     * >Das Datum muss in die Liste von Aenderungsdaten eingefuegt werden.
+     *  
+     * SCHLECHT:
+     * >Keine automatische chronologische Sortierung
      */
     public void makeSnapShot(GregorianCalendar date) {
-        // Kopie des Mitglied-Sets nach entfernen des bestimmten Mitglieds
         HashSet<Mitglied> momentMitglieder = new HashSet<Mitglied>(mitglieder);
-        // Momentaner Set-Zustand mit Datum verknuepfen
         snapShots.put(date, momentMitglieder);
-        // Datum der aenderung in chronologisch geordnete Liste geben
         snapDates.add(date);
     }
     
-    /*
-     * @return Zustand aktuelles Mitglieds-Set
+    
+    
+    
+    
+    
+    /**
+     * METHODE mitgliederAuflisten.
+     * 
+     * 
+     * Keine nennenswerten VB, IV, NB
+     * 
+     * GUT:
+     * >Alles super!
+     * 
+     * SCHLECHT:
+     * >nix! ;)
      */
     public HashSet<Mitglied> mitgliederAuflisten() {
         return mitglieder;
     }
     
+    
+    
+    
     /**
-     * Liefert das Mitglieds-Set zu einem bestimmten Datum zurueck
+     * METHODE mitgliederAuflisten.
      * 
-     * @param _date Das Datum des zurueckzugebenden Zustands
-     * @return Ein Mitglieds-Set zu dem bestimmten Datum
+     * 
+     * VORBEDINGUNGEN:
+     * >Parameter "date" muss in chronologischer Reihenfolge sein
+     * 
+     * INVARIANTE:
+     * >"date" darf sich nicht aendern
+     * 
+     * NACHBEDINGUNG:
+     * >Es muss die korrekte Bandzusammensetzung zu dem bestimmten Zeitpunkt 
+     * ausgegeben werden.
+     * 
+     * GUT:
+     * >Es wird NULL zurueckgegeben wenn nichts gefunden wird (Also die band
+     * zu dem Datum nicht existiert)
+     * >Minimaler Code
      */
     public HashSet<Mitglied> mitgliederAuflisten(GregorianCalendar date) {
-       
         
-       // Laufvariable
        GregorianCalendar tmpSnapDate = snapDates.get(0);
        
-       // Falls erste aenderung nach dem gesuchten Datum liegt
-       // null zurueckliefern, weil da die Band noch nicht existierte.
        if (tmpSnapDate.after(date)) {
            return null;
        }
        
-       // Chronologisches Durchlaufen der Daten an denen aenderungen am Set vorgenommen worden sind
        for (GregorianCalendar snapDate : snapDates) {
-           // Liegt das zu suchende Datum innerhalb zweier Daten 
-           // wird das Set zum Datum der letzten aenderung ausgegeben
            if(tmpSnapDate.before(date) && snapDate.after(date)) {
                return snapShots.get(tmpSnapDate);
            }
            tmpSnapDate = snapDate;
        }
        
-       // Letzte Kontrolle ob das zu suchende Datum juenger ist als letzte
-       // aenderung, dann naemlich aktuellen Zustand ausgeben.
        if (tmpSnapDate.before(date)) {
            return mitglieder;
        }
-       
        return null;
     }
 }
