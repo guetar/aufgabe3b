@@ -15,9 +15,9 @@ public class SonstigerPosten extends Posten{
     private int kategorie;
     private String beschreibung;
     
-    public SonstigerPosten(int wert, int kategorie, String beschreibung, GregorianCalendar datum){
+    public SonstigerPosten(int wert, String beschreibung, GregorianCalendar datum){
         super(wert, datum);
-        this.kategorie=kategorie;
+        kategorie=(wert>0)?3:4;
         this.beschreibung=beschreibung;
     }
     
