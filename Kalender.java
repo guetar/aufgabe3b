@@ -103,17 +103,18 @@ public class Kalender {
         
         for (Termin t: termine) {
             if (t.getDatum().equals(alt)) {
-                if (t instanceof Probe) {
                 
-                    termine.remove(t);
+                termine.remove(t);
+                
+                if (t.getKategorie()==2) {
+                
                     Probe p = (Probe) t;
                     Probe p_neu = p.setProbe((Probe) neu);
                     termine.add(p_neu);
                     return p_neu;
 
-                } else if (t instanceof Auftritt) {
+                } else if (t.getKategorie()==1) {
 
-                    termine.remove(t);
                     Auftritt a = (Auftritt) t;
                     Auftritt a_neu = a.setAuftritt((Auftritt) neu);
                     termine.add(a_neu);
@@ -170,18 +171,17 @@ public class Kalender {
         
                 if (alt != null) {
                     // Eine alte Version des Termins lag am Stack => wird wiederhergestellt
-                    if (alt instanceof Probe) {
+                    termine.remove(t);                   
+                    if (alt.getKategorie()==2) {
 
-                        termine.remove(t);
                         Probe p_alt = (Probe) alt;
                         Probe t_alt = (Probe) t;
                         t_alt.setProbe(p_alt);
                         termine.add(t_alt);
                         return t_alt;
 
-                    } else if(alt instanceof Auftritt) {
+                    } else if(alt.getKategorie()==1) {
 
-                        termine.remove(t);
                         Auftritt a_alt = (Auftritt) alt;
                         Auftritt t_alt = (Auftritt) t;
                         t_alt.setAuftritt(a_alt);
@@ -213,10 +213,10 @@ public class Kalender {
         TreeSet<Termin> terminListe = new TreeSet<Termin>();
         
         for (Termin t : termine) {
-            if(t instanceof Probe) {
+            if(t.getKategorie()==2) {
                 terminListe.add(new Probe(t));
             }
-            if(t instanceof Auftritt) {
+            if(t.getKategorie()==1) {
                 terminListe.add(new Auftritt(t));
             }
         }
@@ -242,10 +242,10 @@ public class Kalender {
 
         for (Termin t : termine) {
             if (von.before(t.getDatum()) && bis.after(t.getDatum())) {
-                if(t instanceof Probe) {
+                if(t.getKategorie()==2) {
                     terminListe.add(new Probe(t));
                 }
-                if(t instanceof Auftritt) {
+                if(t.getKategorie()==1) {
                     terminListe.add(new Auftritt(t));
                 }
             } else if (bis.before(t.getDatum())) {
@@ -274,7 +274,7 @@ public class Kalender {
         ArrayList<Probe> probenListe = new ArrayList<Probe>();
 
         for (Termin t : termine) {
-            if (t instanceof Probe && von.before(t.getDatum()) && bis.after(t.getDatum())) {
+            if (t.getKategorie()==2 && von.before(t.getDatum()) && bis.after(t.getDatum())) {
                 probenListe.add(new Probe(t));
             } else if (bis.before(t.getDatum())) {
                 break;
@@ -302,7 +302,7 @@ public class Kalender {
         ArrayList<Auftritt> auftritteListe = new ArrayList<Auftritt>();
 
         for (Termin t : termine) {
-            if (t instanceof Auftritt && von.before(t.getDatum()) && bis.after(t.getDatum())) {
+            if (t.getKategorie()==1 && von.before(t.getDatum()) && bis.after(t.getDatum())) {
                 auftritteListe.add(new Auftritt(t));
             } else if (bis.before(t.getDatum())) {
                 break;
@@ -319,10 +319,10 @@ public class Kalender {
         LinkedList<Termin> trashListe = new LinkedList<Termin>();
         
         for (Termin t : trash) {
-            if(t instanceof Probe) {
+            if(t.getKategorie()==2) {
                 trashListe.add(new Probe(t));
             }
-            if(t instanceof Auftritt) {
+            if(t.getKategorie()==1) {
                 trashListe.add(new Auftritt(t));
             }
         }
