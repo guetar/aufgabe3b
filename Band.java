@@ -8,6 +8,7 @@ public class Band {
     private Mitglieder mitglieder;
     private Kalender kalender;
     private Bilanz bilanz;
+    private Abstimmung abstimmung;
 
     public Band() {
         this.mitglieder = new Mitglieder();
@@ -154,9 +155,26 @@ public class Band {
      * @param t abzustimmender Termin
      * @return Abstimmung
      */
-    public Abstimmung abstimmenTermin(Termin t) {
-        return new Abstimmung(mitglieder.mitgliederAuflisten(), t);
+    public void abstimmungErzeugen(Termin t) {
+        abstimmung = new Abstimmung(mitglieder.mitgliederAuflisten(), t);
     }
+    
+    public boolean abstimmen(Termin t, Mitglied m, boolean dafuer, String begruendung) {
+        if (t == abstimmung.getTermin()) {
+            return abstimmung.abstimmen(m, dafuer, begruendung);
+        }
+        else {
+            return false;
+        }
+    }
+    
+    public String abstimmungsErgebnis() {
+        if (abstimmung.getResult()) {
+            terminHinzufuegen(abstimmung.getTermin());
+        } 
+        return abstimmung.getResultMessage();
+    }
+    
     
     /**
      * Vorbedingung

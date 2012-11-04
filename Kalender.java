@@ -183,10 +183,10 @@ public class Kalender {
         TreeSet<Termin> terminListe = new TreeSet<Termin>();
         
         for (Termin t : termine) {
-            if(t instanceof Probe) {
+            if(t.getKategorie()==2) {
                 terminListe.add(new Probe(t));
             }
-            if(t instanceof Auftritt) {
+            if(t.getKategorie()==1) {
                 terminListe.add(new Auftritt(t));
             }
         }
@@ -212,10 +212,10 @@ public class Kalender {
 
         for (Termin t : termine) {
             if (von.before(t.getDatum()) && bis.after(t.getDatum())) {
-                if(t instanceof Probe) {
+                if(t.getKategorie()==2) {
                     terminListe.add(new Probe(t));
                 }
-                if(t instanceof Auftritt) {
+                if(t.getKategorie()==1) {
                     terminListe.add(new Auftritt(t));
                 }
             } else if (bis.before(t.getDatum())) {
@@ -244,7 +244,7 @@ public class Kalender {
         ArrayList<Probe> probenListe = new ArrayList<Probe>();
 
         for (Termin t : termine) {
-            if (t instanceof Probe && von.before(t.getDatum()) && bis.after(t.getDatum())) {
+            if (t.getKategorie()==2 && von.before(t.getDatum()) && bis.after(t.getDatum())) {
                 probenListe.add(new Probe(t));
             } else if (bis.before(t.getDatum())) {
                 break;
@@ -272,7 +272,7 @@ public class Kalender {
         ArrayList<Auftritt> auftritteListe = new ArrayList<Auftritt>();
 
         for (Termin t : termine) {
-            if (t instanceof Auftritt && von.before(t.getDatum()) && bis.after(t.getDatum())) {
+            if (t.getKategorie()==1 && von.before(t.getDatum()) && bis.after(t.getDatum())) {
                 auftritteListe.add(new Auftritt(t));
             } else if (bis.before(t.getDatum())) {
                 break;
@@ -289,10 +289,10 @@ public class Kalender {
         LinkedList<Termin> trashListe = new LinkedList<Termin>();
         
         for (Termin t : trash) {
-            if(t instanceof Probe) {
+            if(t.getKategorie()==2) {
                 trashListe.add(new Probe(t));
             }
-            if(t instanceof Auftritt) {
+            if(t.getKategorie()==1) {
                 trashListe.add(new Auftritt(t));
             }
         }

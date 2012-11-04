@@ -27,7 +27,7 @@ public class Probe extends Termin {
     
     @Override
     public int getKategorie() {
-        return 1;
+        return 2;
     }
 
     @Override

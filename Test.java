@@ -274,48 +274,38 @@ public class Test {
          * Abstimmen ueber einen Auftritt
          */                
         System.out.println("\nAusgabe Abstimmung----------------------------------");
-        System.out.println("Erwarteter Output: \nAbstimmung ueber zwei Termine, Entscheidungen der Mitglieder + Begruendungen,\nein Termin findet nicht statt, der andere schon und wird angelegt");        
+        System.out.println("Erwarteter Output: \nAbstimmung ueber zwei Termine, Entscheidungen der Mitglieder + Begruendungen,"
+                + "\nEinmal wird nach dem Ergebnis gefragt, bevor alle abgestimmt haben, gibt Fehler"
+                + "\nein Termin findet nicht statt, der andere schon und wird angelegt");        
         System.out.println("----------------------------------------------------\n");
         
         Auftritt moeglAuftritt1 = new Auftritt(new Ort("a2 Gasometer", "Gasstr.666", 3000), new GregorianCalendar(2004, 9, 3, 18, 0), "2:00", mitglieder, 800);
-        Abstimmung abstimmungAuftritt1 = b.abstimmenTermin(moeglAuftritt1);
-        abstimmungAuftritt1.abstimmen(jonas, true, "passt");
-        abstimmungAuftritt1.abstimmen(michael, true, "Leiwand!");
-        abstimmungAuftritt1.abstimmen(lukas, false, "do kau i ned!!");
+        b.abstimmungErzeugen(moeglAuftritt1);
+        b.abstimmen(moeglAuftritt1, jonas, true, "passt");
+        b.abstimmen(moeglAuftritt1, michael, true, "Leiwand!");
+        System.out.println(b.abstimmungsErgebnis()+"\n");
+        b.abstimmen(moeglAuftritt1, lukas, false, "do kau i ned!!");
+        System.out.println(b.abstimmungsErgebnis());
                
         /**
          * Ausgabe des Ergebnis der Abstimmung
          */
-        String[] ergebnisAbstimmung = abstimmungAuftritt1.getResult();
-        System.out.println(ergebnisAbstimmung[1]);
+ 
 
-        if (ergebnisAbstimmung[0].equals("1")) {
-            b.terminHinzufuegen(moeglAuftritt1);
-            System.out.println(">> Termin findet statt");
-        } else if (ergebnisAbstimmung[0].equals("0")) {
-            System.out.println(">> Termin findet nicht statt");
-        }
+       
         System.out.println("");
         
         Probe moeglProbe1 = new Probe(new Ort("p Unter Bruecke", "Sandlerhaus 3", 30), new GregorianCalendar(2004, 10, 3, 18, 0), "2:00", mitglieder, -200);
-        Abstimmung abstimmungProbe1 = b.abstimmenTermin(moeglProbe1);
-        abstimmungProbe1.abstimmen(jonas, true, "passt");
-        abstimmungProbe1.abstimmen(michael, true, "Leiwand!");
-        abstimmungProbe1.abstimmen(lukas, true, "yeah, Mann!");
+        b.abstimmungErzeugen(moeglProbe1);
+        b.abstimmen(moeglProbe1, jonas, true, "passt");
+        b.abstimmen(moeglProbe1, michael, true, "Leiwand!");
+        b.abstimmen(moeglProbe1, lukas, true, "yeah, Mann!");
+        System.out.println(b.abstimmungsErgebnis());
                
         /**
          * Ausgabe des Ergebnis der Abstimmung
          */
-        ergebnisAbstimmung = abstimmungProbe1.getResult();
-        System.out.println(ergebnisAbstimmung[1]);
-        
-        if(ergebnisAbstimmung[0].equals("1")) {
-            b.terminHinzufuegen(moeglProbe1);
-            System.out.println(">> Termin findet statt");
-        }
-        else if(ergebnisAbstimmung[0].equals("0")) {
-            System.out.println(">> Termin findet nicht statt");
-        }
+       
         System.out.println("Termin aus Verwaltung: " + b.probenAuflisten(new GregorianCalendar(2004, 10, 3), new GregorianCalendar(2004, 10, 4))+"\n");
         
         /**
@@ -326,14 +316,14 @@ public class Test {
                 + "\nAuflisten der Posten durch Auftritte, Loeschen eines Auftritts, erneutes Auflisten");
         System.out.println("----------------------------------------------------\n");
         
-        b.postenHinzufuegen(new SonstigerPosten(-150, 4, "Gras", new GregorianCalendar(2002, 4, 8, 1, 00)));
-        b.postenHinzufuegen(new SonstigerPosten(-400, 4, "Koks", new GregorianCalendar(2002, 4, 8, 1, 00)));
-        b.postenHinzufuegen(new SonstigerPosten(-900, 4, "Nutten", new GregorianCalendar(2002, 4, 8, 3, 00)));       
-        b.postenHinzufuegen(new SonstigerPosten(-15, 4, "Pille danach", new GregorianCalendar(2002, 4, 9, 11, 00)));
-        b.postenHinzufuegen(new SonstigerPosten(30, 3, "Plasmaspende", new GregorianCalendar(2002, 4, 10)));
-        b.postenHinzufuegen(new SonstigerPosten(500, 3, "Nierenverkauf", new GregorianCalendar(2002, 5, 26, 11, 00)));
-        b.postenHinzufuegen(new SonstigerPosten(-500, 4, "Alk", new GregorianCalendar(2002, 5, 26, 11, 05)));
-        b.postenHinzufuegen(new SonstigerPosten( -1000, 4, "Miete eingezogen durch Inkasso", new GregorianCalendar(2003, 5, 26, 11, 05)));
+        b.postenHinzufuegen(new SonstigerPosten(-150, "Gras", new GregorianCalendar(2002, 4, 8, 1, 00)));
+        b.postenHinzufuegen(new SonstigerPosten(-400, "Koks", new GregorianCalendar(2002, 4, 8, 1, 00)));
+        b.postenHinzufuegen(new SonstigerPosten(-900, "Nutten", new GregorianCalendar(2002, 4, 8, 3, 00)));       
+        b.postenHinzufuegen(new SonstigerPosten(-15, "Pille danach", new GregorianCalendar(2002, 4, 9, 11, 00)));
+        b.postenHinzufuegen(new SonstigerPosten(30, "Plasmaspende", new GregorianCalendar(2002, 4, 10)));
+        b.postenHinzufuegen(new SonstigerPosten(500, "Nierenverkauf", new GregorianCalendar(2002, 5, 26, 11, 00)));
+        b.postenHinzufuegen(new SonstigerPosten(-500, "Alk", new GregorianCalendar(2002, 5, 26, 11, 05)));
+        b.postenHinzufuegen(new SonstigerPosten( -1000, "Miete eingezogen durch Inkasso", new GregorianCalendar(2003, 5, 26, 11, 05)));
         
         System.out.println("Alle Posten:");
         TreeSet<Posten> bilanz = b.postenAuflisten(true, true, true, true, von, bis);
