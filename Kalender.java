@@ -166,7 +166,7 @@ public class Kalender {
     public Termin terminWiederherstellen(GregorianCalendar datum) {
         for (Termin t : termine) {
             if (t.getDatum().equals(datum)) {
-                Termin alt = t.popFromStack();
+                Posten alt = t.popFromStack();
         
                 if (alt != null) {
                     // Eine alte Version des Termins lag am Stack => wird wiederhergestellt

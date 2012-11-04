@@ -21,9 +21,8 @@ public class Bilanz {
     
     //Vorbedingung: t!=null
     public Posten getPosten(Termin t) {
-        Posten p = new Posten(t);
-        if(posten.contains(p)) {
-            return p;
+        if(posten.contains(t)) {
+            return t;
         }
         return null;
     }
@@ -123,7 +122,7 @@ public class Bilanz {
 
                     //Ueberpruefung des Filters
                     if (filter.contains(p.getKategorie())) {
-                        ergebnis.add(new Posten(p));
+                        ergebnis.add(p);
                     }
                  
             } else if (bis.before(p.getDatum())) {

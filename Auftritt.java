@@ -7,16 +7,13 @@ import java.util.HashSet;
  */
 public class Auftritt extends Termin {
 
-    private int gage;
-
     /**
      * Vorbedingung
      * 
      * ort, datum, dauer, teilnehmer und gage sollten nicht null sein.
      */
     public Auftritt(Ort ort, GregorianCalendar datum, String dauer, HashSet<Mitglied> teilnehmer, int gage) {
-        super(ort, datum, dauer, teilnehmer);
-        this.gage = gage;
+        super((gage > 0) ? gage : -gage, ort, datum, dauer, teilnehmer);
     }
     
     /**
@@ -26,8 +23,6 @@ public class Auftritt extends Termin {
      */
     public Auftritt(Termin t) {
         super(t);
-        Auftritt a = (Auftritt) t;
-        this.gage = a.getGage();
     }
     
     /**
@@ -42,16 +37,16 @@ public class Auftritt extends Termin {
     public Auftritt setAuftritt(Auftritt a) {
         super.pushToStack(new Auftritt(this));
         super.setTermin(a);
-        this.gage = a.getGage();
         return this;
     }
     
-    public int getGage() {
-        return gage;
+    @Override
+    public int getKategorie() {
+        return 2;
     }
 
     @Override
     public String toString() {
-        return super.toString() + " " + gage + " Euro Gage";
+        return super.toString() + " " + super.getWert() + " Euro Gage";
     }
 }
