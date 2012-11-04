@@ -25,21 +25,6 @@ public class Auftritt extends Termin {
         super(t);
     }
     
-    /**
-     * Vorbedingung
-     * 
-     * Uebergebener Auftritt sollte nicht null sein.
-     * 
-     * Nachbedingung
-     * 
-     * Retournierter Auftritt hat die Daten des uebergebenen Auftritts uebernommen.
-     */
-    public Auftritt setAuftritt(Auftritt a) {
-        super.pushToStack(new Auftritt(this));
-        super.setTermin(a);
-        return this;
-    }
-    
     @Override
     public int getKategorie() {
         return 2;

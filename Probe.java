@@ -25,21 +25,6 @@ public class Probe extends Termin {
         super(t);
     }
     
-    /**
-     * Vorbedingung
-     * 
-     * Uebergebene Probe sollte nicht null sein.
-     * 
-     * Nachbedingung
-     * 
-     * Retournierte Probe hat die Daten der uebergebenen Probe uebernommen.
-     */
-    public Probe setProbe(Probe p) {
-        super.pushToStack(new Probe(this));
-        super.setTermin(p);
-        return this;
-    }
-    
     @Override
     public int getKategorie() {
         return 1;

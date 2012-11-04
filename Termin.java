@@ -20,7 +20,7 @@ public abstract class Termin extends Posten {
      * ort, datum, dauer und teilnehmer sollten nicht null sein.
      */
     public Termin(int wert,Ort ort, GregorianCalendar datum, String dauer, HashSet<Mitglied> teilnehmer) {
-        super(wert,datum);
+        super(wert, datum);
         this.ort = ort;
         this.dauer = dauer;
         this.stack = new Stack<Termin>();
@@ -37,7 +37,7 @@ public abstract class Termin extends Posten {
      * Uebergebener Termin darf nicht null sein, da sonst eine NullpointerException entsteht.
      */
     public Termin(Termin t) {
-        super(t.getWert(),t.getDatum());
+        super(t.getWert(), t.getDatum());
         this.ort = t.getOrt();
         this.dauer = t.getDauer();
         this.stack = new Stack<Termin>();
@@ -54,7 +54,7 @@ public abstract class Termin extends Posten {
      * Retournierter Termin hat die Daten des uebergebenen Termins uebernommen.
      */
     public Termin setTermin(Termin t) {
-        super.setDatum(t.getDatum());
+        super.setPosten(t);
         this.ort = t.getOrt();
         this.datum = t.getDatum();
         this.dauer = t.getDauer();
@@ -102,6 +102,15 @@ public abstract class Termin extends Posten {
     
     public HashSet<Mitglied> getTeilnehmer() {
         return teilnehmer;
+    }
+    
+    public void pushToStack(Termin t) {
+        super.pushToStack(t);
+    }
+    
+    @Override
+    public Termin popFromStack() {
+        return (Termin) super.popFromStack();
     }
 
     @Override

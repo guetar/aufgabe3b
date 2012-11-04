@@ -100,25 +100,12 @@ public class Kalender {
      * da immer festgestellt werden muss, Instanz welcher Klasse das aktuelle Objekt ist.
      */
     public Termin terminAendern(GregorianCalendar alt, Termin neu) {
-        
         for (Termin t: termine) {
             if (t.getDatum().equals(alt)) {
-                if (t instanceof Probe) {
-                
-                    termine.remove(t);
-                    Probe p = (Probe) t;
-                    Probe p_neu = p.setProbe((Probe) neu);
-                    termine.add(p_neu);
-                    return p_neu;
-
-                } else if (t instanceof Auftritt) {
-
-                    termine.remove(t);
-                    Auftritt a = (Auftritt) t;
-                    Auftritt a_neu = a.setAuftritt((Auftritt) neu);
-                    termine.add(a_neu);
-                    return a;
-                }
+                termine.remove(t);
+                Termin t_neu = t.setTermin(neu);
+                termine.add(t.setTermin(neu));
+                return t_neu;
             }
         }
         return null;
@@ -166,29 +153,12 @@ public class Kalender {
     public Termin terminWiederherstellen(GregorianCalendar datum) {
         for (Termin t : termine) {
             if (t.getDatum().equals(datum)) {
-                Posten alt = t.popFromStack();
-        
-                if (alt != null) {
-                    // Eine alte Version des Termins lag am Stack => wird wiederhergestellt
-                    if (alt instanceof Probe) {
+                Termin alt = t.popFromStack();
 
-                        termine.remove(t);
-                        Probe p_alt = (Probe) alt;
-                        Probe t_alt = (Probe) t;
-                        t_alt.setProbe(p_alt);
-                        termine.add(t_alt);
-                        return t_alt;
-
-                    } else if(alt instanceof Auftritt) {
-
-                        termine.remove(t);
-                        Auftritt a_alt = (Auftritt) alt;
-                        Auftritt t_alt = (Auftritt) t;
-                        t_alt.setAuftritt(a_alt);
-                        termine.add(t_alt);
-                        return t_alt;
-                    }
-                }
+                termine.remove(t);
+                Termin t_neu = t.setTermin(alt);
+                termine.add(t_neu);
+                return t_neu;
             }
         }
         

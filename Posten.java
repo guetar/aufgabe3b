@@ -52,6 +52,10 @@ public abstract class Posten implements Comparable<Posten> {
         this.datum = datum;
     }
     
+    public void setWert(int wert) {
+        this.wert = wert;
+    }
+    
     public GregorianCalendar getDatum() {
         return datum;
     }
