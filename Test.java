@@ -3,7 +3,6 @@
  * and open the template in the editor.
  */
 
-import com.*;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
