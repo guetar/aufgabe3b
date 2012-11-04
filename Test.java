@@ -274,14 +274,16 @@ public class Test {
          * Abstimmen ueber einen Auftritt
          */                
         System.out.println("\nAusgabe Abstimmung----------------------------------");
-        System.out.println("Erwarteter Output: \nAbstimmung ueber zwei Termine, Entscheidungen der Mitglieder + Begruendungen,\nein Termin findet nicht statt, der andere schon und wird angelegt");        
+        System.out.println("Erwarteter Output: \nAbstimmung ueber zwei Termine, Entscheidungen der Mitglieder + Begruendungen,"
+                + "\nEinmal wird nach dem Ergebnis gefragt, bevor alle abgestimmt haben, gibt Fehler"
+                + "\nein Termin findet nicht statt, der andere schon und wird angelegt");        
         System.out.println("----------------------------------------------------\n");
         
         Auftritt moeglAuftritt1 = new Auftritt(new Ort("a2 Gasometer", "Gasstr.666", 3000), new GregorianCalendar(2004, 9, 3, 18, 0), "2:00", mitglieder, 800);
         b.abstimmungErzeugen(moeglAuftritt1);
         b.abstimmen(moeglAuftritt1, jonas, true, "passt");
         b.abstimmen(moeglAuftritt1, michael, true, "Leiwand!");
-        System.out.println(b.abstimmungsErgebnis());
+        System.out.println(b.abstimmungsErgebnis()+"\n");
         b.abstimmen(moeglAuftritt1, lukas, false, "do kau i ned!!");
         System.out.println(b.abstimmungsErgebnis());
                
@@ -294,24 +296,16 @@ public class Test {
         System.out.println("");
         
         Probe moeglProbe1 = new Probe(new Ort("p Unter Bruecke", "Sandlerhaus 3", 30), new GregorianCalendar(2004, 10, 3, 18, 0), "2:00", mitglieder, -200);
-        Abstimmung abstimmungProbe1 = b.abstimmenTermin(moeglProbe1);
-        abstimmungProbe1.abstimmen(jonas, true, "passt");
-        abstimmungProbe1.abstimmen(michael, true, "Leiwand!");
-        abstimmungProbe1.abstimmen(lukas, true, "yeah, Mann!");
+        b.abstimmungErzeugen(moeglProbe1);
+        b.abstimmen(moeglProbe1, jonas, true, "passt");
+        b.abstimmen(moeglProbe1, michael, true, "Leiwand!");
+        b.abstimmen(moeglProbe1, lukas, true, "yeah, Mann!");
+        System.out.println(b.abstimmungsErgebnis());
                
         /**
          * Ausgabe des Ergebnis der Abstimmung
          */
-        ergebnisAbstimmung = abstimmungProbe1.getResult();
-        System.out.println(ergebnisAbstimmung[1]);
-        
-        if(ergebnisAbstimmung[0].equals("1")) {
-            b.terminHinzufuegen(moeglProbe1);
-            System.out.println(">> Termin findet statt");
-        }
-        else if(ergebnisAbstimmung[0].equals("0")) {
-            System.out.println(">> Termin findet nicht statt");
-        }
+       
         System.out.println("Termin aus Verwaltung: " + b.probenAuflisten(new GregorianCalendar(2004, 10, 3), new GregorianCalendar(2004, 10, 4))+"\n");
         
         /**
