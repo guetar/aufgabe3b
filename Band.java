@@ -145,7 +145,7 @@ public class Band {
      * false, andernfalls.
      */
     public boolean terminHinzufuegen(Termin t) {
-        return  kalender.terminHinzufuegen(t) && kalender.ortHinzufuegen(t.getOrt()) && bilanz.postenHinzufuegen(new Posten(t));
+        return  kalender.terminHinzufuegen(t) && kalender.ortHinzufuegen(t.getOrt()) && bilanz.postenHinzufuegen(t);
     }
     
     /**
@@ -180,10 +180,9 @@ public class Band {
         
         if(t != null) {
             
-            Posten p = new Posten(alt);
             kalender.ortLoeschen(alt.getOrt());
             kalender.ortHinzufuegen(neu.getOrt());
-            if(bilanz.postenExistiert(p)) bilanz.postenAendern(p, new Posten(neu));
+            if(bilanz.postenExistiert(alt)) bilanz.postenAendern(alt, neu);
             
             for(Mitglied m : mitgliederListe) {
                 m.message("Folgender Termin wurde geaendert: " + t.toString());
@@ -214,9 +213,8 @@ public class Band {
         
         if(kalender.terminLoeschen(t)) {
             
-            Posten p = new Posten(t);
             kalender.ortLoeschen(t.getOrt());
-            if (bilanz.postenExistiert(p)) bilanz.postenLoeschen(p);
+            if (bilanz.postenExistiert(t)) bilanz.postenLoeschen(t);
             
             for(Mitglied m : mitgliederListe) {
                 m.message("Folgender Termin wurde abgesagt: " + t.toString());
@@ -244,8 +242,7 @@ public class Band {
      * BAD: Bei jeder Wiederherstellungsaktion muessen saemtliche verknuepften Objekte einzeln wiederhergestellt werden.
      */
     public Termin terminWiederherstellen(Termin t) {
-        Posten p = new Posten(t);
-        if(bilanz.postenExistiert(p)) bilanz.postenWiederherstellen(p);
+        if(bilanz.postenExistiert(t)) bilanz.postenWiederherstellen(t);
         return kalender.terminWiederherstellen(t.getDatum());
     }
     

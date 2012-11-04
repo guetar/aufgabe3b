@@ -60,7 +60,7 @@ public abstract class Posten implements Comparable<Posten> {
         return wert;
     }
     
-    
+    public abstract int getKategorie();
     
     //Nachbedingung: p wird auf stack gelegt
     protected void pushToStack(Posten p) {

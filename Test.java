@@ -326,14 +326,14 @@ public class Test {
                 + "\nAuflisten der Posten durch Auftritte, Loeschen eines Auftritts, erneutes Auflisten");
         System.out.println("----------------------------------------------------\n");
         
-        b.postenHinzufuegen(new Posten(-150, 4, "Gras", new GregorianCalendar(2002, 4, 8, 1, 00)));
-        b.postenHinzufuegen(new Posten(-400, 4, "Koks", new GregorianCalendar(2002, 4, 8, 1, 00)));
-        b.postenHinzufuegen(new Posten(-900, 4, "Nutten", new GregorianCalendar(2002, 4, 8, 3, 00)));       
-        b.postenHinzufuegen(new Posten(-15, 4, "Pille danach", new GregorianCalendar(2002, 4, 9, 11, 00)));
-        b.postenHinzufuegen(new Posten(30, 3, "Plasmaspende", new GregorianCalendar(2002, 4, 10)));
-        b.postenHinzufuegen(new Posten(500, 3, "Nierenverkauf", new GregorianCalendar(2002, 5, 26, 11, 00)));
-        b.postenHinzufuegen(new Posten(-500, 4, "Alk", new GregorianCalendar(2002, 5, 26, 11, 05)));
-        b.postenHinzufuegen(new Posten( -1000, 4, "Miete eingezogen durch Inkasso", new GregorianCalendar(2003, 5, 26, 11, 05)));
+        b.postenHinzufuegen(new SonstigerPosten(-150, 4, "Gras", new GregorianCalendar(2002, 4, 8, 1, 00)));
+        b.postenHinzufuegen(new SonstigerPosten(-400, 4, "Koks", new GregorianCalendar(2002, 4, 8, 1, 00)));
+        b.postenHinzufuegen(new SonstigerPosten(-900, 4, "Nutten", new GregorianCalendar(2002, 4, 8, 3, 00)));       
+        b.postenHinzufuegen(new SonstigerPosten(-15, 4, "Pille danach", new GregorianCalendar(2002, 4, 9, 11, 00)));
+        b.postenHinzufuegen(new SonstigerPosten(30, 3, "Plasmaspende", new GregorianCalendar(2002, 4, 10)));
+        b.postenHinzufuegen(new SonstigerPosten(500, 3, "Nierenverkauf", new GregorianCalendar(2002, 5, 26, 11, 00)));
+        b.postenHinzufuegen(new SonstigerPosten(-500, 4, "Alk", new GregorianCalendar(2002, 5, 26, 11, 05)));
+        b.postenHinzufuegen(new SonstigerPosten( -1000, 4, "Miete eingezogen durch Inkasso", new GregorianCalendar(2003, 5, 26, 11, 05)));
         
         System.out.println("Alle Posten:");
         TreeSet<Posten> bilanz = b.postenAuflisten(true, true, true, true, von, bis);

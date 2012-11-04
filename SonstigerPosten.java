@@ -12,19 +12,26 @@ import java.util.GregorianCalendar;
  */
 
 public class SonstigerPosten extends Posten{
+    private int kategorie;
     private String beschreibung;
     
-    public SonstigerPosten(int wert, GregorianCalendar datum, String beschreibung){
-    super(wert, datum);
-    this.beschreibung=beschreibung;
+    public SonstigerPosten(int wert, int kategorie, String beschreibung, GregorianCalendar datum){
+        super(wert, datum);
+        this.kategorie=kategorie;
+        this.beschreibung=beschreibung;
+    }
+    
+    @Override
+    public int getKategorie() {
+        return kategorie;
     }
     
     public String getBeschreibung(){
-    return beschreibung;
+        return beschreibung;
     }
     
     @Override
     public String toString(){
-    return beschreibung+" "+super.toString();
+        return beschreibung+" "+super.toString();
     }
 }
