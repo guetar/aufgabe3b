@@ -1,20 +1,15 @@
 package com;
 
-import java.util.ArrayList;
-import java.util.GregorianCalendar;
-import java.util.HashSet;
-import java.util.TreeSet;
+import java.util.*;
 
 public class Band {
 
     private Mitglieder mitglieder;
-    private ArrayList<Song> repertoire;
     private Kalender kalender;
     private Bilanz bilanz;
 
     public Band() {
         this.mitglieder = new Mitglieder();
-        this.repertoire = new ArrayList<Song>();
         this.kalender = new Kalender();
         this.bilanz = new Bilanz();
     }
@@ -95,47 +90,15 @@ public class Band {
      * Nachbedingung
      * 
      * return
-     * true, falls der Song hinzugefuegt werden konnte,
-     * false andernfalls.
-     */
-    public boolean songHinzufuegen(Song s) {
-        return repertoire.add(s);
-    }
-
-    /**
-     * Nachbedingung
-     * 
-     * return
-     * true, falls der Song vorhanden war und geloescht werden konnte,
-     * false andernfalls.
-     */
-    public boolean songEntfernen(Song s) {
-        if (repertoire.contains(s)) {
-            return repertoire.remove(s);
-        }
-        return false;
-    }
-
-    /**
-     * 
-     */
-    public ArrayList<Song> songsAuflisten() {
-        return repertoire;
-    }
-
-    /**
-     * Nachbedingung
-     * 
-     * return
      * Liste beinhaltet Versionen wie spezifiziert.
      * Songs sind alle nach dem spezifizierten Datum entstanden.
      * s.getVon() > datum
      */
     public ArrayList<Song> songsAuflisten(GregorianCalendar datum, boolean versionen) {
         ArrayList<Song> repertoireListe = new ArrayList<Song>();
-        HashSet<Mitglied> mitglieder = this.mitglieder.mitgliederAuflisten(datum);
-
-        for(Mitglied m : mitglieder) {
+        HashSet<Mitglied> mitgliederListe = this.mitglieder.mitgliederAuflisten(datum);
+        
+        for (Mitglied m : mitgliederListe) {
             if(!versionen) {
                 repertoireListe.addAll(m.getRepertoire(datum));
             } else {
@@ -354,30 +317,6 @@ public class Band {
     public TreeSet<Posten> postenAuflisten(boolean showAuftr, boolean showProben, boolean showEinnahmen, boolean showAusgaben, GregorianCalendar von, GregorianCalendar bis) {
         return bilanz.postenAuflisten(showAuftr, showProben, showEinnahmen, showAusgaben, von, bis);
     }
-    
-    /**
-     * Summiert die Kosten, die innerhalb eines gesuchten Zeitraumes durch das Mieten der Proberaume entstehen
-     * 
-     * @param von Beginn des gesuchten Zeitraumes
-     * @param bis Ende des gesuchten Zeitraumes
-     * @return Kosten, die innerhalb des gesuchten Zeitraumes entstanden sind
-     */
-//    public int kostenSummieren(boolean showProben, boolean showSonstige, GregorianCalendar von, GregorianCalendar bis) {
-//        return bilanz.kosten(showProben, showSonstige, von, bis);
-//    }
-
-    /**
-     * Summiert den Umsatz, der innerhalb eines gesuchten Zeitraumes durch Gagen
-     * bei den Auftritten verdient wurde
-     *
-     * @param von Beginn des gesuchten Zeitraumes
-     * @param bis Ende des gesuchten Zeitraumes
-     * @return Umsatz, der innerhalb des gesuchten Zeitraumes erwirtschaftet
-     * werden konnte
-     */
-//    public int umsatzSummieren(boolean showAuftr, boolean showSonstige, GregorianCalendar von, GregorianCalendar bis) {
-//        return bilanz.umsatz(showAuftr, showSonstige, von, bis);
-//    }
 
     /**
      * Summiert den Gewinn, der innerhalb eines gesuchten Zeitraumes
@@ -405,8 +344,9 @@ public class Band {
     
     public String printMitglieder() {
         String s = "";
-        HashSet<Mitglied> mitglieder = this.mitglieder.mitgliederAuflisten();
-        for (Mitglied m : mitglieder) {
+        HashSet<Mitglied> mitgliederListe = this.mitglieder.mitgliederAuflisten();
+        
+        for(Mitglied m : mitgliederListe) {
             s += m + "\n";
         }
         return s;

@@ -112,6 +112,7 @@ public class Bilanz {
     public TreeSet<Posten> postenAuflisten(boolean showAuftr, boolean showProben, boolean showEinnahmen, boolean showAusgaben, GregorianCalendar von, GregorianCalendar bis) {
        TreeSet<Posten> ergebnis = new TreeSet<Posten>();
        ArrayList<Integer> filter = new ArrayList<Integer>();
+       
        if (showAuftr)       { filter.add(1); }
        if (showProben)      { filter.add(2); }
        if (showEinnahmen)   { filter.add(3); }

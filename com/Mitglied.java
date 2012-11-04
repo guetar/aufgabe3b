@@ -73,8 +73,8 @@ public class Mitglied {
     public ArrayList<Song> getRepertoire(GregorianCalendar datum) {
         ArrayList<Song> repertoireListe = new ArrayList<Song>();
         
-        for(Song s : repertoire) {
-            if(s.getVon().before(datum)) {
+        for (Song s : repertoire) {
+            if (s.getVon().before(datum)) {
                 repertoireListe.add(s);
             }
         }

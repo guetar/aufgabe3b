@@ -56,7 +56,7 @@ public abstract class Termin implements Comparable<Termin> {
      * 
      * Retournierter Termin hat die Daten des uebergebenen Termins uebernommen.
      */
-    protected Termin setTermin(Termin t) {
+    public Termin setTermin(Termin t) {
         this.ort = t.getOrt();
         this.datum = t.getDatum();
         this.dauer = t.getDauer();
@@ -71,7 +71,7 @@ public abstract class Termin implements Comparable<Termin> {
      * true, falls der Teilnehmer hinzugefuegt werden und ihm der Termin uebergeben werden konnte
      * false andernfalls.
      */
-    protected boolean teilnehmerHinzufuegen(Mitglied m) {
+    public boolean teilnehmerHinzufuegen(Mitglied m) {
         boolean ok = teilnehmer.add(m);
         if (ok) {
             m.addTermin(this);
@@ -86,7 +86,7 @@ public abstract class Termin implements Comparable<Termin> {
      * true, falls der Teilnehmer entfernt und ihm der Termin entzogen werden konnte,
      * false andernfalls.
      */
-    protected boolean teilnehmerEntfernen(Mitglied m) {
+    public boolean teilnehmerEntfernen(Mitglied m) {
         boolean ok = teilnehmer.remove(m);
         if (ok) {
             m.terminLoeschen(this);
@@ -94,15 +94,15 @@ public abstract class Termin implements Comparable<Termin> {
         return ok;
     }
 
-    protected GregorianCalendar getDatum() {
+    public GregorianCalendar getDatum() {
         return datum;
     }
 
-    protected String getDauer() {
+    public String getDauer() {
         return dauer;
     }
     
-    protected Ort getOrt() {
+    public Ort getOrt() {
         return ort;
     }
     

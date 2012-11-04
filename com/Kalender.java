@@ -1,9 +1,6 @@
 package com;
 
-import java.util.ArrayList;
-import java.util.GregorianCalendar;
-import java.util.LinkedList;
-import java.util.TreeSet;
+import java.util.*;
 
 /**
  *
@@ -31,7 +28,7 @@ public class Kalender {
      * falsch, falls der Ort schon vorhanden war oder nicht erfolgreich hinzugefuegt werden konnte.
      */
     public boolean ortHinzufuegen(Ort o) {
-        if(!orte.contains(o)) {
+        if (!orte.contains(o)) {
             return orte.add(o);
         }
         return false;
@@ -45,7 +42,7 @@ public class Kalender {
      * false, falls der Ort nicht vorhanden war oder nicht erfolgreich geloescht werden konnte.
      */
     public boolean ortLoeschen(Ort o) {
-        if(orte.contains(o)) {
+        if (orte.contains(o)) {
             return orte.remove(o);
         }
         return false;
@@ -80,7 +77,7 @@ public class Kalender {
      * GOOD: Durch dynamisches Binden ist nur eine Liste zur Verwaltung von Proben und Auftritten notwendig.
      */
     public boolean terminHinzufuegen(Termin t) {
-        if(!termine.contains(t)) {
+        if (!termine.contains(t)) {
             return termine.add(t);
         }
         return false;
@@ -103,9 +100,9 @@ public class Kalender {
      */
     public Termin terminAendern(GregorianCalendar alt, Termin neu) {
         
-        for(Termin t: termine) {
-            if(t.getDatum().equals(alt)) {
-                if(t instanceof Probe) {
+        for (Termin t: termine) {
+            if (t.getDatum().equals(alt)) {
+                if (t instanceof Probe) {
                 
                     termine.remove(t);
                     Probe p = (Probe) t;
@@ -141,7 +138,7 @@ public class Kalender {
             trash.add(t);
             termine.remove(t);
             
-            for(Mitglied m : t.getTeilnehmer()) {
+            for (Mitglied m : t.getTeilnehmer()) {
                 m.terminLoeschen(t);
             }
             return true;
@@ -166,13 +163,13 @@ public class Kalender {
      * da immer festgestellt werden muss, Instanz welcher Klasse das aktuelle Objekt ist.
      */
     public Termin terminWiederherstellen(GregorianCalendar datum) {
-        for(Termin t : termine) {
-            if(t.getDatum().equals(datum)) {
+        for (Termin t : termine) {
+            if (t.getDatum().equals(datum)) {
                 Termin alt = t.popFromStack();
         
-                if(alt != null) {
+                if (alt != null) {
                     // Eine alte Version des Termins lag am Stack => wird wiederhergestellt
-                    if(alt instanceof Probe) {
+                    if (alt instanceof Probe) {
 
                         termine.remove(t);
                         Probe p_alt = (Probe) alt;
@@ -195,9 +192,9 @@ public class Kalender {
         }
         
         for(Termin t : trash) {
-            if(t.getDatum().equals(datum)) {
+            if (t.getDatum().equals(datum)) {
                 // keine alte Version vorhanden => Termin muss geloescht worden sein
-                if(trash.contains(t)) {
+                if (trash.contains(t)) {
                     trash.remove(t);
                     termine.add(t);
                     return t;
@@ -212,7 +209,12 @@ public class Kalender {
      * GOOD: Durch dynamisches Binden kann leicht eine allgemeine Terminliste zurueckgegeben werden.
      */
     public TreeSet<? extends Termin> termineAuflisten() {
-        return termine;
+        TreeSet<Termin> terminListe = new TreeSet<Termin>();
+        
+        for (Termin t : termine) {
+            terminListe.add(t);
+        }
+        return terminListe;
     }
 
     /**
@@ -229,17 +231,17 @@ public class Kalender {
      * GOOD: Durch dynamisches Binden muss nur eine Liste durchiteriert werden.
      */
     public ArrayList<? extends Termin> termineAuflisten(GregorianCalendar von, GregorianCalendar bis) {
-        ArrayList<Termin> termine_liste = new ArrayList<Termin>();
+        ArrayList<Termin> terminListe = new ArrayList<Termin>();
 
         for (Termin t : termine) {
             if (von.before(t.getDatum()) && bis.after(t.getDatum())) {
-                termine_liste.add(t);
+                terminListe.add(t);
             } else if (bis.before(t.getDatum())) {
                 break;
             }
         }
 
-        return termine_liste;
+        return terminListe;
     }
 
     /**
