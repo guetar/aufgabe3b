@@ -278,23 +278,19 @@ public class Test {
         System.out.println("----------------------------------------------------\n");
         
         Auftritt moeglAuftritt1 = new Auftritt(new Ort("a2 Gasometer", "Gasstr.666", 3000), new GregorianCalendar(2004, 9, 3, 18, 0), "2:00", mitglieder, 800);
-        Abstimmung abstimmungAuftritt1 = b.abstimmenTermin(moeglAuftritt1);
-        abstimmungAuftritt1.abstimmen(jonas, true, "passt");
-        abstimmungAuftritt1.abstimmen(michael, true, "Leiwand!");
-        abstimmungAuftritt1.abstimmen(lukas, false, "do kau i ned!!");
+        b.abstimmungErzeugen(moeglAuftritt1);
+        b.abstimmen(moeglAuftritt1, jonas, true, "passt");
+        b.abstimmen(moeglAuftritt1, michael, true, "Leiwand!");
+        System.out.println(b.abstimmungsErgebnis());
+        b.abstimmen(moeglAuftritt1, lukas, false, "do kau i ned!!");
+        System.out.println(b.abstimmungsErgebnis());
                
         /**
          * Ausgabe des Ergebnis der Abstimmung
          */
-        String[] ergebnisAbstimmung = abstimmungAuftritt1.getResult();
-        System.out.println(ergebnisAbstimmung[1]);
+ 
 
-        if (ergebnisAbstimmung[0].equals("1")) {
-            b.terminHinzufuegen(moeglAuftritt1);
-            System.out.println(">> Termin findet statt");
-        } else if (ergebnisAbstimmung[0].equals("0")) {
-            System.out.println(">> Termin findet nicht statt");
-        }
+       
         System.out.println("");
         
         Probe moeglProbe1 = new Probe(new Ort("p Unter Bruecke", "Sandlerhaus 3", 30), new GregorianCalendar(2004, 10, 3, 18, 0), "2:00", mitglieder, -200);
