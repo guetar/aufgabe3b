@@ -44,10 +44,6 @@ public class Band {
         return mitglieder.ersatzMitgliedHinzufuegen(m);
     }
     
-
-    
-    
-    
     /**
      * Vorbedingung.
      * 
@@ -65,10 +61,6 @@ public class Band {
         mitglieder.swapMitglied(mAusErsatz, mAusFix, aenderungsDatum);
     }
 
-    
-    
-    
-    
     /**
      * Vorbedingung.
      * 
@@ -85,12 +77,6 @@ public class Band {
     public boolean mitgliedEntfernen(Mitglied m, GregorianCalendar austrittsdatum) {
         return mitglieder.mitgliedEntfernen(m, austrittsdatum);
     }
-
-
-    
-    
-    
-    
     
     /**
      * Vorbedingung, Nachbedingung.
@@ -103,11 +89,6 @@ public class Band {
     public HashSet<Mitglied> mitgliederAuflisten() {
         return new HashSet<Mitglied>(mitglieder.mitgliederAuflisten());
     }
-
-
-    
-    
-    
     
     /**
      * Vorbedingung.

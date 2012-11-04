@@ -54,6 +54,16 @@ public class Posten implements Comparable<Posten> {
     }
     
     //Vorbedingung: p!=null
+    //Nachbedingung: beschreibung, wert, datum und kategorie werden von p uebernommen
+    public Posten(Posten p) {
+        this.beschreibung = p.getBeschr();
+        this.kategorie = p.getKategorie();
+        this.wert = p.getWert();
+        this.datum = p.getDatum();
+        this.stack = new Stack<Posten>();
+    }
+    
+    //Vorbedingung: p!=null
     //Nachbedingung: this wird auf stack gelegt, beschreibung, wert, datum und 
     //kategorie werden von p uebernommen
     public Posten setPosten(Posten p) {

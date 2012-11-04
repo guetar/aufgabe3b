@@ -86,6 +86,7 @@ public class Bilanz {
     public int postenSummieren(boolean showAuftr, boolean showProben, boolean showEinnahmen, boolean showAusgaben, GregorianCalendar von, GregorianCalendar bis) {
         int sum = 0;
         ArrayList<Integer> filter = new ArrayList<Integer>();
+        
         if (showAuftr)       { filter.add(1); }
         if (showProben)      { filter.add(2); }
         if (showEinnahmen)   { filter.add(3); }
@@ -124,7 +125,7 @@ public class Bilanz {
 
                     //Ueberpruefung des Filters
                     if (filter.contains(p.getKategorie())) {
-                        ergebnis.add(p);
+                        ergebnis.add(new Posten(p));
                     }
                  
             } else if (bis.before(p.getDatum())) {

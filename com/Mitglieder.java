@@ -39,11 +39,6 @@ public class Mitglieder {
     private HashMap<GregorianCalendar, HashSet<Mitglied>> snapShots;
     private ArrayList<GregorianCalendar> snapDates;
     
-    
-    
-    
-    
-    
     /**
      * KONSTRUKTOR.
      * 
@@ -63,10 +58,6 @@ public class Mitglieder {
         snapShots = new HashMap<GregorianCalendar, HashSet<Mitglied>>();
         snapDates = new ArrayList<GregorianCalendar>();
     }
-    
-    
-    
-    
     
     /**
      * METHODE mitgliedHinzufuegen.
@@ -91,10 +82,6 @@ public class Mitglieder {
         return ok; 
     }
     
-    
-    
-    
-    
     /**
      * METHODE ersatzMitgliedHinzufuegen.
      * 
@@ -111,12 +98,6 @@ public class Mitglieder {
     public boolean ersatzMitgliedHinzufuegen(Mitglied m) {
         return ersatzMitglieder.add(m);
     }
-  
-    
-    
-    
-    
-  
      
     /**
      * METHODE mitgliedEntfernen
@@ -149,10 +130,6 @@ public class Mitglieder {
         return ok;
     }
     
-
-
-
-    
     /**
      * METHODE swapMitglied.
      * 
@@ -183,11 +160,6 @@ public class Mitglieder {
         }
     }
     
-    
-    
-    
-    
-    
     /**
      * METHODE makeSnapShot.
      * 
@@ -211,11 +183,6 @@ public class Mitglieder {
         snapDates.add(date);
     }
     
-    
-    
-    
-    
-    
     /**
      * METHODE mitgliederAuflisten.
      * 
@@ -231,9 +198,6 @@ public class Mitglieder {
     public HashSet<Mitglied> mitgliederAuflisten() {
         return mitglieder;
     }
-    
-    
-    
     
     /**
      * METHODE mitgliederAuflisten.

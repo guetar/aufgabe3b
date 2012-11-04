@@ -1,6 +1,9 @@
 package com;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.GregorianCalendar;
+import java.util.LinkedList;
+import java.util.TreeSet;
 
 /**
  *
@@ -60,7 +63,7 @@ public class Kalender {
         for (Ort o : orte) {
 
             if (o.getPlaetze() >= plaetze) {
-                gefOrte.add(o);
+                gefOrte.add(new Ort(o));
             }
         }
 
@@ -212,8 +215,14 @@ public class Kalender {
         TreeSet<Termin> terminListe = new TreeSet<Termin>();
         
         for (Termin t : termine) {
-            terminListe.add(t);
+            if(t instanceof Probe) {
+                terminListe.add(new Probe((Probe) t));
+            }
+            if(t instanceof Auftritt) {
+                terminListe.add(new Auftritt((Auftritt) t));
+            }
         }
+        
         return terminListe;
     }
 
@@ -235,7 +244,12 @@ public class Kalender {
 
         for (Termin t : termine) {
             if (von.before(t.getDatum()) && bis.after(t.getDatum())) {
-                terminListe.add(t);
+                if(t instanceof Probe) {
+                    terminListe.add(new Probe((Probe) t));
+                }
+                if(t instanceof Auftritt) {
+                    terminListe.add(new Auftritt((Auftritt) t));
+                }
             } else if (bis.before(t.getDatum())) {
                 break;
             }
@@ -263,7 +277,7 @@ public class Kalender {
 
         for (Termin t : termine) {
             if (t instanceof Probe && von.before(t.getDatum()) && bis.after(t.getDatum())) {
-                probenListe.add((Probe) t);
+                probenListe.add(new Probe((Probe) t));
             } else if (bis.before(t.getDatum())) {
                 break;
             }
@@ -291,7 +305,7 @@ public class Kalender {
 
         for (Termin t : termine) {
             if (t instanceof Auftritt && von.before(t.getDatum()) && bis.after(t.getDatum())) {
-                auftritteListe.add((Auftritt) t);
+                auftritteListe.add(new Auftritt((Auftritt) t));
             } else if (bis.before(t.getDatum())) {
                 break;
             }
@@ -304,6 +318,17 @@ public class Kalender {
      * GOOD: Durch dynamisches Binden ist nur eine Liste zum Loeschen von Proben und Auftritten notwendig.
      */
     public LinkedList<Termin> trashAuflisten() {
-        return trash;
+        LinkedList<Termin> trashListe = new LinkedList<Termin>();
+        
+        for (Termin t : trash) {
+            if(t instanceof Probe) {
+                trashListe.add(new Probe((Probe) t));
+            }
+            if(t instanceof Auftritt) {
+                trashListe.add(new Auftritt((Auftritt) t));
+            }
+        }
+        
+        return trashListe;
     }
 }
