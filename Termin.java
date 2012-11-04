@@ -107,6 +107,6 @@ public abstract class Termin extends Posten {
     @Override
     public String toString() {
         SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy hh:mm");
-        return ort + " " + sdf.format(datum.getTime()) + " - " + dauer+"-"+getWert()+" Euro";
+        return ort + " " + sdf.format(datum.getTime()) + " - " + dauer+" "+getWert()+" Euro";
     }
 }
