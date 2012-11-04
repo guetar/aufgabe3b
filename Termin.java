@@ -19,8 +19,8 @@ public abstract class Termin extends Posten {
      * 
      * ort, datum, dauer und teilnehmer sollten nicht null sein.
      */
-    public Termin(Ort ort, GregorianCalendar datum, String dauer, HashSet<Mitglied> teilnehmer) {
-        super(datum);
+    public Termin(int wert,Ort ort, GregorianCalendar datum, String dauer, HashSet<Mitglied> teilnehmer) {
+        super(wert,datum);
         this.ort = ort;
         this.dauer = dauer;
         this.stack = new Stack<Termin>();
@@ -37,7 +37,7 @@ public abstract class Termin extends Posten {
      * Uebergebener Termin darf nicht null sein, da sonst eine NullpointerException entsteht.
      */
     public Termin(Termin t) {
-        super(t.getDatum());
+        super(t.getWert(),t.getDatum());
         this.ort = t.getOrt();
         this.dauer = t.getDauer();
         this.stack = new Stack<Termin>();
@@ -107,6 +107,6 @@ public abstract class Termin extends Posten {
     @Override
     public String toString() {
         SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy hh:mm");
-        return ort + " " + sdf.format(datum.getTime()) + " - " + dauer;
+        return ort + " " + sdf.format(datum.getTime()) + " - " + dauer+"-"+getWert()+" Euro";
     }
 }

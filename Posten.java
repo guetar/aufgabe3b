@@ -13,17 +13,13 @@ public abstract class Posten implements Comparable<Posten> {
     //Invariante: kategorie ist entweder 1=Auftritt, 2=Probe, 3=sonstige Einnahme 
     //oder 4=sonstige Ausgabe;andere Werte sind nicht möglich
     //Schlecht: byte haette als Typ gereicht, int verbraucht unnoetig Speicher
-    private int kategorie; 
-    private String beschreibung;
     private Stack<Posten> stack;
     protected GregorianCalendar datum;
 
-    //Vorbedingung: wert!=0, kategorie ist entweder 1,2,3 oder 4, beschreibung!=null.
+    //Vorbedingung: wert!=0.
     //datum!=null, datum enthaelt Informationen ueber Jahr,Monat,Tag,Stunde und Minute
     //Nachbedingung: beschreibung!=null, datum!=null, stack!=null
-    public Posten(int wert, int kategorie, String beschreibung, GregorianCalendar datum) {
-        this.beschreibung = beschreibung;
-        this.kategorie = kategorie;
+    public Posten(int wert, GregorianCalendar datum) {
         this.wert = wert;
         this.datum = datum;
         this.stack = new Stack<Posten>();
@@ -33,33 +29,10 @@ public abstract class Posten implements Comparable<Posten> {
         this.datum = datum;
     }
     
-    //Vorbedingung: t!=null
-    //Nachbedingung: beschreibung!=null, datum!=null, stack!=null
-    public Posten(Termin t) {
-        if(t instanceof Auftritt) {
-            
-            Auftritt a = (Auftritt) t;
-            this.beschreibung = "Auftritt";
-            this.wert = a.getGage();
-            this.kategorie = 1;
-            
-        } else if(t instanceof Probe) {
-            
-            Probe p = (Probe) t;
-            this.beschreibung = "Probe";
-            this.wert = p.getMiete();
-            this.kategorie = 2;
-            
-        }
-        this.datum = t.getDatum();
-        this.stack = new Stack<Posten>();
-    }
-    
+  
     //Vorbedingung: p!=null
     //Nachbedingung: beschreibung, wert, datum und kategorie werden von p uebernommen
     public Posten(Posten p) {
-        this.beschreibung = p.getBeschr();
-        this.kategorie = p.getKategorie();
         this.wert = p.getWert();
         this.datum = p.getDatum();
         this.stack = new Stack<Posten>();
@@ -70,10 +43,8 @@ public abstract class Posten implements Comparable<Posten> {
     //kategorie werden von p uebernommen
     public Posten setPosten(Posten p) {
         stack.push(this);
-        this.beschreibung = p.getBeschr();
         this.wert = p.getWert();
         this.datum = p.getDatum();
-        this.kategorie = p.getKategorie();
         return this;
     }
     
@@ -89,13 +60,7 @@ public abstract class Posten implements Comparable<Posten> {
         return wert;
     }
     
-    public int getKategorie() {
-        return kategorie;
-    }
     
-    public String getBeschr(){
-        return beschreibung;
-    }
     
     //Nachbedingung: p wird auf stack gelegt
     protected void pushToStack(Posten p) {
@@ -113,7 +78,7 @@ public abstract class Posten implements Comparable<Posten> {
     @Override
     public String toString() {
         SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy hh:mm");
-        return sdf.format(datum.getTime()) + ",\t " + wert + " Euro\t" +  beschreibung;
+        return sdf.format(datum.getTime()) + ",\t " + wert + " Euro\t";
     }
     
     @Override
