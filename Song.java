@@ -44,10 +44,12 @@ public class Song
         return versionen.add(s);
     }
     
+    //Nachbedingung: return versionen
     public ArrayList<Song> getVersionen() {
         return versionen;
     }
     
+    //Nachbedingung: return von
     public GregorianCalendar getVon() {
         return von;
     }

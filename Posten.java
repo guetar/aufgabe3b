@@ -24,7 +24,9 @@ public abstract class Posten implements Comparable<Posten> {
         this.datum = datum;
         this.stack = new Stack<Posten>();
     }
-    
+  
+    //VB: datum!=null
+    //NB: datum!=null
     public Posten(GregorianCalendar datum) {
         this.datum = datum;
     }
@@ -48,14 +50,22 @@ public abstract class Posten implements Comparable<Posten> {
         return this;
     }
     
+    //Vorbedingung: datum != null
     public void setDatum(GregorianCalendar datum) {
         this.datum = datum;
     }
     
+    //Vorbedingung: wert != null
+    public void setWert(int wert) {
+        this.wert = wert;
+    }
+    
+    //Nachbedingung: return datum
     public GregorianCalendar getDatum() {
         return datum;
     }
     
+    //Nachbedingung: return wert
     public int getWert() {
         return wert;
     }
@@ -76,6 +86,7 @@ public abstract class Posten implements Comparable<Posten> {
     }
     
     @Override
+    //NB: return!=null
     public String toString() {
         SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy hh:mm");
         return sdf.format(datum.getTime()) + ",\t " + wert + " Euro\t";

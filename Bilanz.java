@@ -27,6 +27,7 @@ public class Bilanz {
         return null;
     }
     
+    //Nachbedingung: return true, falls der Posten existiert
     public boolean postenExistiert(Posten p) {
         return posten.contains(p);
     }

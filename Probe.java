@@ -7,40 +7,18 @@ import java.util.HashSet;
  */
 public class Probe extends Termin {
 
-    /**
-     * Vorbedingung
-     * 
-     * ort, datum, dauer, teilnehmer und miete sollten nicht null sein.
-     */
+    //Vorbedingung: ort, datum, dauer, teilnehmer und miete != null
     public Probe(Ort ort, GregorianCalendar datum, String dauer, HashSet<Mitglied> teilnehmer, int miete) {
         super((miete > 0) ? -miete : miete, ort, datum, dauer, teilnehmer);
     }
     
-    /**
-     * Vorbedingung
-     * 
-     * Uebergebene Probe sollte nicht null sein.
-     */
+    //Vorbedingung: Probe != null
     public Probe(Termin t) {
         super(t);
     }
     
-    /**
-     * Vorbedingung
-     * 
-     * Uebergebene Probe sollte nicht null sein.
-     * 
-     * Nachbedingung
-     * 
-     * Retournierte Probe hat die Daten der uebergebenen Probe uebernommen.
-     */
-    public Probe setProbe(Probe p) {
-        super.pushToStack(new Probe(this));
-        super.setTermin(p);
-        return this;
-    }
-    
     @Override
+    //Nachbedingung: return 2
     public int getKategorie() {
         return 2;
     }
