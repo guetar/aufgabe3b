@@ -16,106 +16,52 @@ public class Band {
         this.bilanz = new Bilanz();
     }
 
-    /**
-     * Vorbedingung
-     * 
-     * Mitglied sollte nicht null sein.
-     * 
-     * Nachbedingung
-     * 
-     * return
-     * true, falls das Mitglied hinzugefuegt werden und der Zustand der Band gespeichert werden konnte,
-     * false andernfalls.
-     */
+    //Vorbdingung: Mitglied != null, eintrittsdatum != null
+    //Nachbedingung: return:
+    //true, falls das Mitglied hinzugefuegt werden und der Zustand der Band gespeichert werden konnte,
+    //false andernfalls.
     public boolean mitgliedHinzufuegen(Mitglied m, GregorianCalendar eintrittsDatum) {
         return mitglieder.mitgliedHinzufuegen(m, eintrittsDatum);
     }
 
-    /**
-     * Vorbedingung
-     * 
-     * Mitglied sollte nicht null sein.
-     * 
-     * Nachbedingung
-     * 
-     * return
-     * true, falls das Mitglied hinzugefuegt werden konnte,
-     * false andernfalls.
-     */
+    //Vorbdingung: Mitglied != null
+    //Nachbedingung: return:
+    //true, falls das Mitglied hinzugefuegt werden konnte,
+    //false andernfalls.
     public boolean ersatzMitgliedHinzufuegen(Mitglied m) {
         return mitglieder.ersatzMitgliedHinzufuegen(m);
     }
     
-    /**
-     * Vorbedingung.
-     * 
-     * Mitglieder sollten nicht NULL sein.
-     * Mitglieder sollten nicht vertauscht sein!
-     * 
-     * Nachbedingung
-     * 
-     * keine
-     * 
-     * GUT:
-     * Alles ausgelagert an Klasse Mitglieder
-     */
+    //Vorbdingung: Mitglied != null, aenderungsdatum != null
+    //GUT: Alles ausgelagert an Klasse Mitglieder
     public void swapMitglied(Mitglied mAusErsatz, Mitglied mAusFix, GregorianCalendar aenderungsDatum) {
         mitglieder.swapMitglied(mAusErsatz, mAusFix, aenderungsDatum);
     }
 
-    /**
-     * Vorbedingung.
-     * 
-     * Mitglied sollten nicht NULL sein,
-     * Mitglied sollte in Band sein.
-     * 
-     * Nachbedingung
-     * 
-     * erfolgreich entfernt
-     * 
-     * GUT:
-     * ausgelagert an Klasse Mitglieder, Weitergabe des return-Werts der Methode
-     */
+    //Vorbdingung: Mitglied != null, austrittsdatum != null
+    //achbedingung: erfolgreich entfernt
+    
+    //GOOD: ausgelagert an Klasse Mitglieder, Weitergabe des return-Werts der Methode
     public boolean mitgliedEntfernen(Mitglied m, GregorianCalendar austrittsdatum) {
         return mitglieder.mitgliedEntfernen(m, austrittsdatum);
     }
     
-    /**
-     * Vorbedingung, Nachbedingung.
-     * 
-     * Keine
-     * 
-     * GUT:
-     * >Es wird eine Kopie des Mitglied-Sets zurueckgegeben.
-     */
+    //GOOD: Es wird eine Kopie des Mitglied-Sets zurueckgegeben.
     public HashSet<Mitglied> mitgliederAuflisten() {
         return new HashSet<Mitglied>(mitglieder.mitgliederAuflisten());
     }
     
-    /**
-     * Vorbedingung.
-     * 
-     * Datum soll in den Zeitraum der Band fallen.
-     * 
-     * Nachbdingung.
-     * 
-     * zurueckgegebene Kopie des Sets.
-     * 
-     * GUT:
-     * >Es wird eine Kopie des Sets zurueckgegeben.
-     */
+    //Vorbedingung: Datum soll in den Zeitraum der Band fallen.
+    //Nachbdingung: zurueckgegebene Kopie des Sets.
+    
+    //GOOD: Es wird eine Kopie des Sets zurueckgegeben.
     public HashSet<Mitglied> mitgliederAuflisten(GregorianCalendar date) {
         return new HashSet<Mitglied>(mitglieder.mitgliederAuflisten(date));
     }
 
-    /**
-     * Nachbedingung
-     * 
-     * return
-     * Liste beinhaltet Versionen wie spezifiziert.
-     * Songs sind alle nach dem spezifizierten Datum entstanden.
-     * s.getVon() > datum
-     */
+    //Nachbedingung: return:
+    //Liste beinhaltet Versionen wie spezifiziert,
+    //s.getVon() > datum
     public ArrayList<Song> songsAuflisten(GregorianCalendar datum, boolean versionen) {
         ArrayList<Song> repertoireListe = new ArrayList<Song>();
         HashSet<Mitglied> mitgliederListe = this.mitglieder.mitgliederAuflisten(datum);
@@ -133,41 +79,32 @@ public class Band {
         return repertoireListe;
     }
     
-    /**
-     * Vorbedingung
-     * 
-     * Uebergebener Termin sollte nicht null sein.
-     * 
-     * Nachbedingung
-     * 
-     * return
-     * true, falls der Termin und dessen Ort dem Kalender
-     * und der Bilanz der zugehoerige Posten hinzugefuegt werden konnt,
-     * false, andernfalls.
-     */
+    //Vorbedingung Termin != null
+    //Nachbedingung: return:
+    //true, falls der Termin und dessen Ort dem Kalender
+    //und der Bilanz der zugehoerige Posten hinzugefuegt werden konnte,
+    //false, andernfalls.
     public boolean terminHinzufuegen(Termin t) {
         return  kalender.terminHinzufuegen(t) && kalender.ortHinzufuegen(t.getOrt()) && bilanz.postenHinzufuegen(t);
     }
     
-    /**
-     * Erzeugt eine neue Abstimmung zu einem Termin
-     * 
-     * @param t abzustimmender Termin
-     * @return Abstimmung
-     */
+    //Vorbedingung: Termin != null
+    //Nachbedingung: Abstimmung aktualisiert
     public void abstimmungErzeugen(Termin t) {
         abstimmung = new Abstimmung(mitglieder.mitgliederAuflisten(), t);
     }
     
+    //Vorbedingung: Termin, Mitglied und begruendung != null
+    //Nachbedingung: return Erfolg
     public boolean abstimmen(Termin t, Mitglied m, boolean dafuer, String begruendung) {
         if (t == abstimmung.getTermin()) {
             return abstimmung.abstimmen(m, dafuer, begruendung);
-        }
-        else {
+        } else {
             return false;
         }
     }
     
+    //Nachbedingung: return: Message
     public String abstimmungsErgebnis() {
         if (abstimmung.getResult()) {
             terminHinzufuegen(abstimmung.getTermin());
@@ -176,21 +113,15 @@ public class Band {
     }
     
     
-    /**
-     * Vorbedingung
-     * 
-     * Uebergebene Termine sollten nicht null sein.
-     * 
-     * Nachbedingung
-     * 
-     * return
-     * true, falls Termin, zugehoeriger Ort und Posten geaendert werden konnten
-     * false andernfalls.
-     * ERROR: return nicht richtig gesetzt.
-     * 
-     * GOOD: Durch dynamisches Binden muessen nur Termine geaendert werden.
-     * BAD: Bei jeder Aenderungsaktion muessen saemtliche verknuepften Objekte einzeln geaendert werden.
-     */
+    //Vorbedingung: Termine != null
+    //Nachbedingung: return:
+    //true, falls Termin, zugehoeriger Ort und Posten geaendert werden konnten
+    //false andernfalls.
+    
+    //ERROR: return nicht richtig gesetzt.
+    
+    //GOOD: Durch dynamisches Binden muessen nur Termine geaendert werden.
+    //BAD: Bei jeder Aenderungsaktion muessen saemtliche verknuepften Objekte einzeln geaendert werden.
     public boolean terminAendern(Termin alt, Termin neu) {
         HashSet<Mitglied> mitgliederListe = this.mitglieder.mitgliederAuflisten();
         
@@ -211,21 +142,15 @@ public class Band {
         return false;
     }
     
-    /**
-     * Vorbedingung
-     * 
-     * Uebergebener Termin sollte nicht null sein.
-     * 
-     * Nachbedingung
-     * 
-     * return
-     * true, falls Termin, zugehoeriger Ort und Posten geloescht werden konnten
-     * false andernfalls.
-     * ERROR: return nicht richtig gesetzt.
-     * 
-     * GOOD: Durch dynamisches Binden muessen nur Termine geloescht werden.
-     * BAD: Bei jeder Loeschaktion muessen saemtliche verknuepften Objekte einzeln geloescht werden.
-     */
+    //Vorbedingung: Termin != null
+    //Nachbedingung: return:
+    //true, falls Termin, zugehoeriger Ort und Posten geloescht werden konnten
+    //false andernfalls.
+    
+    //ERROR: return nicht richtig gesetzt.
+    
+    //GOOD: Durch dynamisches Binden muessen nur Termine geloescht werden.
+    //BAD: Bei jeder Loeschaktion muessen saemtliche verknuepften Objekte einzeln geloescht werden.
     public boolean terminLoeschen(Termin t) {
         HashSet<Mitglied> mitgliederListe = this.mitglieder.mitgliederAuflisten();
         
@@ -243,148 +168,72 @@ public class Band {
         return false;
     }
     
-    /**
-     * Vorbedingung
-     * 
-     * Termin sollte nicht null sein.
-     * 
-     * Nachbedingung
-     * 
-     * return
-     * true, falls Termin, zugehoeriger Ort und Posten wiederhergestellt werden konnten
-     * false andernfalls.
-     * ERROR: Ort wird nicht wiederhergestellt.
-     * ERROR: return nicht richtig gesetzt.
-     * 
-     * GOOD: Durch dynamisches Binden muessen nur Termine wiederhergestellt werden.
-     * BAD: Bei jeder Wiederherstellungsaktion muessen saemtliche verknuepften Objekte einzeln wiederhergestellt werden.
-     */
+    //Vorbedingung: Termin != null
+    //Nachbedingung: return
+    //true, falls Termin, zugehoeriger Ort und Posten wiederhergestellt werden konnten
+    //alse andernfalls.
+    
+    //ERROR: Ort wird nicht wiederhergestellt.
+    //ERROR: return nicht richtig gesetzt.
+    
+    //GOOD: Durch dynamisches Binden muessen nur Termine wiederhergestellt werden.
+    //BAD: Bei jeder Wiederherstellungsaktion muessen saemtliche verknuepften Objekte einzeln wiederhergestellt werden.
     public Termin terminWiederherstellen(Termin t) {
         if(bilanz.postenExistiert(t)) bilanz.postenWiederherstellen(t);
         return kalender.terminWiederherstellen(t.getDatum());
     }
     
-    /**
-     * Vorbedingung
-     * 
-     * von chronologisch vor bis
-     * 
-     * Nachbedingung
-     * 
-     * return
-     * Termine liegen innerhalb des gegebenen Intervalls.
-     */
+    //Vorbedingung: von < bis
+    //Nachbedingung: return: Termine liegen innerhalb des gegebenen Intervalls.
     public ArrayList<? extends Termin> termineAuflisten(GregorianCalendar von, GregorianCalendar bis) {
         return kalender.termineAuflisten(von, bis);
     }
     
-    /**
-     * Vorbedingung
-     * 
-     * von chronologisch vor bis
-     * 
-     * Nachbedingung
-     * 
-     * return
-     * Proben liegen innerhalb des gegebenen Intervalls.
-     */
+    //Vorbedingung: von < bis
+    //Nachbedingung: return: Proben liegen innerhalb des gegebenen Intervalls.
     public ArrayList<Probe> probenAuflisten(GregorianCalendar von, GregorianCalendar bis) {
         return kalender.probenAuflisten(von, bis);
     }
     
-    /**
-     * Vorbedingung
-     * 
-     * von chronologisch vor bis
-     * 
-     * Nachbedingung
-     * 
-     * return
-     * Auftritte liegen innerhalb des gegebenen Intervalls.
-     */
+    //Vorbedingung: von < bis
+    //Nachbedingung: Auftritte liegen innerhalb des gegebenen Intervalls.
     public ArrayList<Auftritt> auftritteAuflisten(GregorianCalendar von, GregorianCalendar bis) {
         return kalender.auftritteAuflisten(von, bis);
     }
     
-    /**
-     * Nachbedingung
-     * 
-     * return
-     * true, falls der Posten erfolgreich hinzugefuegt werden konnte,
-     * false andernfalls.
-     */
+    //Nachbedingung: return Erfolg
     public boolean postenHinzufuegen(Posten p) {
         return bilanz.postenHinzufuegen(p);
     }
     
-    /**
-     * Nachbedingung
-     * 
-     * return
-     * true, falls der Posten erfolgreich geaendert werden konnte,
-     * false andernfalls.
-     */
+    //Nachbedingung: return Erfolg
     public Posten postenAendern(Posten alt, Posten neu) {
         return bilanz.postenAendern(alt, neu);
     }
     
-    /**
-     * Nachbedingung
-     * 
-     * return
-     * true, falls der Posten erfolgreich geloescht werden konnte,
-     * false andernfalls.
-     */
+    //Nachbedingung: return Erfolg
     public boolean postenLoeschen(Posten p) {
         return bilanz.postenLoeschen(p);
     }
     
-    /**
-     * Nachbedingung
-     * 
-     * return
-     * true, falls der Posten erfolgreich wiederhergestellt werden konnte,
-     * false andernfalls.
-     */
+    //Nachbedingung: return Erfolg
     public Posten postenWiederherstellen(Posten p) {
         return bilanz.postenWiederherstellen(p);
     }
 
-    /**
-     * Vorbedingung
-     * 
-     * von!=null, bis!=null
-     * 
-     * Nachbedingung
-     * 
-     * return
-     * Nach Datum sortierte  Liste an Posten
-     */
+    //Vorbedingung: von, bis != null
+    //Nachbedingung: return: Nach Datum sortierte  Liste an Posten
     public TreeSet<Posten> postenAuflisten(boolean showAuftr, boolean showProben, boolean showEinnahmen, boolean showAusgaben, GregorianCalendar von, GregorianCalendar bis) {
         return bilanz.postenAuflisten(showAuftr, showProben, showEinnahmen, showAusgaben, von, bis);
     }
 
-    /**
-     * Vorbedingung
-     * 
-     * von!=null, bis!=null
-     * 
-     * Nachbedingung
-     * 
-     * return
-     * Summe der gewuenschten Posten im gewuenschten Zeitraum 
-     */
+    //Vorbedingung: von, bis != null
+    //Nachbedingung: return: Summe der gewuenschten Posten im gewuenschten Zeitraum
     public int postenSummieren(boolean showAuftr, boolean showProben, boolean showSonstigeEinnahmen, boolean showSonstigeAusgaben, GregorianCalendar von, GregorianCalendar bis) {
         return bilanz.postenSummieren(showAuftr, showProben, showSonstigeEinnahmen, showSonstigeAusgaben, von, bis);
     }
 
-    /**
-     * Nachbedingung
-     * 
-     * return
-     * Orte mit gleich vielen oder mehr Plaetzen als gesucht.
-     * o.getPlaetze() >= plaetze
-     */
+    //Nachbedingung: return: o.getPlaetze() >= plaetze
     public ArrayList<Ort> findeOrt(int plaetze) {
         return kalender.findeOrt(plaetze);
     }

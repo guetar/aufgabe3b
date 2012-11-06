@@ -21,13 +21,10 @@ public class Kalender {
         this.orte = new TreeSet<Ort>();
     }
 
-    /**
-     * Nachbedingung
-     * 
-     * Retournierter Wert immer
-     * true, falls der Ort nicht vorhanden war und erfolgreich hinzugefuegt wurde,
-     * falsch, falls der Ort schon vorhanden war oder nicht erfolgreich hinzugefuegt werden konnte.
-     */
+    //Vorbedingung: Ort != null
+    //Nachbedingung: return:
+    //true, falls der Ort nicht vorhanden war und erfolgreich hinzugefuegt wurde,
+    //false, falls der Ort schon vorhanden war oder nicht erfolgreich hinzugefuegt werden konnte.
     public boolean ortHinzufuegen(Ort o) {
         if (!orte.contains(o)) {
             return orte.add(o);
@@ -35,13 +32,10 @@ public class Kalender {
         return false;
     }
     
-    /**
-     * Nachbedingung
-     * 
-     * Retournierter Wert imer
-     * true, falls der Ort vorhanden war und erfolgreich geloescht werden konnte,
-     * false, falls der Ort nicht vorhanden war oder nicht erfolgreich geloescht werden konnte.
-     */
+    //Vorbedingung: Ort != null
+    //Nachbedingung: return:
+    //true, falls der Ort vorhanden war und erfolgreich geloescht werden konnte,
+    //false, falls der Ort nicht vorhanden war oder nicht erfolgreich geloescht werden konnte.
     public boolean ortLoeschen(Ort o) {
         if (orte.contains(o)) {
             return orte.remove(o);
@@ -49,12 +43,8 @@ public class Kalender {
         return false;
     }
 
-    /**
-     * Nachgedingung
-     * 
-     * Retournierte Orte besitzen immer
-     * Plaetze >= gesuchte Plaetze.
-     */
+    //Vorbedingung: Plaetze != null
+    //Nachgedingung: return: Ort.Plaetze >= gesuchte Plaetze.
     public ArrayList<Ort> findeOrt(int plaetze) {
         ArrayList<Ort> gefOrte = new ArrayList<Ort>();
 
@@ -68,15 +58,12 @@ public class Kalender {
         return gefOrte;
     }
 
-    /**
-     * Nachbedingung
-     * 
-     * Retorunierter Wert immer
-     * true, falls der Termin noch nicht vorhanden war und erfolgreich hinzugefuegt werden konnte,
-     * false, falls der Termin bereits vorhanden war oder nicht erfolgreich hinzugefuegt werden konnte.
-     * 
-     * GOOD: Durch dynamisches Binden ist nur eine Liste zur Verwaltung von Proben und Auftritten notwendig.
-     */
+    //Vorbedingung: Termin != null
+    //Nachbedingung: return:
+    //true, falls der Termin noch nicht vorhanden war und erfolgreich hinzugefuegt werden konnte,
+    //false, falls der Termin bereits vorhanden war oder nicht erfolgreich hinzugefuegt werden konnte.
+    
+    //GOOD: Durch dynamisches Binden ist nur eine Liste zur Verwaltung von Proben und Auftritten notwendig.
     public boolean terminHinzufuegen(Termin t) {
         if (!termine.contains(t)) {
             return termine.add(t);
@@ -84,21 +71,13 @@ public class Kalender {
         return false;
     }
 
-    /**
-     * Vorbedingung
-     * 
-     * Neuer Termin darf nicht null sein, das sonst eine NullpointerException entsteht.
-     * 
-     * Nachbedingung
-     * 
-     * Retournierter Termin immer
-     * Instanz von Probe, falls eine Probe geaendert wurde,
-     * Instanz von Auftritt, falls ein Auftritt geaendert wurde,
-     * null, falls der Termin nicht gefunden wurde.
-     * 
-     * BAD: Durch dynamisches Binden ist diese Funktion sehr unuebersichtlich,
-     * da immer festgestellt werden muss, Instanz welcher Klasse das aktuelle Objekt ist.
-     */
+    //Vorbedingung: Termin != null
+    //Nachbedingung: return:
+    //geaenderter Termin oder
+    //null, falls der Termin nicht gefunden wurde.
+    
+    //GOOD: Durch dynamisches Binden muss nur der Termin, nicht Probe oder Auftritt,
+    //geaendert werden.
     public Termin terminAendern(GregorianCalendar alt, Termin neu) {
         for (Termin t: termine) {
             if (t.getDatum().equals(alt)) {
@@ -111,16 +90,12 @@ public class Kalender {
         return null;
     }
 
-    /**
-     * Nachbedingung
-     * 
-     * Retournierter Wert immer
-     * true, falls der Termin vorhanden war und erfolgreich geloescht werden konnte,
-     * false, falls der Termin nicht vorhanden oder bereits geloescht war.
-     * 
-     * GOOD: Durch dynamisches Binden muss der Termin, egal ob Probe oder Auftritt,
-     * nur in einer Liste gesucht werden.
-     */
+    //Nachbedingung: return: 
+    //true, falls der Termin vorhanden war und erfolgreich geloescht werden konnte,
+    //false, falls der Termin nicht vorhanden oder bereits geloescht war.
+    
+    //GOOD: Durch dynamisches Binden muss der Termin, egal ob Probe oder Auftritt,
+    //nur in einer Liste gesucht werden.
     public boolean terminLoeschen(Termin t) {
         if (termine.contains(t) && !trash.contains(t)) {
             trash.add(t);
@@ -134,22 +109,15 @@ public class Kalender {
         return false;
     }
 
-    /**
-     * Invariante
-     * 
-     * Sicherstellen, dass Termine immer noch aufsteigend sortiert sind durch
-     * .remove() und anschließendes .add().
-     * 
-     * Nachbedingung
-     * 
-     * Retournierter Termin immer
-     * Instanz von Probe, falls eine Probe wiederhergestellt wurde,
-     * Instanz von Auftritt, falls ein Auftritt wiederhergestellt wurde,
-     * null, falls der Termin nicht gefunden wurde.
-     * 
-     * BAD: Durch dynamisches Binden ist diese Funktion sehr unuebersichtlich,
-     * da immer festgestellt werden muss, Instanz welcher Klasse das aktuelle Objekt ist.
-     */
+    //Invariante: Sicherstellen, dass Termine immer noch aufsteigend sortiert sind durch
+    //.remove() und anschließendes .add().
+    
+    //Nachbedingung: return:
+    //wiederhergestellter Termin oder
+    //null, falls der Termin nicht gefunden wurde.
+    
+    //GOOD: Durch dynamisches Binden muss nur der Termin, nicht Probe oder Auftritt,
+    //wiederhergestellt werden.
     public Termin terminWiederherstellen(GregorianCalendar datum) {
         for (Termin t : termine) {
             if (t.getDatum().equals(datum)) {
@@ -176,9 +144,7 @@ public class Kalender {
         return null;
     }
 
-    /**
-     * GOOD: Durch dynamisches Binden kann leicht eine allgemeine Terminliste zurueckgegeben werden.
-     */
+    //GOOD: Durch dynamisches Binden kann leicht eine allgemeine Terminliste zurueckgegeben werden.
     public TreeSet<? extends Termin> termineAuflisten() {
         TreeSet<Termin> terminListe = new TreeSet<Termin>();
         
@@ -194,19 +160,10 @@ public class Kalender {
         return terminListe;
     }
 
-    /**
-     * Vorbedingung
-     * 
-     * von chronologisch vor bis
-     * 
-     * Nachbedingung
-     * 
-     * Retournierte Termine immer
-     * innerhalb des gegebenen Zeitraums.
-     * von < t.getVon() && t.getBis() < bis
-     * 
-     * GOOD: Durch dynamisches Binden muss nur eine Liste durchiteriert werden.
-     */
+    //Vorbedingung: von < bis
+    //Nachbedingung: return: von < t.getVon() && t.getBis() < bis
+    
+    //GOOD: Durch dynamisches Binden muss nur eine Liste durchiteriert werden.
     public ArrayList<? extends Termin> termineAuflisten(GregorianCalendar von, GregorianCalendar bis) {
         ArrayList<Termin> terminListe = new ArrayList<Termin>();
 
@@ -226,20 +183,11 @@ public class Kalender {
         return terminListe;
     }
 
-    /**
-     * Vorbedingung
-     * 
-     * von chronologisch vor bis
-     * 
-     * Nachbedingung
-     * 
-     * Retournierte Proben immer
-     * innerhalb des gegebenen Zeitraums.
-     * von < t.getVon() && t.getBis() < bis
-     * 
-     * BAD: Durch dynamisches Binden muss bei jeder Iteration zusaetzlich ueberprueft werden,
-     * ob der Termin Instanz von Probe ist.
-     */
+    //Vorbedingung: von < bis
+    //Nachbedingung: return: von < t.getVon() && t.getBis() < bis
+    
+    //BAD: Durch dynamisches Binden muss bei jeder Iteration zusaetzlich ueberprueft werden,
+    //ob der Termin Instanz von Probe ist.
     public ArrayList<Probe> probenAuflisten(GregorianCalendar von, GregorianCalendar bis) {
         ArrayList<Probe> probenListe = new ArrayList<Probe>();
 
@@ -254,20 +202,11 @@ public class Kalender {
         return probenListe;
     }
 
-    /**
-     * Vorbedingung
-     * 
-     * von chronologisch vor bis
-     * 
-     * Nachbedingung
-     * 
-     * Retournierte Auftritte immer
-     * innerhalb des gegebenen Zeitraums
-     * von < t.getVon() && t.getBis() < bis
-     * 
-     * BAD: Durch dynamisches Binden muss bei jeder Iteration zusaetzlich ueberprueft werden,
-     * ob der Termin Instanz von Auftritt ist.
-     */
+    //Vorbdingung: von < bis
+    //Nachbedingung: return: von < t.getVon() && t.getBis() < bis
+    
+    //BAD: Durch dynamisches Binden muss bei jeder Iteration zusaetzlich ueberprueft werden,
+    //ob der Termin Instanz von Auftritt ist.
     public ArrayList<Auftritt> auftritteAuflisten(GregorianCalendar von, GregorianCalendar bis) {
         ArrayList<Auftritt> auftritteListe = new ArrayList<Auftritt>();
 
@@ -282,9 +221,7 @@ public class Kalender {
         return auftritteListe;
     }
     
-    /**
-     * GOOD: Durch dynamisches Binden ist nur eine Liste zum Loeschen von Proben und Auftritten notwendig.
-     */
+    //GOOD: Durch dynamisches Binden ist nur eine Liste zum Loeschen von Proben und Auftritten notwendig.
     public LinkedList<Termin> trashAuflisten() {
         LinkedList<Termin> trashListe = new LinkedList<Termin>();
         

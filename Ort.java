@@ -17,16 +17,19 @@ public class Ort implements Comparable<Ort> {
         this.plaetze = plaetze;
     }
 
+    //Vorbedingung: Ort != null
     public Ort(Ort o) {
         name = o.name;
         adresse = o.adresse;
         plaetze = o.plaetze;
     }
 
+    //Nachbedingung: return plaetze
     public int getPlaetze() {
         return plaetze;
     }
     
+    //Nachbedingung: return plaetze
     public String getName() {
         return name;
     }

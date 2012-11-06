@@ -14,11 +14,7 @@ public abstract class Termin extends Posten {
     private Stack<Termin> stack;
     private HashSet<Mitglied> teilnehmer;
 
-    /**
-     * Vorbedingung
-     * 
-     * ort, datum, dauer und teilnehmer sollten nicht null sein.
-     */
+    //Vorbedingung: ort, datum, dauer und teilnehmer != null
     public Termin(int wert,Ort ort, GregorianCalendar datum, String dauer, HashSet<Mitglied> teilnehmer) {
         super(wert, datum);
         this.ort = ort;
@@ -31,11 +27,7 @@ public abstract class Termin extends Posten {
         }
     }
 
-    /**
-     * Vorbedingung
-     * 
-     * Uebergebener Termin darf nicht null sein, da sonst eine NullpointerException entsteht.
-     */
+    //Vorbedingung: Termin != null
     public Termin(Termin t) {
         super(t.getWert(), t.getDatum());
         this.ort = t.getOrt();
@@ -44,15 +36,8 @@ public abstract class Termin extends Posten {
         this.teilnehmer = new HashSet<Mitglied>(t.getTeilnehmer());
     }
 
-    /**
-     * Vorbedingung
-     * 
-     * Uebergebener Termin darf nicht null sein, da sonst eine NullpointerException entsteht.
-     * 
-     * Nachbedingung
-     * 
-     * Retournierter Termin hat die Daten des uebergebenen Termins uebernommen.
-     */
+    //Vorbedingung: Termin != null
+    //Nachbedingung: this = Kopie von Termin
     public Termin setTermin(Termin t) {
         super.setPosten(t);
         this.ort = t.getOrt();
@@ -62,13 +47,9 @@ public abstract class Termin extends Posten {
         return this;
     }
     
-    /**
-     * Nachbedingung
-     * 
-     * Retournierter Wert immer
-     * true, falls der Teilnehmer hinzugefuegt werden und ihm der Termin uebergeben werden konnte
-     * false andernfalls.
-     */
+    //Nachbedingung: return:
+    //true, falls der Teilnehmer hinzugefuegt werden und ihm der Termin uebergeben werden konnte
+    //false andernfalls.
     public boolean teilnehmerHinzufuegen(Mitglied m) {
         boolean ok = teilnehmer.add(m);
         if (ok) {
@@ -77,13 +58,9 @@ public abstract class Termin extends Posten {
         return ok;
     }
     
-    /**
-     * Nachbedingung
-     * 
-     * Retournierter Wert immer
-     * true, falls der Teilnehmer entfernt und ihm der Termin entzogen werden konnte,
-     * false andernfalls.
-     */
+    //Nachbedingung: return:
+    //true, falls der Teilnehmer entfernt und ihm der Termin entzogen werden konnte,
+    //false andernfalls.
     public boolean teilnehmerEntfernen(Mitglied m) {
         boolean ok = teilnehmer.remove(m);
         if (ok) {
@@ -92,23 +69,28 @@ public abstract class Termin extends Posten {
         return ok;
     }
 
+    //Nachbedingung: return dauer
     public String getDauer() {
         return dauer;
     }
     
+    //Nachbedingung: return ort
     public Ort getOrt() {
         return ort;
     }
     
+    //Nachbedingung: return teilnehmer
     public HashSet<Mitglied> getTeilnehmer() {
         return teilnehmer;
     }
     
+    //Vorbedingung: Termin != null
     public void pushToStack(Termin t) {
         super.pushToStack(t);
     }
     
     @Override
+    //Nachbedingung: return alten Termin
     public Termin popFromStack() {
         return (Termin) super.popFromStack();
     }

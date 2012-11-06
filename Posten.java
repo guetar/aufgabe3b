@@ -48,18 +48,22 @@ public abstract class Posten implements Comparable<Posten> {
         return this;
     }
     
+    //Vorbedingung: datum != null
     public void setDatum(GregorianCalendar datum) {
         this.datum = datum;
     }
     
+    //Vorbedingung: wert != null
     public void setWert(int wert) {
         this.wert = wert;
     }
     
+    //Nachbedingung: return datum
     public GregorianCalendar getDatum() {
         return datum;
     }
     
+    //Nachbedingung: return wert
     public int getWert() {
         return wert;
     }

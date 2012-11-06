@@ -132,7 +132,6 @@ public class Test {
         }
         System.out.println("");
 
-
         /**
          * Dem Repertoire der Band einige Songs hinzufuegen und und auflisten
          */
@@ -290,9 +289,6 @@ public class Test {
         /**
          * Ausgabe des Ergebnis der Abstimmung
          */
- 
-
-       
         System.out.println("");
         
         Probe moeglProbe1 = new Probe(new Ort("p Unter Bruecke", "Sandlerhaus 3", 30), new GregorianCalendar(2004, 10, 3, 18, 0), "2:00", mitglieder, -200);
@@ -305,7 +301,6 @@ public class Test {
         /**
          * Ausgabe des Ergebnis der Abstimmung
          */
-       
         System.out.println("Termin aus Verwaltung: " + b.probenAuflisten(new GregorianCalendar(2004, 10, 3), new GregorianCalendar(2004, 10, 4))+"\n");
         
         /**
