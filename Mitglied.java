@@ -5,21 +5,8 @@ import java.util.GregorianCalendar;
 public class Mitglied {
 
     
-    /**
-     * KLASSE Mitglied.
-     * 
-     * 
-     * INVARIANTE:
-     * >einmal zugestellte Nachrichten sollen erhalten bleiben, alles
-     * andere sollte aenderbar sein. (Ist es aber momentan nicht)
-     * 
-     * GUT:
-     * >Mitglied ist eine simple Klasse mit wenig Eigenschaften und einfachen
-     * Methoden.
-     * 
-     * SCHLECHT:
-     * >Eigenschaften wie Name oder Telefonnummer koennen nicht geaendert werden.
-     */
+    
+    //IV: zugestellte Nachrichten muessen erhalten bleiben
     private String name;
     private String tel;
     private String instrument;
@@ -29,21 +16,9 @@ public class Mitglied {
 
     
     
-    
-    
-    /**
-     * KONSTRUKTOR.
-     * 
-     * 
-     * VORBEDINGUNG:
-     * >Die eingehenden Parameter sollen sinnvolle Werte haben.
-     * 
-     * INVARIANTE:
-     * >keine nennenswerten
-     * 
-     * NACHBEDINGUNG:
-     * >Die Parameter sollen gespeichert sein.
-     */
+    //VB: name && tel && != NULL
+    //IV: duerfen sich nicht mehr aendern
+    //NB: Objekt erfolgreich instanziert
     public Mitglied(String name, String tel, String instrument) {
         this.name = name;
         this.tel = tel;
@@ -55,197 +30,139 @@ public class Mitglied {
     
     
     
-    
-    
-    /**
-     * METHODE message.
-     * 
-     * VB:
-     * >Die Nachricht soll sinngemaess sein.
-     * 
-     * IV, NB:
-     * >keine nennenswerten.
-     */
+    //VB: m != NULL
+    //IV: m darf sich nicht aendern
+    //NB: m muss hinzugefuegt worden sein
     public Boolean message(String m) {
-        return messages.add(m);
+        if (m != null) {
+            return messages.add(m);
+        }
+        else {
+            return false;
+        }
     }
     
     
     
-    /**
-     * METHODE getMessages.
-     * 
-     * 
-     * VB:
-     * >keine
-     * 
-     * IV:
-     * >keine
-     * 
-     * NB:
-     * >Die String-Liste soll zurueckgegeben werden.
-     */
+    //VB: messages != NULL
+    //IV: messages darf sich nicht aendern
+    //NB: messages als Kopie erfolgreich zurueckgegeben
     public ArrayList<String> getMessages() {
-        return messages;
+        return new ArrayList<String>(messages);
     }
     
+  
     
-    
-    /**
-     * METHODE songHinzufuegen.
-     * 
-     * 
-     * VB:
-     * >Song sollte einer sein, der noch nicht im repertoire ist.
-     * 
-     * IV:
-     * >keine
-     * 
-     * NB:
-     * >Song soll dem repertoire hinzugefuegt worden sein.
-     * 
-     * GUT:
-     * >einfache Implementierung
-     * 
-     * SCHLECHT:
-     * >Keine Kontrolle ob Song schon vorhanden.
-     */
+    //VB: s != NULL
+    //IV: repertoire darf nicht weniger werden
+    //NB: s erfolgreich zu repertoire hinzugefuegt
     public Boolean songHinzufuegen(Song s) {
-        return repertoire.add(s);
-    }
-    
-    
-    
-    
-    /**
-     * METHODE getRepertoire.
-     * 
-     * 
-     * VB:
-     * >Datum sollte sinnvoll geweahlt worden sein.
-     * 
-     * IV:
-     * >keine nennenswerte
-     * 
-     * NB:
-     * >Liste mit Songs ausgegeben.
-     * 
-     * GUT:
-     * >Es wird eine neue ArrayList zurueckgegeben, nicht das Original
-     */
-    public ArrayList<Song> getRepertoire(GregorianCalendar datum) {
-        ArrayList<Song> repertoireListe = new ArrayList<Song>();
-        
-        for (Song s : repertoire) {
-            if (s.getVon().before(datum)) {
-                repertoireListe.add(s);
-            }
+        if (s != null) {
+            return repertoire.add(s);
         }
-        return repertoireListe;
+        else {
+            return false;
+        }
     }
     
     
+
+    //VB: date != NULL
+    //IV: repertoire darf nicht geandert werden
+    //NB: Rueckgabe des repertoires in From neuer Liste
+    public ArrayList<Song> getRepertoire(GregorianCalendar date) {
+        if(date != null) {
+            ArrayList<Song> repertoireListe = new ArrayList<Song>();
+
+            for (Song s : repertoire) {
+                if (s.getVon().before(date)) {
+                    repertoireListe.add(s);
+                }
+            }
+            return repertoireListe;
+        }
+        else {
+            return null;
+        }
+    }
     
-    /**
-     * METHODE addTermin.
-     * 
-     * 
-     * VB:
-     * >Termin soll auch wirklich einer sein, der die band betrifft.
-     * 
-     * IV:
-     * >Keine nennenswerte
-     * 
-     * NB:
-     * >Termin soll hinzugefuegt worden sein.
-     * 
-     * GUT:
-     * >einfach
-     * 
-     * SCHLECHT:
-     * >Keine Kontrolle ob Termin in band vorhanden.
-     * >Datenstruktur nicht geeignet und auch nicht chronologisch sortiert.
-     * 
-     */
+    
+
+    //VB: t != NULL
+    //IV: termine darf nicht weniger werden
+    //NB: t soll in termine eingefuegt worden sein
     public boolean addTermin(Termin t) {
-        return termine.add(t);
+        if (t != null) {
+            return termine.add(t);
+        }
+        else {
+            return false;
+        }
     }
     
     
     
-    
-    /**
-     * METHODE terminLoeschen.
-     * 
-     * 
-     * VB:
-     * >Termin soll vorhanden sein.
-     * 
-     * IV:
-     * >Keine nennenswerte
-     * 
-     * NB:
-     * >Termin soll falls vorhanden geloescht worden sein.
-     * 
-     * SCHLECHT:
-     * >ungeeignete Datenstruktur, HashSet waere effizienter.
-     */
+    //VB: t != NULL
+    //IV: termine darf nicht mehr werden
+    //NB: t soll aus termine geloescht worden sein
     public boolean terminLoeschen(Termin t) {
-        for (Termin tList : termine) {
-            if (tList.getDatum().equals(t.getDatum()) && tList.getOrt().getName().equals(t.getOrt().getName())) {
-                termine.remove(tList);
-                return true;
+        if (t != null) {
+            for (Termin tList : termine) {
+                if (tList.getDatum().equals(t.getDatum()) && tList.getOrt().getName().equals(t.getOrt().getName())) {
+                    termine.remove(tList);
+                    return true;
+                }
             }
+            return false;
         }
-        return false;
+        else {
+            return false;
+        }
     }
 
     
     
-    /**
-     * no comment.
-     */
+    //VB: name != NULL
+    //IV: name darf sich nicht aendern
+    //NB: name erfolgreich zurueckgegeben
     public String getName() {
         return name;
     }
 
-    /**
-     * no comment.
-     */
+    
+    
+    //VB: name && tel && instrument != NULL
+    //IV: name && tel && instrument duerfen sich nicht aendern
+    //NB: name && tel && instrument als String zurueckgegeben
     public String toString() {
         return name + " " + tel + " " + instrument;
     }
 
  
-    /**
-     * no comment.
-     */
+    
+    //VB: termine != NULL
+    //IV: termine duerfen sich nicht aendern
+    //NB: Kopie von termine zurueckgegeben
     public ArrayList<Termin> getTermine() {
-        return termine;
+        return new ArrayList<Termin>(termine);
     }
 
+  
     
-    /**
-     * METHODE terminAendern.
-     * 
-     * 
-     * VB:
-     * >Termin sollte vorhanden sein.
-     * 
-     * IV:
-     * >keine nennenswerte
-     * 
-     * NB:
-     * >Termin falls vorhanden, geaendert.
-     * 
-     * SCHLECHT:
-     * >ungeeignete Datenstruktur, HashSet waere effizienter.
-     */
+    //VB: alt && neu != NULL
+    //    alt soll vorhanden sein
+    //IV: Bis auf den Termin alt darf sich kein anderer aendern
+    //NB: alt soll erfolgreich durch neu ausgetauscht worden sein
     public boolean terminAendern(Termin alt, Termin neu) {
-        boolean ok = termine.remove(alt);
-        if (ok) {
-            termine.add(neu);
+        if (alt != null && neu != null) {
+            boolean ok = termine.remove(alt);
+            if (ok) {
+                termine.add(neu);
+            }
+            return ok;
         }
-        return ok;
+        else {
+            return false;
+        }
     }
 }

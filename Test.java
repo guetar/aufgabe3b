@@ -66,9 +66,9 @@ public class Test {
         /**
          * Mitglieder der band hinzufuegen, entfernen und wieder hinzfuegen
          */
-        b.mitgliedHinzufuegen(andreas, new GregorianCalendar(2000, 2, 24));
-        b.mitgliedHinzufuegen(michael, new GregorianCalendar(2000, 2, 24));
-        b.mitgliedHinzufuegen(lukas, new GregorianCalendar(2000, 2, 24));
+        b.mitgliedHinzufuegen(andreas, new GregorianCalendar(2000, 2, 23));
+        b.mitgliedHinzufuegen(michael, new GregorianCalendar(2000, 3, 24));
+        b.mitgliedHinzufuegen(lukas, new GregorianCalendar(2000, 2, 25));
         b.mitgliedHinzufuegen(dominik, new GregorianCalendar(2000, 4, 6));
         b.mitgliedEntfernen(lukas, new GregorianCalendar(2001, 3, 2));
         b.mitgliedEntfernen(dominik, new GregorianCalendar(2002, 5, 2));
@@ -78,7 +78,7 @@ public class Test {
          * Ausgabe der Mitglieder zu bestimmten Zeitpunkten
          */
         System.out.println("\nAusgabe Mitglieder----------------------------------");
-        System.out.println("Erwarteter Output:\n\n2000, 3, 12: 3 Mitglieder\n2001, 2, 2 : 4 Mitglieder\n2002, 3, 2 : 3 Mitglieder\n2003, 3, 2 :  2 Mitglieder\n\nAktuell: 3 Mitglieder");
+        System.out.println("Erwarteter Output:\n\n2000, 3, 12: 3 Mitglieder\n2001, 2, 2 : 4 Mitglieder\n2002, 3, 2 : 3 Mitglieder\n2003, 3, 2 :  2 Mitglieder\nAktuell: 3 Mitglieder");
         System.out.println("----------------------------------------------------\n");
 
         System.out.println("Auflistung der Gruppenmitglieder zum Datum 2000, 3, 12:");

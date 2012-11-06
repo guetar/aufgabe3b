@@ -3,6 +3,8 @@ import java.util.HashSet;
 
 public class Abstimmung {
 
+    
+    //IV: dafuers && begruendungen && mitglieder && vorgeschlTermin != NULL
     private HashMap<Mitglied, Boolean> dafuers;
     private HashMap<Mitglied, String> begruendungen;
     private HashSet<Mitglied> mitglieder;
@@ -17,9 +19,12 @@ public class Abstimmung {
     }
     
     
+    
+    //VB: m && begruendung != NULL
+    //IV: dafuers und begruendungen duerfen nicht weniger werden
+    //NB: m und dafuer und begruendung sollen sinngemaess gespeichert werden
     public boolean abstimmen(Mitglied m, boolean dafuer, String begruendung) {
-
-        if (m != null && mitglieder.contains(m)) {
+        if (m != null && begruendung != null && mitglieder.contains(m)) {
             dafuers.put(m, dafuer);
             begruendungen.put(m, begruendung);
             return true;
@@ -29,13 +34,21 @@ public class Abstimmung {
     }
        
     
+    
+    //VB: dafuers && mitglieder != NULL
+    //IV: dafuers und mitglieder sollen nicht geaendert werden
+    //NB: Rueckgabe ob es soviel dafuers wie mitglieder gibt
     public boolean alleAbgestimmt() {
-        return dafuers.size() == mitglieder.size();
+        return (dafuers != null && mitglieder != null && dafuers.size() == mitglieder.size());
     }
 
     
+    
+    //VB: mitglieder und dafuers sollen gleich gross sein
+    //IV: mitglieder und dafuers duerfen sich nicht geaendert haben
+    //NB: Rueckgabe des Ergebnis
     public boolean getResult() {
-        if (dafuers.size() == mitglieder.size()) {
+        if (dafuers != null && mitglieder != null && dafuers.size() == mitglieder.size()) {
             for (Mitglied m : mitglieder) {
                 if (!dafuers.get(m)) {
                     return false;
@@ -48,9 +61,15 @@ public class Abstimmung {
     }
     
     
+    
+    //VB: dafuers && mitglieder != NULL
+    //    Alle sollen bereits abgestimmt worden sein
+    //IV: An dafuers und begruendungen darf nichts geaendert werden
+    //NB: Rueckgabe des Strings mit den noetigen Informationen 
+    //    An dafuers und begruendungen darf nichts geaendert werden
     public String getResultMessage() {
 
-        if (dafuers.size() == mitglieder.size()) {
+        if (dafuers != null && mitglieder != null && dafuers.size() == mitglieder.size()) {
             String result = "Ergebnis fuer Abstimmung zu: " + vorgeschlTermin;
             boolean findetStatt = true;
             
@@ -76,6 +95,10 @@ public class Abstimmung {
     }
     
     
+    
+    //VB: vorgeschlTermin != NULL
+    //IV: vorgeschlTermin darf nicht geaendert werden
+    //NB: vorgeschlTermin darf nicht geaendert werden
     public Termin getTermin() {
         return vorgeschlTermin;
     }
